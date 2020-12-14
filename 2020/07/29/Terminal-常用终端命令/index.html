@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="初识Command Line 许多命令会花费一些时间来执行，然而这中间不会给出任何提示或者进度条。一般结束后会出现一个用户名$的标记。如果没有出现，那么说明最后一条命令正在执行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Terminal-常用终端命令">
+<meta property="og:url" content="https://taigermos.github.io/2020/07/29/Terminal-%E5%B8%B8%E7%94%A8%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="初识Command Line 许多命令会花费一些时间来执行，然而这中间不会给出任何提示或者进度条。一般结束后会出现一个用户名$的标记。如果没有出现，那么说明最后一条命令正在执行。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/08/11/qufVzyT2sga8Rni.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/11/ZF1dTGyW2p5oMHg.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/11/1fKu7zHGkQ9PRYo.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/11/ZSxnJDEzKOe4oYG.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/11/n1PtcNdbDrQFsyC.png">
+<meta property="article:published_time" content="2020-07-29T14:15:07.000Z">
+<meta property="article:modified_time" content="2020-12-10T14:13:42.092Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="终端">
+<meta property="article:tag" content="Terminal">
+<meta property="article:tag" content="终端常用命令">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/11/qufVzyT2sga8Rni.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2020/07/29/Terminal-%E5%B8%B8%E7%94%A8%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Terminal-常用终端命令 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E8%AF%86Command-Line"><span class="nav-number">1.</span> <span class="nav-text">初识Command Line</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">文件目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D"><span class="nav-number">3.</span> <span class="nav-text">文件定位</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E7%9B%AE%E5%BD%95%EF%BC%9Acd%EF%BC%88change-directory-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">进入目录：cd（change directory 的缩写）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cd%E8%B7%AF%E5%BE%84%E9%81%87%E5%88%B0%E7%A9%BA%E7%99%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">cd路径遇到空白</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E4%B8%8E%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">3.1.2.</span> <span class="nav-text">cd绝对路径与相对路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84%EF%BC%9Apwd%EF%BC%88Print-Working-Directory-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">显示当前目录的完整路径：pwd（Print Working Directory 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%E5%A4%B9-%E6%96%87%E4%BB%B6%EF%BC%9Afind"><span class="nav-number">3.3.</span> <span class="nav-text">查找文件夹&#x2F;文件：find</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9-%E6%96%87%E4%BB%B6%EF%BC%9Als%EF%BC%88list-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">查看当前目录下的文件夹&#x2F;文件：ls（list 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Amkdir%EF%BC%88make-directory-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">新增文件夹：mkdir（make directory 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%96%87%E4%BB%B6-%E6%94%B9%E5%8F%98%E5%B7%B2%E6%9C%89%E6%96%87%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3%E5%B1%9E%E6%80%A7%EF%BC%9Atouch"><span class="nav-number">4.3.</span> <span class="nav-text">新增文件&#x2F;改变已有文件的时间戳属性：touch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6-%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%8D%E6%88%96%E6%94%B9%E5%8F%98%E5%90%8D%E7%A7%B0%EF%BC%9Amv%EF%BC%88move-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.4.</span> <span class="nav-text">移动文件&#x2F;文件夹名或改变名称：mv（move 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E6%88%96%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Arm%EF%BC%88remove-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.5.</span> <span class="nav-text">删除文件或文件夹：rm（remove 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9%E6%88%96%E6%94%B9%E5%8F%98%E5%90%8D%E7%A7%B0%EF%BC%9Amvdir%EF%BC%88move-directory-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89%E2%80%93-gt-Mac-%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="nav-number">4.6.</span> <span class="nav-text">移动一个文件夹或改变名称：mvdir（move directory 的缩写）–&gt; Mac 无法使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E7%A9%BA%E7%9B%AE%E5%BD%95%EF%BC%9Armdir%EF%BC%88remove-directory-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.7.</span> <span class="nav-text">删除一个空目录：rmdir（remove directory 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E6%88%96%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Acp%EF%BC%88copy-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">4.8.</span> <span class="nav-text">复制文件或文件夹：cp（copy 的缩写）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%EF%BC%9Afile"><span class="nav-number">4.9.</span> <span class="nav-text">显示文件类型：file</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-vim-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">vi&#x2F;vim 的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%9B%B8%E5%85%B3"><span class="nav-number">6.</span> <span class="nav-text">权限相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E4%BB%A5root%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E5%8E%BB%E6%93%8D%E4%BD%9C%EF%BC%9Asudo%EF%BC%88super-user-do-%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%89"><span class="nav-number">6.1.</span> <span class="nav-text">临时以root用户权限去操作：sudo（super user do 的缩写）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F"><span class="nav-number">7.</span> <span class="nav-text">系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E6%9C%BA-IP-%E7%AD%89%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%EF%BC%9Aifconfig"><span class="nav-number">7.1.</span> <span class="nav-text">查看本机 IP 等配置信息：ifconfig</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Terminal%E5%85%89%E6%A0%87-%E8%BE%93%E5%85%A5%E6%8A%80%E5%B7%A7"><span class="nav-number">8.</span> <span class="nav-text">Terminal光标&#x2F;输入技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8%E5%88%B0%E8%A1%8C%E9%A6%96%EF%BC%9ACtrl-a"><span class="nav-number">8.1.</span> <span class="nav-text">光标移动到行首：Ctrl + a</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8%E5%88%B0%E8%A1%8C%E5%B0%BE%EF%BC%9ACtrl-e"><span class="nav-number">8.2.</span> <span class="nav-text">光标移动到行尾：Ctrl + e</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%87%E7%A7%BB%E5%8A%A8%E5%88%B0%E9%BC%A0%E6%A0%87%E6%8C%87%E9%92%88%E5%A4%84%EF%BC%9AOption-%E9%BC%A0%E6%A0%87"><span class="nav-number">8.3.</span> <span class="nav-text">光标移动到鼠标指针处：Option + 鼠标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%87%E5%88%A0%E9%99%A4%E5%88%B0%E8%A1%8C%E9%A6%96%EF%BC%9ACtrl-u"><span class="nav-number">8.4.</span> <span class="nav-text">光标删除到行首：Ctrl + u</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%87%E5%88%A0%E9%99%A4%E5%88%B0%E8%A1%8C%E5%B0%BE%EF%BC%9ACtrl-k"><span class="nav-number">8.5.</span> <span class="nav-text">光标删除到行尾：Ctrl + k</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E5%88%97%E5%87%BA%E4%BB%A3%E9%80%89%E5%91%BD%E4%BB%A4-%E4%BB%A3%E9%80%89%E6%96%87%E4%BB%B6%EF%BC%9ADouble-Tab%EF%BC%88%E5%8F%8C%E5%87%BB-Tab%EF%BC%89"><span class="nav-number">8.6.</span> <span class="nav-text">可以列出代选命令&#x2F;代选文件：Double Tab（双击 Tab）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E6%8E%A8%E5%87%BA%E5%BD%93%E5%89%8D%E6%93%8D%E4%BD%9C%EF%BC%9ACtrl-c"><span class="nav-number">8.7.</span> <span class="nav-text">强制推出当前操作：Ctrl + c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E5%B1%8F%EF%BC%9ACommand-k-Ctrl-l-clear"><span class="nav-number">8.8.</span> <span class="nav-text">清屏：Command + k &#x2F; Ctrl + l &#x2F; clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%B8%8E%E6%89%A7%E8%A1%8C%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%EF%BC%9Ahistory"><span class="nav-number">8.9.</span> <span class="nav-text">查看与执行历史命令：history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%8A%9F%E8%83%BD-%E5%8F%AF%E4%BB%A5%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E5%85%B7%E4%BD%93%E6%8C%87%E4%BB%A4%E6%88%96%E8%80%85%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3%EF%BC%9Aman"><span class="nav-number">8.10.</span> <span class="nav-text">查询功能, 可以查询某个具体指令或者工具的使用文档：man</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Terminal%E7%AA%97%E5%8F%A3%E6%8A%80%E5%B7%A7"><span class="nav-number">9.</span> <span class="nav-text">Terminal窗口技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E7%AA%97%E5%8F%A3%EF%BC%9ACommand-n"><span class="nav-number">9.1.</span> <span class="nav-text">新增窗口：Command + n</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BC%80%E5%88%86%E9%A1%B5%EF%BC%9ACommand-t"><span class="nav-number">9.2.</span> <span class="nav-text">新开分页：Command + t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E5%BD%93%E5%89%8D%E7%AA%97%E5%8F%A3%E6%88%96%E5%88%86%E9%A1%B5%EF%BC%9ACommand-w"><span class="nav-number">9.3.</span> <span class="nav-text">关闭当前窗口或分页：Command + w</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%A8%E5%AD%98%E5%BD%93%E4%B8%8B%E7%94%BB%E9%9D%A2%E6%88%90%E6%96%87%E5%AD%97%E6%A1%A3%EF%BC%9ACommand-s"><span class="nav-number">9.4.</span> <span class="nav-text">储存当下画面成文字档：Command + s</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%86%E9%A1%B5%EF%BC%9ACtrl-Tab-Ctrl-Shift-Tab"><span class="nav-number">9.5.</span> <span class="nav-text">切换分页：Ctrl + Tab &#x2F; Ctrl + Shift + Tab</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2020/07/29/Terminal-%E5%B8%B8%E7%94%A8%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Terminal-常用终端命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-29 22:15:07" itemprop="dateCreated datePublished" datetime="2020-07-29T22:15:07+08:00">2020-07-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-10 22:13:42" itemprop="dateModified" datetime="2020-12-10T22:13:42+08:00">2020-12-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="初识Command-Line"><a href="#初识Command-Line" class="headerlink" title="初识Command Line"></a><strong>初识Command Line</strong></h1><ul>
+<li><p>许多命令会花费一些时间来执行，然而这中间不会给出任何提示或者进度条。一般结束后会出现一个用户名$的标记。如果没有出现，那么说明最后一条命令正在执行。</p>
+<a id="more"></a>
+</li>
+<li><p>一条命令包括 Command Name、Options、Arguments、Extras 四个部分，后三个部分是可选的。</p>
+<p>  Options 部分用 - 作为前导符。许多命令的 Options 部分只包含单个字母，这时可以合并。例如，ls -lA 和 ls -l -A 是等效的。</p>
+<p>  Arguments 部分用来细化这个命令或指定这个命令具体的实施对象，</p>
+<p>  Extras 部分则用来进一步实现其他功能。</p>
+</li>
+<li><p>例如：下列命令包含前三个部分，用于强行删除 Junk.app 这个程序。</p>
+<p>  $ rm -R /Applications/Junk.app</p>
+</li>
+<li><p>如果你输入了错误的命令，系统会返回一些错误信息。但是系统却不会阻止你做任何事（例如删除整个用户文件夹）。</p>
+</li>
+</ul>
+<h1 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a><strong>文件目录</strong></h1><p>首先要清楚几个文件目录：</p>
+<p><code>&quot; / &quot;</code>  ：根目录</p>
+<p><code>&quot; ~ &quot;</code> ：用户主目录的缩写。例如当前用户为taigermos，那么” ~ “展开来就是：/Users/taigermos</p>
+<p><code>&quot; . &quot;</code>  ：当前目录</p>
+<p><code>&quot; .. &quot;</code>   ：父目录（上一级的目录）</p>
+<p>可参考：<a href="https://taigermos.github.io/2020/08/10/Mac-Os%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E5%AE%B6-home-%E7%9B%AE%E5%BD%95%E5%88%86%E5%88%AB%E6%8C%87%E4%BB%80%E4%B9%88%EF%BC%8C%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BD%95%E5%85%B3%E7%B3%BB%EF%BC%9F/">Mac Os系统中的根目录和家(home)目录分别指什么，它们有何关系？</a></p>
+<h1 id="文件定位"><a href="#文件定位" class="headerlink" title="文件定位"></a><strong>文件定位</strong></h1><h2 id="进入目录：cd（change-directory-的缩写）"><a href="#进入目录：cd（change-directory-的缩写）" class="headerlink" title="进入目录：cd（change directory 的缩写）"></a><strong>进入目录：cd（change directory 的缩写）</strong></h2><p><strong>Mac：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 进入到某个文件目录中</span><br><span class="line">$ cd</span><br><span class="line"></span><br><span class="line"># 返回使用者的根目录</span><br><span class="line">$ cd &#x2F;</span><br><span class="line"></span><br><span class="line"># 返回使用者的 home 目录</span><br><span class="line">$ cd ~　</span><br><span class="line"></span><br><span class="line"># 返回上一级目录</span><br><span class="line">$ cd ..</span><br><span class="line"></span><br><span class="line"># 返回上一个访问的目录</span><br><span class="line">$ cd -</span><br><span class="line"></span><br><span class="line"># 切换到 &#x2F;tmp 目录（绝对路径）</span><br><span class="line">$ cd &#x2F;tmp</span><br><span class="line"></span><br><span class="line"># 切换到 my_project 目录（相对路径）</span><br><span class="line">$ cd my_project</span><br><span class="line"></span><br><span class="line"># 切换到使用者的 home 目录中的 project 里的 namecards 目录</span><br><span class="line"># 这个 &quot;~&quot; 符号表示 home 目录</span><br><span class="line">$ cd ~&#x2F;project&#x2F;namecards&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 进入到某个文件目录中</span><br><span class="line">$ cd</span><br><span class="line"></span><br><span class="line"># 返回当前所在盘符的根目录</span><br><span class="line">$ cd \  # 也可以用Mac中的&quot; &#x2F; &quot;</span><br><span class="line"></span><br><span class="line"># 返回使用者的 home 目录</span><br><span class="line">$ cd ~　</span><br><span class="line"></span><br><span class="line"># 返回上一级目录</span><br><span class="line">$ cd ..</span><br><span class="line"></span><br><span class="line"># 返回上一个访问的目录</span><br><span class="line">$ cd -</span><br><span class="line"></span><br><span class="line"># 切换到 D 盘的 5xruby 目录（绝对路径）</span><br><span class="line">C:\&gt; cd D:\5xruby</span><br><span class="line"></span><br><span class="line"># 切换到 5xruby 目录（相对路径）</span><br><span class="line">D:\&gt; cd 5xruby</span><br></pre></td></tr></table></figure>
+
+<p>cd就是change directory，变换当前的目录，而这个用法就与Windows下相同，cd空一格+文件夹名称。</p>
+<p><img src="https://i.loli.net/2020/08/11/qufVzyT2sga8Rni.png" alt="image.png"></p>
+<ul>
+<li><h3 id="cd路径遇到空白"><a href="#cd路径遇到空白" class="headerlink" title="cd路径遇到空白"></a><strong>cd路径遇到空白</strong></h3></li>
+</ul>
+<p>当目录有空白或特殊符号([]，!，$，&amp;，*，;，|，)时，得用\来将它格开。</p>
+<p><img src="https://i.loli.net/2020/08/11/ZF1dTGyW2p5oMHg.png" alt="image.png"></p>
+<ul>
+<li><h3 id="cd绝对路径与相对路径"><a href="#cd绝对路径与相对路径" class="headerlink" title="cd绝对路径与相对路径"></a><strong>cd绝对路径与相对路径</strong></h3></li>
+</ul>
+<p>在路径的部分，除了可使用绝对外，可以用~，来表示当前的家目录（用户文件夹），就不用再打/Users/XXX/。</p>
+<p><img src="https://i.loli.net/2020/08/11/1fKu7zHGkQ9PRYo.png" alt="image.png"></p>
+<h2 id="显示当前目录的完整路径：pwd（Print-Working-Directory-的缩写）"><a href="#显示当前目录的完整路径：pwd（Print-Working-Directory-的缩写）" class="headerlink" title="显示当前目录的完整路径：pwd（Print Working Directory 的缩写）"></a><strong>显示当前目录的完整路径：pwd（Print Working Directory 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 显示当前目录的完整路径</span><br><span class="line"></span><br><span class="line">$ pwd</span><br></pre></td></tr></table></figure>
+
+<p>pwd就是print working directory，显示当前目录的完整路径。</p>
+<p><img src="https://i.loli.net/2020/08/11/ZSxnJDEzKOe4oYG.png" alt="image.png"></p>
+<h2 id="查找文件夹-文件：find"><a href="#查找文件夹-文件：find" class="headerlink" title="查找文件夹/文件：find"></a><strong>查找文件夹/文件：find</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 在当前目录下，找寻文件名称为 gtwang.txt 的文件</span><br><span class="line">$ find . -name gtwang.txt</span><br><span class="line"></span><br><span class="line"># 在家目录（home）底下，找寻文件名称为 gtwang.txt 的文件</span><br><span class="line">$ find ~ -name gtwang.txt</span><br><span class="line">$ find &#x2F;Users&#x2F;taigermos -name gtwang.txt</span><br><span class="line"></span><br><span class="line"># 在家目录（home）下，不区分英文大小写，找寻文件名称为 gtwang.txt 的文件</span><br><span class="line">$ find &#x2F;Users&#x2F;taigermos -iname gtwang.txt</span><br><span class="line"></span><br><span class="line"># 在家目录（home）下，指定只要搜寻「文件」名称含有&quot; .log &quot;的文件</span><br><span class="line">$ find &#x2F;Users&#x2F;taigermos -iname &#39;*.log&#39; -type f</span><br><span class="line"></span><br><span class="line"># 在家目录（home）下，指定只要搜寻「文件夹目录」名称含有&quot; apache2 &quot;的文件夹目录</span><br><span class="line">$ find &#x2F;Users&#x2F;taigermos -iname &#39;apache2&#39; -type d</span><br></pre></td></tr></table></figure>
+
+<p> <strong>补充说明：可用的 –type 参数值如下</strong></p>
+<p>b      block (buffered) special</p>
+<p>c      character (unbuffered) special</p>
+<p>d      directory ( 一般文件夹目录 )</p>
+<p>p      named pipe (FIFO)</p>
+<p>f      regular file ( 一般文件 )</p>
+<p>l      symbolic link</p>
+<p>s      socket</p>
+<p>D      door (Solaris)</p>
+<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a><strong>文件操作</strong></h1><h2 id="查看当前目录下的文件夹-文件：ls（list-的缩写）"><a href="#查看当前目录下的文件夹-文件：ls（list-的缩写）" class="headerlink" title="查看当前目录下的文件夹/文件：ls（list 的缩写）"></a><strong>查看当前目录下的文件夹/文件：ls（list 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 查看当前目录下的文件夹&#x2F;文件</span><br><span class="line">$ ls</span><br><span class="line"></span><br><span class="line"># 查看当前目录下的文件夹&#x2F;文件，包括隐藏文件</span><br><span class="line">$ ls -a</span><br><span class="line"></span><br><span class="line"># 查看当前目录下的文件夹&#x2F;文件，显示文件夹&#x2F;文件的详细信息</span><br><span class="line">$ ls -l</span><br><span class="line"></span><br><span class="line"># 两者一起</span><br><span class="line">$ ls -al</span><br></pre></td></tr></table></figure>
+
+<p>ls就是list directory contents，显示当前目录下的所有內容，就像Windows中的dir，而这一个ls后面也有相关的参数可用，可打man ls來查看，当看完再按Q键即可跳出。</p>
+<p>参数：-l 详细信息，-a 包括隐藏文件，-al 表示两者一起，a 是指连小数点开头的文件（例如.gitignore）也会显示，l 则是完整文件的权限、拥有者以及建立、修改时间的详细信息</p>
+<p><img src="https://i.loli.net/2020/08/11/n1PtcNdbDrQFsyC.png" alt="image.png"></p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls [选项] [目录或文件名]</span><br></pre></td></tr></table></figure>
+
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-a：–all的缩写，显示所有的文件，包括隐藏文件(以.开头的文件)（常用）</p>
+</li>
+<li><p>-A：–almost-all的缩写，显示所有的文件，包括隐藏文件，但不包括表示当前目录.和上级目录..这两个文件</p>
+</li>
+<li><p>-c：和-lt一起使用：显示列表并且以ctime(文件状态最后改变时间)排序。和-l一起使用：显示ctime并且以文件名排序。其他情况，以ctime排序</p>
+</li>
+<li><p>-d：–directory的缩写，仅列出目录本身，而不是列出目录里的内容列表</p>
+</li>
+<li><p>-f：直接列出结果，而不进行排序(ls默认会以文件名排序)</p>
+</li>
+<li><p>–color[=WHEN]：是否根据文件类型显示颜色，WHEN可以为never、always或者auto</p>
+</li>
+<li><p>–full-time：以完整的实际模式显示(包含年月日时分)，类似与ls -l –time-style=full-iso，</p>
+</li>
+<li><p>-g：列表显示结果，和-l类似，但是不显示文件所属者。</p>
+</li>
+<li><p>-h：将文件内容大小以GB、KB等易读的方式显示</p>
+</li>
+<li><p>-i：结合-l参数，列出每个文件的inode</p>
+</li>
+<li><p>-l：列出长数据串，显示出文件的属性与权限等数据信息(常用)</p>
+</li>
+<li><p>-n：和-l类似，只是显示的所属用户和组不是名称而是对应的id</p>
+</li>
+<li><p>-r：–reverse，将排序结果以倒序方式显示</p>
+</li>
+<li><p>-S：以文件大小排序</p>
+</li>
+<li><p>-t：以修改时间排序</p>
+</li>
+<li><p>–help：显示帮助信息</p>
+</li>
+</ul>
+<h2 id="新增文件夹：mkdir（make-directory-的缩写）"><a href="#新增文件夹：mkdir（make-directory-的缩写）" class="headerlink" title="新增文件夹：mkdir（make directory 的缩写）"></a><strong>新增文件夹：mkdir（make directory 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 新增一个名为 test 的文件夹（单个）</span><br><span class="line">$ mkdir test</span><br><span class="line"></span><br><span class="line"># 新增三个分别名为 a1、b2、c3 的文件夹（多个）</span><br><span class="line">$ mkdir a1 b2 c3</span><br><span class="line"></span><br><span class="line"># 递归新增目录</span><br><span class="line">$ mkdir -p &#x2F;cs&#x2F;sc&#x2F;a</span><br></pre></td></tr></table></figure>
+<p>mdir就是make diretory，就跟新增一個文件夹意思是一样的。</p>
+<p>如果要创建的目录已经存在，则提示已存在，而不会继续创建目录，mkdir命令还可以同时创建多个目录。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir [选项] [目录名]</span><br></pre></td></tr></table></figure>
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-m：对新建目录设置存取权限，没有-m默认权限755</p>
+</li>
+<li><p>-p：可以建多个目录</p>
+</li>
+</ul>
+<h2 id="新增文件-改变已有文件的时间戳属性：touch"><a href="#新增文件-改变已有文件的时间戳属性：touch" class="headerlink" title="新增文件/改变已有文件的时间戳属性：touch"></a><strong>新增文件/改变已有文件的时间戳属性：touch</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 在当前目录下创建一个名为text的.txt文件（单个）</span><br><span class="line">$ touch text.txt</span><br><span class="line"></span><br><span class="line"># 在当前目录下同时创建两个.txt文件（多个）</span><br><span class="line">$ touch text1.txt text2.txt</span><br></pre></td></tr></table></figure>
+
+<p>touch可以直接创建不同格式的文件，以及修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch [-acfm][-d&lt;日期时间&gt;][-r&lt;参考文件或目录&gt;] [-t&lt;日期时间&gt;][--help][--version][文件或目录…]</span><br></pre></td></tr></table></figure>
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-a： 改变档案的读取时间记录。</p>
+</li>
+<li><p>-m： 改变档案的修改时间记录。</p>
+</li>
+<li><p>-c：假如目的档案不存在，不会建立新的档案。与 –no-create 的效果一样。</p>
+</li>
+<li><p>-f：不使用，是为了与其他 unix 系统的相容性而保留。</p>
+</li>
+<li><p>-r：使用参考档的时间记录，与 –file 的效果一样。</p>
+</li>
+<li><p>-d：设定时间与日期，可以使用各种不同的格式。</p>
+</li>
+<li><p>-t：设定档案的时间记录，格式与 date 指令相同。</p>
+</li>
+</ul>
+<h2 id="移动文件-文件夹名或改变名称：mv（move-的缩写）"><a href="#移动文件-文件夹名或改变名称：mv（move-的缩写）" class="headerlink" title="移动文件/文件夹名或改变名称：mv（move 的缩写）"></a><strong>移动文件/文件夹名或改变名称：mv（move 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 移动当前目录中的 hello.txt 到 test 这个目录</span><br><span class="line">$ mv hello.txt .&#x2F;test</span><br><span class="line"></span><br><span class="line"># 再从 test 目录移动回來当前目录</span><br><span class="line">$ mv .&#x2F;text&#x2F;hello.txt .</span><br></pre></td></tr></table></figure>
+<p>mv就是move的缩写，可以用来移动文件或者将文件改名（move (rename) files），是Linux系统下常用的命令，经常用来备份文件或者目录。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv [选项] [源文件或目录] [目标文件或目录]</span><br></pre></td></tr></table></figure>
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-b ：若需覆盖文件，则覆盖前先行备份</p>
+</li>
+<li><p>-f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖</p>
+</li>
+<li><p>-i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖</p>
+</li>
+</ul>
+<h2 id="删除文件或文件夹：rm（remove-的缩写）"><a href="#删除文件或文件夹：rm（remove-的缩写）" class="headerlink" title="删除文件或文件夹：rm（remove 的缩写）"></a><strong>删除文件或文件夹：rm（remove 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 强制删除整个文件夹，无论该文件夹是否为空（使用 -rf）</span><br><span class="line">$ rm -rf &#x2F;Users&#x2F;taigermos&#x2F;desktop</span><br><span class="line"></span><br><span class="line"># 强制删除文件，无论该文件为什么权限（使用 -f）</span><br><span class="line">$ rm -f &#x2F;Users&#x2F;taigermos&#x2F;desktop&#x2F;test.py</span><br><span class="line"></span><br><span class="line"># 删除文件前逐一询问（使用 -i）</span><br><span class="line">$ rm -i test.txt </span><br><span class="line">rm：是否删除 一般文件 &quot;test.txt&quot;? y </span><br><span class="line"></span><br><span class="line"># 删除文件夹必须使用 -r</span><br><span class="line">$ rm homework  </span><br><span class="line">rm: 无法删除目录&quot;homework&quot;: 是一个目录  </span><br><span class="line">$ rm -r  homework </span><br></pre></td></tr></table></figure>
+
+<p>rm就是remove，這指令要特別小心，用來刪除資料的，當使用時要謹慎，否則刪除就找不到了。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm [选项] [文件或目录]</span><br></pre></td></tr></table></figure>
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-i 删除前逐一询问确认</p>
+</li>
+<li><p>-r 将目录及以下之档案亦逐一删除（向下递归删除）</p>
+</li>
+<li><p>-f 即使原档案属性设为唯读，亦直接删除，无需逐一确认（强制删除）</p>
+</li>
+</ul>
+<h2 id="移动一个文件夹或改变名称：mvdir（move-directory-的缩写）–-gt-Mac-无法使用"><a href="#移动一个文件夹或改变名称：mvdir（move-directory-的缩写）–-gt-Mac-无法使用" class="headerlink" title="移动一个文件夹或改变名称：mvdir（move directory 的缩写）–&gt; Mac 无法使用"></a><strong>移动一个文件夹或改变名称：mvdir（move directory 的缩写）–&gt; Mac 无法使用</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># mvdir 是unix操作系统的命令行。在mac的终端是用不了的</span><br><span class="line">$ mvdir .&#x2F;text .&#x2F;text2  </span><br><span class="line">zsh: command not found: mvdir  </span><br></pre></td></tr></table></figure>
+
+<p>mvdir就是move directory，mvdir是unix操作系统的命令行，在mac的终端是用不了的。所以mac终端使用 mv 代替 mvdir。  </p>
+<h2 id="删除一个空目录：rmdir（remove-directory-的缩写）"><a href="#删除一个空目录：rmdir（remove-directory-的缩写）" class="headerlink" title="删除一个空目录：rmdir（remove directory 的缩写）"></a><strong>删除一个空目录：rmdir（remove directory 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 删除 text 这个空目录</span><br><span class="line">$ rmdir &#x2F;Users&#x2F;taigermos&#x2F;text   </span><br></pre></td></tr></table></figure>
+
+<p>rmdir就是remove directory，只用来删除空目录，不过一旦目录非空会提示 Directiry not empty，一般不使用rmdir 而使用 rm -r [文件夹名称]。</p>
+<h2 id="复制文件或文件夹：cp（copy-的缩写）"><a href="#复制文件或文件夹：cp（copy-的缩写）" class="headerlink" title="复制文件或文件夹：cp（copy 的缩写）"></a><strong>复制文件或文件夹：cp（copy 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将文件file复制到目录&#x2F;Users&#x2F;taigermos&#x2F;tmp下，并改名为file1</span><br><span class="line">$ cp file &#x2F;Users&#x2F;taigermos&#x2F;tmp&#x2F;file1</span><br><span class="line"></span><br><span class="line"># 将&#x2F;boot目录下所有文件及子目录复制到&#x2F;root目录（复制文件夹目录使用 -r）</span><br><span class="line">$ cp -r &#x2F;boot &#x2F;root</span><br></pre></td></tr></table></figure>
+<p>cp就是copy，這指令就像Ctrl+C複製的意思，cp命令用来将一个或多个源文件或者目录复制到指定的目的文件或目录。它可以将单个源文件复制成一个指定文件名的具体的文件或一个已经存在的目录下。cp命令还支持同时复制多个文件，当一次复制多个文件时，目标文件参数必须是一个已经存在的目录，否则将出现错误。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp [选项] 源文件&#x2F;文件夹</span><br></pre></td></tr></table></figure>
+
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>-a：此参数的效果和同时指定”-dpR”参数相同；</p>
+</li>
+<li><p>-d：当复制符号连接时，把目标文件或目录也建立为符号连接，并指向与源文件或目录连接的原始文件或目录；</p>
+</li>
+<li><p>-f：强行复制文件或目录，不论目标文件或目录是否已存在；</p>
+</li>
+<li><p>-i：覆盖既有文件之前先询问用户；</p>
+</li>
+<li><p>-l：对源文件建立硬连接，而非复制文件；</p>
+</li>
+<li><p>-p：保留源文件或目录的属性；</p>
+</li>
+<li><p>-R/r：递归处理，将指定目录下的所有文件与子目录一并处理；</p>
+</li>
+<li><p>-s：对源文件建立符号连接，而非复制文件；</p>
+</li>
+<li><p>-u：使用这项参数后只会在源文件的更改时间较目标文件更新时或是名称相互对应的目标文件并不存在时，才复制文件；</p>
+</li>
+<li><p>-S：在备份文件时，用指定的后缀“SUFFIX”代替文件的默认后缀；</p>
+</li>
+<li><p>-b：覆盖已存在的文件目标前将目标文件备份；</p>
+</li>
+<li><p>-v：详细显示命令执行的操作</p>
+</li>
+</ul>
+<p><strong>参数：</strong></p>
+<ul>
+<li><p>源文件：制定源文件列表。默认情况下，cp命令不能复制目录，如果要复制目录，则必须使用-R选项</p>
+</li>
+<li><p>目标文件：指定目标文件。当“源文件”为多个文件时，要求“目标文件”为指定的目录</p>
+</li>
+</ul>
+<h2 id="显示文件类型：file"><a href="#显示文件类型：file" class="headerlink" title="显示文件类型：file"></a><strong>显示文件类型：file</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查看text文件的文件类型</span><br><span class="line">$ file text.txt</span><br></pre></td></tr></table></figure>
+
+<p>file用来查看文件类型。</p>
+<h1 id="vi-vim-的使用"><a href="#vi-vim-的使用" class="headerlink" title="vi/vim 的使用"></a><strong>vi/vim 的使用</strong></h1><p>详细内容参考：<a href="https://taigermos.github.io/2020/08/16/Linux-vi-vim%E2%80%94%E2%80%94%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8/">Linux vi/vim——终端中的编辑器</a></p>
+<h1 id="权限相关"><a href="#权限相关" class="headerlink" title="权限相关"></a><strong>权限相关</strong></h1><h2 id="临时以root用户权限去操作：sudo（super-user-do-的缩写）"><a href="#临时以root用户权限去操作：sudo（super-user-do-的缩写）" class="headerlink" title="临时以root用户权限去操作：sudo（super user do 的缩写）"></a><strong>临时以root用户权限去操作：sudo（super user do 的缩写）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 以root用户权限生成hexo博客</span><br><span class="line">$ sudo hexo g</span><br></pre></td></tr></table></figure>
+
+<p>sudo就是super user do，临时使用 root 账户权限执行操作，当然，使用之前需要 administrator 账户（管理员账户）的授权（输入密码）。</p>
+<p><strong>提示：</strong> 如果由于你忘了使用 sudo 而导致命令行返回一个错误，只需输入 sudo !! 就可以用 sudo 来执行上一条指令。不恰当地使用 sudo 可以轻易破坏你的系统设置。命令行只会在第一次执行严重破坏性行为之前提示。</p>
+<ul>
+<li><p><strong>使用 sudo 切换 Shell</strong></p>
+<p>  如果你是一个管理员用户，你需要执行很多条需要 root 权限的命令，你可以临时切换整个命令行 shell 来取得 root 级别的访问权限。方法就是先输入 sudo -s，回车后再键入你的密码。</p>
+</li>
+</ul>
+<h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a><strong>系统</strong></h1><h2 id="查看本机-IP-等配置信息：ifconfig"><a href="#查看本机-IP-等配置信息：ifconfig" class="headerlink" title="查看本机 IP 等配置信息：ifconfig"></a><strong>查看本机 IP 等配置信息：ifconfig</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 看本机 IP 等配置信息</span><br><span class="line">$ ifconfig</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Terminal光标-输入技巧"><a href="#Terminal光标-输入技巧" class="headerlink" title="Terminal光标/输入技巧"></a><strong>Terminal光标/输入技巧</strong></h1><h2 id="光标移动到行首：Ctrl-a"><a href="#光标移动到行首：Ctrl-a" class="headerlink" title="光标移动到行首：Ctrl + a"></a><strong>光标移动到行首：Ctrl + a</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 光标移动到行首</span><br><span class="line">  Ctrl + a</span><br></pre></td></tr></table></figure>
+
+<h2 id="光标移动到行尾：Ctrl-e"><a href="#光标移动到行尾：Ctrl-e" class="headerlink" title="光标移动到行尾：Ctrl + e"></a><strong>光标移动到行尾：Ctrl + e</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 光标移动到行尾</span><br><span class="line">  Ctrl + e</span><br></pre></td></tr></table></figure>
+
+<h2 id="光标移动到鼠标指针处：Option-鼠标"><a href="#光标移动到鼠标指针处：Option-鼠标" class="headerlink" title="光标移动到鼠标指针处：Option + 鼠标"></a><strong>光标移动到鼠标指针处：Option + 鼠标</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 光标移动到鼠标指针处</span><br><span class="line">  Option + 鼠标</span><br></pre></td></tr></table></figure>
+
+<h2 id="光标删除到行首：Ctrl-u"><a href="#光标删除到行首：Ctrl-u" class="headerlink" title="光标删除到行首：Ctrl + u"></a><strong>光标删除到行首：Ctrl + u</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 光标删除到行首</span><br><span class="line">  Ctrl + u</span><br></pre></td></tr></table></figure>
+
+<h2 id="光标删除到行尾：Ctrl-k"><a href="#光标删除到行尾：Ctrl-k" class="headerlink" title="光标删除到行尾：Ctrl + k"></a><strong>光标删除到行尾：Ctrl + k</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 光标删除到行尾</span><br><span class="line">  Ctrl + k</span><br></pre></td></tr></table></figure>
+
+<h2 id="可以列出代选命令-代选文件：Double-Tab（双击-Tab）"><a href="#可以列出代选命令-代选文件：Double-Tab（双击-Tab）" class="headerlink" title="可以列出代选命令/代选文件：Double Tab（双击 Tab）"></a><strong>可以列出代选命令/代选文件：Double Tab（双击 Tab）</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 列出代选命令&#x2F;代选文件</span><br><span class="line">$ 双击 Tab</span><br></pre></td></tr></table></figure>
+
+<h2 id="强制推出当前操作：Ctrl-c"><a href="#强制推出当前操作：Ctrl-c" class="headerlink" title="强制推出当前操作：Ctrl + c"></a><strong>强制推出当前操作：Ctrl + c</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 强制本地hexo博客预览的执行</span><br><span class="line">  Ctrl + c</span><br></pre></td></tr></table></figure>
+
+<h2 id="清屏：Command-k-Ctrl-l-clear"><a href="#清屏：Command-k-Ctrl-l-clear" class="headerlink" title="清屏：Command + k / Ctrl + l / clear"></a><strong>清屏：Command + k / Ctrl + l / clear</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 清除屏幕或窗口内容</span><br><span class="line">$ clear</span><br><span class="line"></span><br><span class="line"># 清除屏幕或窗口内容</span><br><span class="line">  Ctrl + l</span><br><span class="line"></span><br><span class="line"># 清除屏幕或窗口内容</span><br><span class="line">  Command + k</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看与执行历史命令：history"><a href="#查看与执行历史命令：history" class="headerlink" title="查看与执行历史命令：history"></a><strong>查看与执行历史命令：history</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查看历史命令（默认查看4条历史命令）</span><br><span class="line">$ history</span><br><span class="line"></span><br><span class="line"># 查看10条历史命令</span><br><span class="line">$ history 10</span><br></pre></td></tr></table></figure>
+
+<p>history用于显示指定数目的历史指令命令，读取历史命令文件中的目录到历史命令缓冲区和将历史命令缓冲区中的目录写入命令文件。</p>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history [选项]</span><br></pre></td></tr></table></figure>
+
+<p><strong>选项：</strong></p>
+<ul>
+<li><p>n  ：数字,要列出最近的 n 笔命令列表</p>
+</li>
+<li><p>-c ：将目前的shell中的所有 history 内容全部消除</p>
+</li>
+<li><p>-a ：将目前新增的history 指令新增入 histfiles 中，若没有加 histfiles,则预设写入 ~/.bash_history</p>
+</li>
+<li><p>-r ：将 histfiles 的内容读到目前这个 shell 的 history 记忆中</p>
+</li>
+<li><p>-w ：将目前的 history 记忆内容写入 histfiles。</p>
+</li>
+</ul>
+<h2 id="查询功能-可以查询某个具体指令或者工具的使用文档：man"><a href="#查询功能-可以查询某个具体指令或者工具的使用文档：man" class="headerlink" title="查询功能, 可以查询某个具体指令或者工具的使用文档：man"></a><strong>查询功能, 可以查询某个具体指令或者工具的使用文档：man</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查询ls指令的使用方法及功能</span><br><span class="line">$ man ls</span><br></pre></td></tr></table></figure>
+
+<p>man就是一个命令使用指南，在命令行中输入 man command-name 即可获取。</p>
+<p>使用指南往往很长，所以你可以使用▲（上箭头）或▼（下箭头）来上下移动，使用空格来翻页，输入 / 和关键字来按照关键字搜索，按 Q 来退出使用指南页面。</p>
+<p>输入 man -k 和关键字来对整个使用指南数据库进行搜索。</p>
+<h1 id="Terminal窗口技巧"><a href="#Terminal窗口技巧" class="headerlink" title="Terminal窗口技巧"></a><strong>Terminal窗口技巧</strong></h1><h2 id="新增窗口：Command-n"><a href="#新增窗口：Command-n" class="headerlink" title="新增窗口：Command + n"></a><strong>新增窗口：Command + n</strong></h2><h2 id="新开分页：Command-t"><a href="#新开分页：Command-t" class="headerlink" title="新开分页：Command + t"></a><strong>新开分页：Command + t</strong></h2><h2 id="关闭当前窗口或分页：Command-w"><a href="#关闭当前窗口或分页：Command-w" class="headerlink" title="关闭当前窗口或分页：Command + w"></a><strong>关闭当前窗口或分页：Command + w</strong></h2><h2 id="储存当下画面成文字档：Command-s"><a href="#储存当下画面成文字档：Command-s" class="headerlink" title="储存当下画面成文字档：Command + s"></a><strong>储存当下画面成文字档：Command + s</strong></h2><h2 id="切换分页：Ctrl-Tab-Ctrl-Shift-Tab"><a href="#切换分页：Ctrl-Tab-Ctrl-Shift-Tab" class="headerlink" title="切换分页：Ctrl + Tab / Ctrl + Shift + Tab"></a><strong>切换分页：Ctrl + Tab / Ctrl + Shift + Tab</strong></h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BB%88%E7%AB%AF/" rel="tag"># 终端</a>
+              <a href="/tags/Terminal/" rel="tag"># Terminal</a>
+              <a href="/tags/%E7%BB%88%E7%AB%AF%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="tag"># 终端常用命令</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/29/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Hexo-GitHubPages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="prev" title="彻底搞懂如何使用Hexo+GitHubPages搭建个人博客">
+                  <i class="fa fa-chevron-left"></i> 彻底搞懂如何使用Hexo+GitHubPages搭建个人博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/31/git%E4%BB%A5%E5%8F%8Agithub%E7%AE%80%E5%8D%95%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" rel="next" title="git以及github简单的使用方法">
+                  git以及github简单的使用方法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
