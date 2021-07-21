@@ -154,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -165,7 +165,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -194,6 +194,103 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/07/21/Tomcat%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/21/Tomcat%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">Tomcat安装及配置教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-21 17:00:54 / Modified: 17:08:41" itemprop="dateCreated datePublished" datetime="2021-07-21T17:00:54+08:00">2021-07-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="步骤一：下载Tomcat"><a href="#步骤一：下载Tomcat" class="headerlink" title="步骤一：下载Tomcat"></a><strong>步骤一：下载Tomcat</strong></h2><p>链接如下：<a target="_blank" rel="noopener" href="https://tomcat.apache.org/">https://tomcat.apache.org/</a></p>
+<p><img src="https://i.loli.net/2021/07/19/GJwsTUFdZCXomzr.png" alt="image.png"><br><img src="https://i.loli.net/2021/07/19/idM2vSUIpTq1Rnw.png" alt="image.png"></p>
+<p><font color=#FF0000>注意：要根据自己的JDK版本选择Tomcat的版本。</font></p>
+<p><img src="https://i.loli.net/2021/07/19/tdgloXBP9y6C4m1.png" alt="image.png"></p>
+<p>因本人java版本为10.0.2，故选择Tomcat9.0.31版本（Windows请自行选择64位或32位）</p>
+<h2 id="步骤二：配置环境变量"><a href="#步骤二：配置环境变量" class="headerlink" title="步骤二：配置环境变量"></a><strong>步骤二：配置环境变量</strong></h2><p>新建系统环境变量：</p>
+<p><img src="https://i.loli.net/2021/07/19/OkxPpgGY8CJ4HEs.png" alt="image.png"></p>
+<p>修改系统Path(变量值末尾添加%CATALINA_HOME%\bin;):</p>
+<p><img src="https://i.loli.net/2021/07/19/sDX59yUQWTal6IV.png" alt="image.png"></p>
+<p>保存即可。</p>
+<h2 id="步骤三：查询环境是否配置成功"><a href="#步骤三：查询环境是否配置成功" class="headerlink" title="步骤三：查询环境是否配置成功"></a><strong>步骤三：查询环境是否配置成功</strong></h2><p><img src="https://i.loli.net/2021/07/19/q24DLcXTRWYCUIw.png" alt="image.png"></p>
+<p>ps:若出现上述内容，则环境配置成功</p>
+<h2 id="步骤四：启动Tomcat：使用命令：startup-bat"><a href="#步骤四：启动Tomcat：使用命令：startup-bat" class="headerlink" title="步骤四：启动Tomcat：使用命令：startup.bat"></a><strong>步骤四：启动Tomcat：使用命令：startup.bat</strong></h2><p><font color=#87ceeb>(此处可能出现闪退，导致启动不成功，请滑至文章结尾处查看解决办法)</font></p>
+<p><img src="https://i.loli.net/2021/07/19/ra7E3QoGJ8jksRN.png" alt="image.png"></p>
+<p>ps:当出现Tomcat的命令框且在浏览器中输入 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a> 出现下述界面（注意，此时上述两个命令框不要关闭）：</p>
+<p><img src="https://i.loli.net/2021/07/19/dePzf4C31XnNkyS.png" alt="image.png"></p>
+<p>大功告成，Tomcat搭建成功！！！！</p>
+<p>&lt;问题&gt;</p>
+<p>Q：出现闪退怎么办（即：启动tomcatw.exe出现unable to open the service tomcat怎么办）？</p>
+<p><img src="https://i.loli.net/2021/07/19/s3pIJmvVPiAqBhS.png" alt="image.png"></p>
+<p>A：打开命令行，输入命令service.bat install</p>
+<p><img src="https://i.loli.net/2021/07/19/VqOE9CvoGwYmyTx.png" alt="image.png"></p>
+<p>再回到步骤四，重新启动Tomcat。</p>
+<p>参考：链接一：<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/20b68a88592e06796cec6234.html">https://jingyan.baidu.com/article/20b68a88592e06796cec6234.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
