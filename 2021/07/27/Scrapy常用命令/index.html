@@ -23,14 +23,18 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
+<meta name="description" content="1. scrapy startproject myproject这条命令用来创建一个Scrapy爬虫项目，myproject代表项目名称。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scrapy常用命令">
 <meta property="og:url" content="https://taigermos.github.io/2021/07/27/Scrapy%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="1. scrapy startproject myproject这条命令用来创建一个Scrapy爬虫项目，myproject代表项目名称。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-27T05:03:50.000Z">
-<meta property="article:modified_time" content="2021-07-27T05:03:50.534Z">
+<meta property="article:modified_time" content="2021-07-27T05:12:58.246Z">
 <meta property="article:author" content="Aaron">
+<meta property="article:tag" content="网络爬虫">
+<meta property="article:tag" content="Scrapy">
 <meta name="twitter:card" content="summary">
 
 
@@ -131,7 +135,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -144,6 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-scrapy-startproject-myproject"><span class="nav-number">1.</span> <span class="nav-text">1. scrapy startproject myproject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-scrapy-genspider-mydomain-mydomain-com"><span class="nav-number">2.</span> <span class="nav-text">2. scrapy genspider mydomain mydomain.com</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-scrapy-crawl-myspider"><span class="nav-number">3.</span> <span class="nav-text">3. scrapy crawl myspider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-scrapy-shell-url"><span class="nav-number">4.</span> <span class="nav-text">4. scrapy shell  [url]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-scrapy-view-url"><span class="nav-number">5.</span> <span class="nav-text">5. scrapy view [url]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-scrapy-list"><span class="nav-number">6.</span> <span class="nav-text">6. scrapy list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-scrapy-parse-options"><span class="nav-number">7.</span> <span class="nav-text">7. scrapy parse  [options]</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -162,12 +167,12 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -229,8 +234,22 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-07-27 13:03:50" itemprop="dateCreated datePublished" datetime="2021-07-27T13:03:50+08:00">2021-07-27</time>
+      <time title="Created: 2021-07-27 13:03:50 / Modified: 13:12:58" itemprop="dateCreated datePublished" datetime="2021-07-27T13:03:50+08:00">2021-07-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">网络爬虫</span></a>
+        </span>
     </span>
 
   
@@ -243,7 +262,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <h2 id="1-scrapy-startproject-myproject"><a href="#1-scrapy-startproject-myproject" class="headerlink" title="1. scrapy startproject myproject"></a><strong>1. scrapy startproject myproject</strong></h2><p><strong>这条命令用来创建一个Scrapy爬虫项目，myproject代表项目名称。</strong></p>
+<a id="more"></a>
+
+<h2 id="2-scrapy-genspider-mydomain-mydomain-com"><a href="#2-scrapy-genspider-mydomain-mydomain-com" class="headerlink" title="2. scrapy genspider mydomain mydomain.com"></a><strong>2. scrapy genspider mydomain mydomain.com</strong></h2><p><strong>这条命令在项目中使用基础spider模板生成一个爬虫文件，所以此命令需要在项目目录中运行。</strong></p>
+<h2 id="3-scrapy-crawl-myspider"><a href="#3-scrapy-crawl-myspider" class="headerlink" title="3. scrapy crawl myspider"></a><strong>3. scrapy crawl myspider</strong></h2><p><strong>在项目中启动爬虫命令，myspider代表爬虫名称。</strong></p>
+<h2 id="4-scrapy-shell-url"><a href="#4-scrapy-shell-url" class="headerlink" title="4. scrapy shell  [url]"></a><strong>4. scrapy shell  [url]</strong></h2><p><strong>全局命令。以给定的URL(如果给出)或者空(没有给出URL)启动Scrapy shell。这个命令经常用来在交互模式下检查XPath语法提取数据是否正确。</strong></p>
+<h2 id="5-scrapy-view-url"><a href="#5-scrapy-view-url" class="headerlink" title="5. scrapy view [url]"></a><strong>5. scrapy view [url]</strong></h2><p><strong>全局命令。在浏览器中打开给定的URL，并以Scrapy spider获取到的形式展现。</strong></p>
+<h2 id="6-scrapy-list"><a href="#6-scrapy-list" class="headerlink" title="6. scrapy list"></a><strong>6. scrapy list</strong></h2><p><strong>这条命令需要在项目中运行，它会列出当前项目中所有可用的spider（每行输出一个spider）。</strong></p>
+<h2 id="7-scrapy-parse-options"><a href="#7-scrapy-parse-options" class="headerlink" title="7. scrapy parse  [options]"></a><strong>7. scrapy parse <url> [options]</strong></h2><p><strong>这条命令需要在项目中运行，它获取给定的URL并使用相应的spider分析处理。如果我们提供–callback选项，则使用spider的对应方法处理，否则使用parse解析。这条命令也可以帮助我们检查解析函数是否正确。</strong></p>
+
     </div>
 
     
@@ -251,6 +279,10 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" rel="tag"># 网络爬虫</a>
+              <a href="/tags/Scrapy/" rel="tag"># Scrapy</a>
+          </div>
 
         
 
