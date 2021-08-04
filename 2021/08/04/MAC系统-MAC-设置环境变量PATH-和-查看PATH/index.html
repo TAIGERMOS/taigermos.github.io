@@ -31,7 +31,7 @@
 <meta property="og:description" content="理论篇Mac系统的环境变量，加载顺序为：&#x2F;etc&#x2F;profile &#x2F;etc&#x2F;paths ~&#x2F;.bash_profile ~&#x2F;.bash_login ~&#x2F;.profile ~&#x2F;.bashrc &#x2F;etc&#x2F;profile和&#x2F;etc&#x2F;paths是系统级别的，系统启动就会加载，后面几个是当前用户级的环境变量。后面3个按照从前往后的顺序读取，如果&#x2F;.bash_profile文件存在，则后面的几个文件就会被忽略">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-04T07:25:47.000Z">
-<meta property="article:modified_time" content="2021-08-04T07:40:56.077Z">
+<meta property="article:modified_time" content="2021-08-04T08:01:02.046Z">
 <meta property="article:author" content="Aaron">
 <meta property="article:tag" content="macOS">
 <meta property="article:tag" content="Path">
@@ -236,7 +236,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-08-04 15:25:47 / Modified: 15:40:56" itemprop="dateCreated datePublished" datetime="2021-08-04T15:25:47+08:00">2021-08-04</time>
+      <time title="Created: 2021-08-04 15:25:47 / Modified: 16:01:02" itemprop="dateCreated datePublished" datetime="2021-08-04T15:25:47+08:00">2021-08-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -286,11 +286,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch &#x2F;etc&#x2F;paths.d&#x2F;mysql</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>用 vim 打开这个文件（如果是以 open -t 的方式打开，则不允许编辑）：</p>
-</li>
-</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;paths.d&#x2F;mysql</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
+</li>
 <li><p>编辑该文件，键入路径并保存（关闭该 Terminal 窗口并重新打开一个，就能使用 mysql 命令了）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;mysql&#x2F;bin</span><br></pre></td></tr></table></figure>
 </li>
