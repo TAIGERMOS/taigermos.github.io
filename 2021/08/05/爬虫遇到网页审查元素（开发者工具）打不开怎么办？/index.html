@@ -23,16 +23,24 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="TAIGERMOS">
-<meta property="og:url" content="https://taigermos.github.io/tags/%E6%AD%BB%E4%BA%A1/index.html">
+<meta name="description" content="问题描述今天想用Python写一个脚本，批量爬取某站图片。发现该网站的开发调试工具打不开，右键和F12都没用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫遇到网页审查元素（开发者工具）打不开怎么办？">
+<meta property="og:url" content="https://taigermos.github.io/2021/08/05/%E7%88%AC%E8%99%AB%E9%81%87%E5%88%B0%E7%BD%91%E9%A1%B5%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0%EF%BC%88%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%EF%BC%89%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/index.html">
 <meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="问题描述今天想用Python写一个脚本，批量爬取某站图片。发现该网站的开发调试工具打不开，右键和F12都没用。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/08/05/XFngmkPeaNlRTOE.png">
+<meta property="article:published_time" content="2021-08-05T08:06:40.000Z">
+<meta property="article:modified_time" content="2021-08-05T08:11:39.092Z">
 <meta property="article:author" content="Aaron">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="Chrome 网页检查元素">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/08/05/XFngmkPeaNlRTOE.png">
 
 
-<link rel="canonical" href="https://taigermos.github.io/tags/%E6%AD%BB%E4%BA%A1/">
+<link rel="canonical" href="https://taigermos.github.io/2021/08/05/%E7%88%AC%E8%99%AB%E9%81%87%E5%88%B0%E7%BD%91%E9%A1%B5%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0%EF%BC%88%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%EF%BC%89%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/">
 
 
 <script class="page-configurations">
@@ -40,11 +48,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
-<title>Tag: 死亡 | TAIGERMOS</title>
+<title>爬虫遇到网页审查元素（开发者工具）打不开怎么办？ | TAIGERMOS</title>
   
 
 
@@ -129,7 +137,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -142,6 +150,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">引用参考</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -193,50 +202,109 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">死亡
-          <small>Tag</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/08/05/%E7%88%AC%E8%99%AB%E9%81%87%E5%88%B0%E7%BD%91%E9%A1%B5%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0%EF%BC%88%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%EF%BC%89%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬虫遇到网页审查元素（开发者工具）打不开怎么办？
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="Created: 2021-08-05 16:06:40 / Modified: 16:11:39" itemprop="dateCreated datePublished" datetime="2021-08-05T16:06:40+08:00">2021-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">网络爬虫</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天想用Python写一个脚本，批量爬取某站图片。发现该网站的开发调试工具打不开，右键和F12都没用。</p>
+<a id="more"></a>
+
+<h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><p>个人推测右键和F12可能都被JS脚本禁用了。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>点击浏览器右上角-更多工具-开发者工具即可强制启动开发调试。</p>
+<p><img src="https://i.loli.net/2021/08/05/XFngmkPeaNlRTOE.png" alt="image.png"></p>
+<h2 id="引用参考"><a href="#引用参考" class="headerlink" title="引用参考"></a>引用参考</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_21567385&#x2F;article&#x2F;details&#x2F;109253191</span><br></pre></td></tr></table></figure>
+
+
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-07-27T13:39:10+08:00"
-              content="2021-07-27">
-          07-27
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/07/27/%E5%A4%A9%E7%9C%9F-%E6%AD%BB%E4%BA%A1%E4%BB%8E%E4%B8%8D%E6%98%AF%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E9%80%89%E6%8B%A9/" itemprop="url">
-            <span itemprop="name">天真|死亡从不是我的第一选择</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/Chrome-%E7%BD%91%E9%A1%B5%E6%A3%80%E6%9F%A5%E5%85%83%E7%B4%A0/" rel="tag"># Chrome 网页检查元素</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/04/MAC%E7%B3%BB%E7%BB%9F-MAC-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH-%E5%92%8C-%E6%9F%A5%E7%9C%8BPATH/" rel="prev" title="MAC系统 - MAC 设置环境变量PATH 和 查看PATH">
+                  <i class="fa fa-chevron-left"></i> MAC系统 - MAC 设置环境变量PATH 和 查看PATH
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 
 <script>
