@@ -23,14 +23,19 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
+<meta name="description" content="用Python做数据分析光是掌握numpy和matplotlib可不够，Pandas是必须要掌握的一个重点，numpy虽然能够帮我们处理处理数值型数据，但是这还不够，很多时候，我们的数据除了数值之外，还有字符串，还有时间序列等，比如：我们通过爬虫获取到了存储在数据库中的数据。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pandas 必会的方法汇总">
 <meta property="og:url" content="https://taigermos.github.io/2021/09/28/Pandas-%E5%BF%85%E4%BC%9A%E7%9A%84%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/index.html">
 <meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="用Python做数据分析光是掌握numpy和matplotlib可不够，Pandas是必须要掌握的一个重点，numpy虽然能够帮我们处理处理数值型数据，但是这还不够，很多时候，我们的数据除了数值之外，还有字符串，还有时间序列等，比如：我们通过爬虫获取到了存储在数据库中的数据。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-28T13:55:23.000Z">
-<meta property="article:modified_time" content="2021-09-28T13:55:23.493Z">
+<meta property="article:modified_time" content="2021-09-29T16:01:42.063Z">
 <meta property="article:author" content="Aaron">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="Pandas">
 <meta name="twitter:card" content="summary">
 
 
@@ -131,7 +136,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -144,6 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Pandas%E4%B8%A4%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">一、Pandas两大数据结构的创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81DataFrame%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">二、DataFrame常见方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E7%B4%A2%E5%BC%95"><span class="nav-number">3.</span> <span class="nav-text">三、数据索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81DataFrame%E9%80%89%E5%8F%96%E5%92%8C%E9%87%8D%E6%96%B0%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">四、DataFrame选取和重新组合数据的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8E%92%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">五、排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E7%9B%B8%E5%85%B3%E5%88%86%E6%9E%90%E5%92%8C%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">六、相关分析和统计分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%88%86%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">七、分组的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E8%AF%BB%E5%86%99%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">八、读写文本格式数据的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%A4%84%E7%90%86%E7%BC%BA%E5%A4%B1%E6%95%B0%E6%8D%AE"><span class="nav-number">9.</span> <span class="nav-text">九、处理缺失数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="nav-number">10.</span> <span class="nav-text">十、数据转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">11.</span> <span class="nav-text">结语</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -162,12 +168,12 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -232,6 +238,34 @@
 
       <time title="Created: 2021-09-28 21:55:23" itemprop="dateCreated datePublished" datetime="2021-09-28T21:55:23+08:00">2021-09-28</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-30 00:01:42" itemprop="dateModified" datetime="2021-09-30T00:01:42+08:00">2021-09-30</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/python/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数据分析</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/python/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/Pandas/" itemprop="url" rel="index"><span itemprop="name">Pandas</span></a>
+        </span>
+    </span>
 
   
 </div>
@@ -243,7 +277,540 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <p>用Python做数据分析光是掌握numpy和matplotlib可不够，Pandas是必须要掌握的一个重点，numpy虽然能够帮我们处理处理数值型数据，但是这还不够，很多时候，我们的数据除了数值之外，还有字符串，还有时间序列等，比如：我们通过爬虫获取到了存储在数据库中的数据。</p>
+<a id="more"></a>
+
+<p><font color="#EB3007">今天来分享一些Pandas必会的用法，让你的数据分析水平更上一层楼。</font></p>
+<h1 id="一、Pandas两大数据结构的创建"><a href="#一、Pandas两大数据结构的创建" class="headerlink" title="一、Pandas两大数据结构的创建"></a>一、<strong>Pandas两大数据结构的创建</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">pd.Series(对象,index=[ ])</td>
+<td align="left">创建Series。对象可以是列表\ndarray、字典以及DataFrame中的某一行或某一列</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">pd.DataFrame(data,columns = [ ],index = [ ])</td>
+<td align="left">创建DataFrame。columns和index为指定的列、行索引，并按照顺序排列</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：用pandas创建数据表：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; pd.DataFrame(&#123;&quot;id&quot;:[1001,1002,1003,1004,1005,1006], </span><br><span class="line"></span><br><span class="line"> &quot;date&quot;:pd.date_range(&#39;20130102&#39;, periods&#x3D;6),</span><br><span class="line"></span><br><span class="line">  &quot;city&quot;:[&#39;Beijing &#39;, &#39;SH&#39;, &#39; guangzhou &#39;, &#39;Shenzhen&#39;, &#39;shanghai&#39;, &#39;BEIJING &#39;],</span><br><span class="line"></span><br><span class="line"> &quot;age&quot;:[23,44,54,32,34,32],</span><br><span class="line"></span><br><span class="line"> &quot;category&quot;:[&#39;100-A&#39;,&#39;100-B&#39;,&#39;110-A&#39;,&#39;110-C&#39;,&#39;210-A&#39;,&#39;130-F&#39;],</span><br><span class="line"></span><br><span class="line">  &quot;price&quot;:[1200,np.nan,2133,5433,np.nan,4432]&#125;,</span><br><span class="line"></span><br><span class="line">  columns &#x3D;[&#39;id&#39;,&#39;date&#39;,&#39;city&#39;,&#39;category&#39;,&#39;age&#39;,&#39;price&#39;])</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、DataFrame常见方法"><a href="#二、DataFrame常见方法" class="headerlink" title="二、DataFrame常见方法"></a>二、<strong>DataFrame常见方法</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">df.head()</td>
+<td align="left">查询数据的前五行</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">df.tail()</td>
+<td align="left">查询数据的末尾5行</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">pandas.qcut()</td>
+<td align="left">基于秩或基于样本分位数将变量离散化为等大小桶</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">pandas.cut()</td>
+<td align="left">基于分位数的离散化函数</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">pandas.date_range()</td>
+<td align="left">返回一个时间索引</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">df.apply()</td>
+<td align="left">沿相应轴应用函数</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">Series.value_counts()</td>
+<td align="left">返回不同数据的计数值</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">df.reset_index()</td>
+<td align="left">重新设置index，参数drop = True时会丢弃原来的索引，设置新的从0开始的索引，常与groupby()一起用</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：重新索引</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_inner.reset_index()</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、数据索引"><a href="#三、数据索引" class="headerlink" title="三、数据索引"></a>三、<strong>数据索引</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">.values</td>
+<td align="left">将DataFrame转换为ndarray二维数组</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">.append(idx)</td>
+<td align="left">连接另一个Index对象，产生新的Index对象</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">.insert(loc,e)</td>
+<td align="left">在loc位置增加一个元素</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">.delete(loc)</td>
+<td align="left">删除loc位置处的元素</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">.union(idx)</td>
+<td align="left">计算并集</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">.intersection(idx)</td>
+<td align="left">计算交集</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">.diff(idx)</td>
+<td align="left">计算差集，产生新的Index对象</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">.reindex(index, columns ,fill_value, method, limit, copy )</td>
+<td align="left">改变、重排Series和DataFrame索引，会创建一个新对象，如果某个索引值当前不存在，就引入缺失值。</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">.drop()</td>
+<td align="left">删除Series和DataFrame指定行或列索引。</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">.loc[行标签，列标签]</td>
+<td align="left">通过标签查询指定的数据，第一个值为行标签，第二值为列标签。</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">df.iloc[行位置，列位置]</td>
+<td align="left">通过默认生成的数字索引查询指定的数据。</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：按索引提取单行的数值</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_inner.loc[3]</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、DataFrame选取和重新组合数据的方法"><a href="#四、DataFrame选取和重新组合数据的方法" class="headerlink" title="四、DataFrame选取和重新组合数据的方法"></a>四、<strong>DataFrame选取和重新组合数据的方法</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">df[val]</td>
+<td align="left">从DataFrame选取单列或一组列；在特殊情况下比较便利：布尔型数组（过滤行）、切片（行切片）、或布尔型DataFrame（根据条件设置值）</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">df.loc[val]</td>
+<td align="left">通过标签，选取DataFrame的单个行或一组行</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">df.loc[：,val]</td>
+<td align="left">通过标签，选取单列或列子集</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">df.1oc[val1,val2]</td>
+<td align="left">通过标签，同时选取行和列</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">df.iloc[where]</td>
+<td align="left">通过整数位置，从DataFrame选取单个行或行子集</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">df.iloc[where_i,where_j]</td>
+<td align="left">通过整数位置，同时选取行和列</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">df.at[1abel_i,1abel_j]</td>
+<td align="left">通过行和列标签，选取单一的标量</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">df.iat[i,j]</td>
+<td align="left">通过行和列的位置（整数），选取单一的标量</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">reindex</td>
+<td align="left">通过标签选取行或列</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">get_value</td>
+<td align="left">通过行和列标签选取单一值</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">set_value</td>
+<td align="left">通过行和列标签选取单一值</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：使用iloc按位置区域提取数据</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_inner.iloc[:3,:2] #冒号前后的数字不再是索引的标签名称，而是数据所在的位置，从0开始，前三行，前两列。</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、排序"><a href="#五、排序" class="headerlink" title="五、排序"></a>五、<strong>排序</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">.sort_index(axis=0, ascending=True)</td>
+<td align="left">根据指定轴索引的值进行排序</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">Series.sort_values(axis=0, ascending=True)</td>
+<td align="left">只能根据0轴的值排序。</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">DataFrame.sort_values(by, axis=0, ascending=True)</td>
+<td align="left">参数by为axis轴上的某个索引或索引列表。</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：按照索引列排序</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_inner.sort_index()</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、相关分析和统计分析"><a href="#六、相关分析和统计分析" class="headerlink" title="六、相关分析和统计分析"></a>六、<strong>相关分析和统计分析</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">.idxmin()</td>
+<td align="left">计算数据最小值所在位置的索引（自定义索引）</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">.idxmax()</td>
+<td align="left">计算数据最大值所在位置的索引（自定义索引）</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">.argmin()</td>
+<td align="left">计算数据最小值所在位置的索引位置（自动索引）</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">.argmax()</td>
+<td align="left">计算数据最大值所在位置的索引位置（自动索引）</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">.describe()</td>
+<td align="left">针对各列的多个统计汇总，用统计学指标快速描述数据的概要</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">.sum()</td>
+<td align="left">计算各列数据的和</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">.count()</td>
+<td align="left">非NaN值的数量</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">.mean( )</td>
+<td align="left">计算数据的算术平均值</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">.median()</td>
+<td align="left">计算算术中位数</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">.var()</td>
+<td align="left">计算数据的方差</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">.std()</td>
+<td align="left">计算数据的标准差</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">.corr()</td>
+<td align="left">计算相关系数矩阵</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">.cov()</td>
+<td align="left">计算协方差矩阵</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">.corrwith()</td>
+<td align="left">利用DataFrame的corrwith方法，可以计算其列或行跟另一个Series或DataFrame之间的相关系数。</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="left">.min()</td>
+<td align="left">计算数据的最小值</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="left">.max()</td>
+<td align="left">计算数据的最大值</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="left">.diff()</td>
+<td align="left">计算一阶差分，对时间序列很有效</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="left">.mode()</td>
+<td align="left">计算众数，返回频数最高的那（几）个</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="left">.mean()</td>
+<td align="left">计算均值</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="left">.quantile()</td>
+<td align="left">计算分位数（0到1）</td>
+</tr>
+<tr>
+<td align="left">21</td>
+<td align="left">.isin()</td>
+<td align="left">用于判断矢量化集合的成员资格，可用于过滤Series中或DataFrame列中数据的子集</td>
+</tr>
+<tr>
+<td align="left">22</td>
+<td align="left">.unique()</td>
+<td align="left">返回一个Series中的唯一值组成的数组。</td>
+</tr>
+<tr>
+<td align="left">23</td>
+<td align="left">.value_counts()</td>
+<td align="left">计算一个Series中各值出现的频率。</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：判断city列的值是否为北京</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">df_inner[&#39;city&#39;].isin([&#39;beijing&#39;])</span><br></pre></td></tr></table></figure>
+
+<h1 id="七、分组的方法"><a href="#七、分组的方法" class="headerlink" title="七、分组的方法"></a>七、<strong>分组的方法</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">DataFrame.groupby()</td>
+<td align="left">分组函数</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">pandas.cut()</td>
+<td align="left">根据数据分析对象的特征，按照一定的数值指标，把数据分析对象划分为不同的区间部分来进行研究，以揭示其内在的联系和规律性。</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：.groupby用法</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">group_by_name&#x3D;salaries.groupby(&#39;name&#39;) </span><br><span class="line">print(type(group_by_name))</span><br></pre></td></tr></table></figure>
+
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;class &#39;pandas.core.groupby.DataFrameGroupBy&#39;&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="八、读写文本格式数据的方法"><a href="#八、读写文本格式数据的方法" class="headerlink" title="八、读写文本格式数据的方法"></a>八、<strong>读写文本格式数据的方法</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">read_csv</td>
+<td align="left">从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为逗号</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">read_table</td>
+<td align="left">从文件、URL、文件型对象中加载带分隔符的数据。默认分隔符为制表符（t）</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">read_ fwf</td>
+<td align="left">读取定宽列格式数据（也就是说，没有分隔符）</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">read_clipboard</td>
+<td align="left">读取剪贴板中的数据，可以看做read_table的剪贴板版。再将网页转换为表格时很有用</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">read_excel</td>
+<td align="left">从ExcelXLS或XLSXfile 读取表格数据</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">read_hdf</td>
+<td align="left">读取pandas写的HDF5文件</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">read_html</td>
+<td align="left">读取HTML文档中的所有表格</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">read_json</td>
+<td align="left">读取JSON字符串中的数据</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">read_msgpack</td>
+<td align="left">二进制格式编码的pandas数据</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">read_pickle</td>
+<td align="left">读取Python pickle格式中存储的任意对象</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">read_sas</td>
+<td align="left">读取存储于SAS系统自定义存储格式的SAS数据集</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">read_sql</td>
+<td align="left">读取SQL 查询结果为pandas的DataFrame</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">read_stata</td>
+<td align="left">读取Stata文件格式的数据集</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">read_feather</td>
+<td align="left">读取 Feather二进制文件格式</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：导入CSV或者xlsx文件</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df &#x3D; pd.DataFrame(pd.read_csv(&#39;name.csv&#39;,header&#x3D;1))</span><br><span class="line">df &#x3D; pd.DataFrame(pd.read_excel(&#39;name.xlsx&#39;))</span><br></pre></td></tr></table></figure>
+
+<h1 id="九、处理缺失数据"><a href="#九、处理缺失数据" class="headerlink" title="九、处理缺失数据"></a>九、<strong>处理缺失数据</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">.fillna(value,method,limit,inplace)</td>
+<td align="left">填充缺失值</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">.dropna()</td>
+<td align="left">删除缺失数据</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">.info()</td>
+<td align="left">查看数据的信息，包括每个字段的名称、非空数量、字段的数据类型</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">.isnull()</td>
+<td align="left">返回一个同样长度的值为布尔型的对象（Series或DataFrame），表示哪些值是缺失的</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：查看数据表基本信息（维度、列名称、数据格式等等）</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure>
+
+<h1 id="十、数据转换"><a href="#十、数据转换" class="headerlink" title="十、数据转换"></a>十、<strong>数据转换</strong></h1><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">方法</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">.replace(old, new)</td>
+<td align="left">用新的数据替换老的数据，如果希望一次性替换多个值，old和new可以是列表。默认会返回一个新的对象，传入inplace=True可以对现有对象进行就地修改。</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">.duplicated()</td>
+<td align="left">判断各行是否是重复行，返回一个布尔型Series。</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">.drop_duplicates()</td>
+<td align="left">删除重复行，返回删除后的DataFrame对象。</td>
+</tr>
+</tbody></table>
+<p><font color="#EB3007">举例：删除后出现的重复值：</font></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df[&#39;city&#39;].drop_duplicates()</span><br></pre></td></tr></table></figure>
+
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a><strong>结语</strong></h1><p>文章中总结的是都是一些Pandas常用的方法，至于一些基础的概念还需要你学到Pandas的时候去理解，例如Series是什么？DataFrame是什么？如果你已经清楚了Pandas的这些基础东西之后，搭配上文章中的这些方法，那你用Pandas去做数据处理和分析必然会游刃有余。</p>
+
     </div>
 
     
@@ -251,6 +818,11 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/Pandas/" rel="tag"># Pandas</a>
+          </div>
 
         
 
