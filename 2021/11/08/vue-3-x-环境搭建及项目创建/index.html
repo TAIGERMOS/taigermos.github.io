@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="一、环境搭建1、安装node.js 下载地址：https:&#x2F;&#x2F;nodejs.org&#x2F; 安装就下一步下一步就可以了（node8.9或以上版本） 安装成功结束如何检查是否安装成功和版本 打开cmd 输入 node –v 如果没有出现，可以重启电脑再试一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 3.x 环境搭建及项目创建">
+<meta property="og:url" content="https://taigermos.github.io/2021/11/08/vue-3-x-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="一、环境搭建1、安装node.js 下载地址：https:&#x2F;&#x2F;nodejs.org&#x2F; 安装就下一步下一步就可以了（node8.9或以上版本） 安装成功结束如何检查是否安装成功和版本 打开cmd 输入 node –v 如果没有出现，可以重启电脑再试一下">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/MjpVs3Ut6ohZAq1.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/KfFkadX9HnUReEZ.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/mHdwEsbyFh7OBaj.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/94QsLd6KNcDo3nJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/VhmpyAazcDBRQ9T.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/17cPdas894LQ2Ab.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/tp6NQx8VPz1oJ3U.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/ULS2wDsitKYxEAe.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/AwYaqSZdT6hpmXE.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/tyR3q1uwQbZknIY.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/OtchW1exXQImlZV.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/uEXbzfaHBGt7wjN.png">
+<meta property="og:image" content="https://i.loli.net/2021/11/08/un1ao7OfviErgd2.png">
+<meta property="article:published_time" content="2021-11-08T08:08:52.000Z">
+<meta property="article:modified_time" content="2021-11-08T08:28:14.586Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/11/08/MjpVs3Ut6ohZAq1.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2021/11/08/vue-3-x-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>vue 3.x 环境搭建及项目创建 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">一、环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%88%9B%E5%BB%BAvue3-x%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">二、创建vue3.x项目</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/11/08/vue-3-x-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue 3.x 环境搭建及项目创建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-08 16:08:52 / Modified: 16:28:14" itemprop="dateCreated datePublished" datetime="2021-11-08T16:08:52+08:00">2021-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF/Vue%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">Vue框架</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a><strong>一、环境搭建</strong></h1><p>1、安装node.js 下载地址：<a target="_blank" rel="noopener" href="https://nodejs.org/">https://nodejs.org/</a> 安装就下一步下一步就可以了（node8.9或以上版本） 安装成功结束如何检查是否安装成功和版本 打开cmd 输入 node –v 如果没有出现，可以重启电脑再试一下</p>
+<a id="more"></a>
+
+<p><img src="https://i.loli.net/2021/11/08/MjpVs3Ut6ohZAq1.png" alt="image.png"></p>
+<p>2、全局安装vue-cli3.0脚手架<br>卸载：如果已经全局安装了旧版本的vue-cli(1.x 或 2.x)，需要先卸载：npm uninstall vue-cli -g<br>安装：也是在cmd中输入命令  npm install -g @vue/cli<br>查看版本号：vue -V，（大写的V）出现版本号即安装成功。</p>
+<p>3、安装淘宝镜像 cnpm (非必装，网络慢的情况可安装)<br>npm install -g cnpm –registry=<a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a></p>
+<h1 id="二、创建vue3-x项目"><a href="#二、创建vue3-x项目" class="headerlink" title="二、创建vue3.x项目"></a><strong>二、创建vue3.x项目</strong></h1><p>1、输入命令 vue create projectname</p>
+<p><img src="https://i.loli.net/2021/11/08/KfFkadX9HnUReEZ.png" alt="image.png"><br>注意：如果你想在某个目录下创建项目，可以先打开这个文件夹，然后在文件夹地址栏输入cmd 按回车键，弹出cmd窗口，输入命令</p>
+<p>2、输入命令后会跳出选项</p>
+<p><img src="https://i.loli.net/2021/11/08/mHdwEsbyFh7OBaj.png" alt="image.png"><br>我们选最后一个 Manually select features 自定义创建，按回车键进入下一步 3、我们可以按上下键，然后按空格键选中需要的选项，最后按回车键进入下一步</p>
+<p><img src="https://i.loli.net/2021/11/08/94QsLd6KNcDo3nJ.png" alt="image.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;( ) Babel &#x2F;&#x2F;转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。 </span><br><span class="line"> ( ) TypeScript&#x2F;&#x2F; TypeScript是一个JavaScript（后缀.js）的超集（后缀.ts）包含并扩展了 JavaScript 的语法，需要被编译输出为 JavaScript在浏览器运行</span><br><span class="line"> ( ) Progressive Web App (PWA) Support&#x2F;&#x2F; 渐进式Web应用程序</span><br><span class="line"> ( ) Router &#x2F;&#x2F; vue-router（vue路由）</span><br><span class="line"> ( ) Vuex &#x2F;&#x2F; vuex（vue的状态管理模式）</span><br><span class="line"> ( ) CSS Pre-processors &#x2F;&#x2F; CSS 预处理器（如：less、sass）</span><br><span class="line"> ( ) Linter &#x2F; Formatter &#x2F;&#x2F; 代码风格检查和格式化（如：ESlint）</span><br><span class="line"> ( ) Unit Testing &#x2F;&#x2F; 单元测试（unit tests）</span><br><span class="line"> ( ) E2E Testing &#x2F;&#x2F; e2e（end to end） 测试</span><br></pre></td></tr></table></figure>
+
+<p>4、选择要创建的vue的版本，我们选3.x</p>
+<p><img src="https://i.loli.net/2021/11/08/VhmpyAazcDBRQ9T.png" alt="image.png"></p>
+<p>5、是否使用history路由模式(不带#号的)，输入 n</p>
+<p><img src="https://i.loli.net/2021/11/08/17cPdas894LQ2Ab.png" alt="image.png"></p>
+<p>6、选择css 模式，我们选择 node-sass css 预处理器，node-sass是自动编译实时的，dart-sass需要保存后才会生效。</p>
+<p><img src="https://i.loli.net/2021/11/08/tp6NQx8VPz1oJ3U.png" alt="image.png"></p>
+<p>7、代码验证模式，我们选择最后一个 ESLint + Prettier</p>
+<p><img src="https://i.loli.net/2021/11/08/ULS2wDsitKYxEAe.png" alt="image.png"></p>
+<p>8、热更新模式，选 Lint on save 保存的时候就热更新</p>
+<p><img src="https://i.loli.net/2021/11/08/AwYaqSZdT6hpmXE.png" alt="image.png"></p>
+<p>9、配置文件存放在单独的文件里 选 In dedicated config files</p>
+<p><img src="https://i.loli.net/2021/11/08/tyR3q1uwQbZknIY.png" alt="image.png"></p>
+<p>10、是否保存创建的选项，保存的话，下次创建也会按这个选择来创建，我们先选择 n 不保存</p>
+<p><img src="https://i.loli.net/2021/11/08/OtchW1exXQImlZV.png" alt="image.png"></p>
+<p>接下来就可以等待项目创建了</p>
+<p><img src="https://i.loli.net/2021/11/08/uEXbzfaHBGt7wjN.png" alt="image.png"></p>
+<p>创建完成后的界面如下</p>
+<p><img src="https://i.loli.net/2021/11/08/un1ao7OfviErgd2.png" alt="image.png"></p>
+<p>我们可以输入cd 命令 进入项目文件夹 cd oamyproject，然后输入 npm run serve 运行vue项目</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/" rel="prev" title="Java开源项目推荐">
+                  <i class="fa fa-chevron-left"></i> Java开源项目推荐
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
