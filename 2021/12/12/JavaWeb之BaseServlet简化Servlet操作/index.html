@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="1. BaseServlet是什么？BaseServlet是通过重写Servlet的service()方法，以达到可以控制所有Servlet的目的，同时简化了Servlet的一些操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaWeb之BaseServlet简化Servlet操作">
+<meta property="og:url" content="https://taigermos.github.io/2021/12/12/JavaWeb%E4%B9%8BBaseServlet%E7%AE%80%E5%8C%96Servlet%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="1. BaseServlet是什么？BaseServlet是通过重写Servlet的service()方法，以达到可以控制所有Servlet的目的，同时简化了Servlet的一些操作。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2021/12/12/cIGly7rQ6aMowZ1.png">
+<meta property="og:image" content="https://s2.loli.net/2021/12/12/KxBZaSiHkyq3t7D.png">
+<meta property="og:image" content="https://s2.loli.net/2021/12/12/JYVLHpBvgjdzi52.png">
+<meta property="article:published_time" content="2021-12-12T15:37:24.000Z">
+<meta property="article:modified_time" content="2021-12-12T16:42:41.099Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="JavaWeb">
+<meta property="article:tag" content="BaseServlet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2021/12/12/cIGly7rQ6aMowZ1.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2021/12/12/JavaWeb%E4%B9%8BBaseServlet%E7%AE%80%E5%8C%96Servlet%E6%93%8D%E4%BD%9C/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>JavaWeb之BaseServlet简化Servlet操作 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-BaseServlet%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1. BaseServlet是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-BaseServlet%E7%9A%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E4%BB%A5%E5%8F%8A%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2. BaseServlet的代码实现以及用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%9C%A8%E7%BC%96%E5%86%99BaseServlet%E4%B9%8B%E5%89%8D%EF%BC%8C%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E7%9C%8B%E7%9C%8B%E5%88%9D%E5%AD%A6%E6%97%B6Servlet%E7%9A%84%E7%94%A8%E6%B3%95%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 在编写BaseServlet之前，我们先来看看初学时Servlet的用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E7%BB%99%E5%87%BAindex-jsp%E9%A1%B5%E9%9D%A2%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 给出index.jsp页面：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-LoginServlet%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 LoginServlet：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-FindServlet"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 FindServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-%E6%80%BB%E7%BB%93"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.5 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0%E7%A1%AE%E5%AE%9A%E8%B0%83%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 传递参数确定调用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E7%BB%99%E5%87%BAindex-jsp%E9%A1%B5%E9%9D%A2-%E8%BF%98%E6%98%AF%E4%B8%8A%E9%9D%A2%E9%82%A3%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%BD%86%E6%98%AF%E6%88%91%E4%BB%AC%E8%A6%81%E5%AF%B9%E8%AF%B7%E6%B1%82url%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BF%AE%E6%94%B9-%EF%BC%9A"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 给出index.jsp页面(还是上面那个页面，但是我们要对请求url做一些修改)：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-UserServlet"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 UserServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-%E6%80%BB%E7%BB%93"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-BaseServlet%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 BaseServlet：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E4%B8%8B%E9%9D%A2%E6%88%91%E4%BB%AC%E5%85%88%E6%9D%A5%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E7%9A%84BaseServlet%EF%BC%9A"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 下面我们先来编写一个具有基本功能的BaseServlet：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E7%BB%99%E5%87%BAindex-jsp%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 给出index.jsp页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E7%BB%99%E5%87%BAUserServlet"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 给出UserServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-4-%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-5-%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.3.5 总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-BaseServlet%E7%9A%84%E5%8A%9F%E8%83%BD%E6%8B%93%E5%B1%95"><span class="nav-number">3.</span> <span class="nav-text">3. BaseServlet的功能拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E4%BF%AE%E6%94%B9%E5%AE%8C%E7%9A%84BaseServlet%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 修改完的BaseServlet：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E7%94%A8%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E7%BB%99%E5%87%BAindex-jsp"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 给出index.jsp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-%E7%BB%99%E5%87%BAUserServlet"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 给出UserServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 运行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-%E6%80%BB%E7%BB%93"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 总结</span></a></li></ol></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/12/12/JavaWeb%E4%B9%8BBaseServlet%E7%AE%80%E5%8C%96Servlet%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaWeb之BaseServlet简化Servlet操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-12 23:37:24" itemprop="dateCreated datePublished" datetime="2021-12-12T23:37:24+08:00">2021-12-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-13 00:42:41" itemprop="dateModified" datetime="2021-12-13T00:42:41+08:00">2021-12-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%EF%BC%8CJava%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">技术，Java后端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1-BaseServlet是什么？"><a href="#1-BaseServlet是什么？" class="headerlink" title="1. BaseServlet是什么？"></a>1. <strong>BaseServlet是什么？</strong></h1><p>BaseServlet是通过重写Servlet的service()方法，以达到可以控制所有Servlet的目的，同时简化了Servlet的一些操作。</p>
+<a id="more"></a>
+<ul>
+<li><p>为什么要重写service()方法？  因为客户端向服务端发送的每一次请求，服务器都会调用service()方法，重写它可以控制所有的请求。</p>
+</li>
+<li><p>service()可以写什么？ Servlet中常有的对象(比如session)可以在service()中进行获取。</p>
+</li>
+<li><p>BaseServlet主要完成对当前类中的方法进行调用的操作(因为不知道当前类中以后会有哪些方法，所以就要用到反射机制，以后BaseServlet的子类中不管有什么样的方法，都可以被当前类所调用)。</p>
+</li>
+</ul>
+<h1 id="2-BaseServlet的代码实现以及用法"><a href="#2-BaseServlet的代码实现以及用法" class="headerlink" title="2. BaseServlet的代码实现以及用法"></a>2. <strong>BaseServlet的代码实现以及用法</strong></h1><h2 id="2-1-在编写BaseServlet之前，我们先来看看初学时Servlet的用法："><a href="#2-1-在编写BaseServlet之前，我们先来看看初学时Servlet的用法：" class="headerlink" title="2.1 在编写BaseServlet之前，我们先来看看初学时Servlet的用法："></a>2.1 <strong>在编写BaseServlet之前，我们先来看看初学时Servlet的用法：</strong></h2><p><u>需求：有一个index.jsp页面，点击登录按钮，客户端发送请求到Servlet,Servlet处理登录请求并进行逻辑判断将结果响应给客户端。点击查询按钮，客户端发送请求到Servlet,Servlet处理查询请求并将结果响应给客户端。</u></p>
+<h3 id="2-1-1-给出index-jsp页面："><a href="#2-1-1-给出index-jsp页面：" class="headerlink" title="2.1.1 给出index.jsp页面："></a><font color=#3399EA>2.1.1 <strong>给出index.jsp页面：</strong></font></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;hello jsp&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;!-- $&#123;pageContext.request.contextPath&#125; 是当前项目名 --&gt;</span><br><span class="line">        &lt;!-- 发送请求给LoginServlet --&gt;</span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/LoginServlet&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;登录&quot;</span>&gt;$&#123;session_username&#125; &lt;!--用EL表达式全域查找属性 --&gt;</span><br><span class="line">        &lt;/form&gt;&lt;br/&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;!-- 发送请求给FindServlet --&gt;</span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/FindServlet&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;findname&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;查询&quot;</span>&gt;$&#123;request_findname&#125;&lt;!--用EL表达式全域查找属性 --&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<center>
+
+<p><img src="https://s2.loli.net/2021/12/12/cIGly7rQ6aMowZ1.png" alt="image.png"></p>
+<p>index.jsp</p>
+</center>
+
+<h3 id="2-1-2-LoginServlet："><a href="#2-1-2-LoginServlet：" class="headerlink" title="2.1.2 LoginServlet："></a><font color=#3399EA>2.1.2 <strong>LoginServlet：</strong></font></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@WebServlet(&quot;/LoginServlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String username = request.getParameter(<span class="string">&quot;username&quot;</span>);  <span class="comment">//获取username参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;username:&quot;</span>+username);    <span class="comment">//打印username</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(username))&#123;   <span class="comment">//如果username是&quot;admin&quot;  就将它保存到session域中</span></span><br><span class="line">            request.getSession().setAttribute(<span class="string">&quot;session_username&quot;</span>,username);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重定向到index.jsp页面   request.getContextPath()获取的是项目名</span></span><br><span class="line"><span class="comment">//        response.sendRedirect(request.getContextPath()+&quot;/index.jsp&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-3-FindServlet"><a href="#2-1-3-FindServlet" class="headerlink" title="2.1.3 FindServlet"></a><font color=#3399EA>2.1.3 <strong>FindServlet</strong></font></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@WebServlet(&quot;/FindServlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FindServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String findname = request.getParameter(<span class="string">&quot;findname&quot;</span>);  <span class="comment">//获取findname参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;findname:&quot;</span>+findname);    <span class="comment">//打印findname</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(findname))&#123;   <span class="comment">//如果findname是&quot;admin&quot;  就将它保存到request域中</span></span><br><span class="line">            request.setAttribute(<span class="string">&quot;request_findname&quot;</span>,findname);</span><br><span class="line">        &#125;</span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-4-运行结果"><a href="#2-1-4-运行结果" class="headerlink" title="2.1.4 运行结果"></a><font color=#3399EA>2.1.4 <strong>运行结果</strong></font></h3><p>两个输入框都输入admin，点击登录按钮，点击查询按钮</p>
+<p>1）页面显示结果：</p>
+<center>
+
+<p><img src="https://s2.loli.net/2021/12/12/KxBZaSiHkyq3t7D.png" alt="image.png"></p>
+<p>页面显示</p>
+</center>
+
+<p>2）控制台打印结果：</p>
+<center>
+
+<p><img src="https://s2.loli.net/2021/12/12/JYVLHpBvgjdzi52.png" alt="image.png"></p>
+<p>控制台打印</p>
+</center>
+
+<h3 id="2-1-5-总结"><a href="#2-1-5-总结" class="headerlink" title="2.1.5 总结"></a><font color=#3399EA>2.1.5 <strong>总结</strong></font></h3><p>上面的是初始的Servlet用法，由代码可见，这里需要两个功能（登录和查找），那么就要写两个独立的Servlet来完成，试想一下如果需要100个功能或者是1000个功能，那我们岂不是要写那么多个Servlet。</p>
+<p>当然我们不会去写成百上千个Servlet，为了简化操作，我们通过在请求url中添加参数的方法，来确定我们要调用的功能，这样一个Servlet中就可以写多个功能，每次发送请求要调用什么功能由url中的参数来决定。</p>
+<hr>
+<h2 id="2-2-传递参数确定调用功能"><a href="#2-2-传递参数确定调用功能" class="headerlink" title="2.2 传递参数确定调用功能"></a>2.2 <strong>传递参数确定调用功能</strong></h2><u>
+需求：有一个index.jsp页面，点击登录按钮，客户端发送请求到Servlet,Servlet处理登录请求并进行逻辑判断将结果响应给客户端。点击查询按钮，客户端发送请求到Servlet,Servlet处理查询请求并将结果响应给客户端。
+</u>
+
+<h3 id="2-2-1-给出index-jsp页面-还是上面那个页面，但是我们要对请求url做一些修改-："><a href="#2-2-1-给出index-jsp页面-还是上面那个页面，但是我们要对请求url做一些修改-：" class="headerlink" title="2.2.1 给出index.jsp页面(还是上面那个页面，但是我们要对请求url做一些修改)："></a><font color=#3399EA>2.2.1 <strong>给出index.jsp页面(还是上面那个页面，但是我们要对请求url做一些修改)：</strong></font></h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;hello jsp&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=login&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;登录&quot;</span>&gt;$&#123;session_username&#125;</span><br><span class="line">        &lt;/form&gt;&lt;br/&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=find&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;findname&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;查询&quot;</span>&gt;$&#123;request_findname&#125;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这次给出的url里面带有method参数，这个参数就是你要调用UserServlet中的那个方法的方法名。</p>
+<p>比如你要发送请求给服务器调用登录功能，那么method=login,UserServlet中会通过你传递的方法名来调用对应方法。</p>
+<h3 id="2-2-2-UserServlet"><a href="#2-2-2-UserServlet" class="headerlink" title="2.2.2 UserServlet"></a><font color=#3399EA>2.2.2 <strong>UserServlet</strong></font></h3><p>由上面index.jsp页面中的action=””可以看出，我们将要把以前的两个功能(2个Servlet)整合在一个Servlet中，通过传递method参数来调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@WebServlet(&quot;/UserServlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String method = request.getParameter(<span class="string">&quot;method&quot;</span>);  <span class="comment">//获取method参数的值</span></span><br><span class="line">        <span class="keyword">if</span>(method == <span class="keyword">null</span>)    <span class="comment">//method如果为null就抛异常</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;您没有传递method值，无法确定您要调用的功能&quot;</span>);</span><br><span class="line">        <span class="keyword">switch</span>(method)&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;login&quot;</span>:</span><br><span class="line">            login(request, response);  </span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;find&quot;</span>:</span><br><span class="line">            find(request, response);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;找不到&quot;</span>+method+<span class="string">&quot;(HttpServletRequest request, HttpServletResponse response)方法&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 登录</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ServletException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String username = request.getParameter(<span class="string">&quot;username&quot;</span>);  <span class="comment">//获取username参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;username:&quot;</span>+username);    <span class="comment">//打印username</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(username))&#123;   <span class="comment">//如果username是&quot;admin&quot;  就将它保存到session域中</span></span><br><span class="line">            request.getSession().setAttribute(<span class="string">&quot;session_username&quot;</span>,username);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重定向到index.jsp页面   request.getContextPath()获取的是项目名</span></span><br><span class="line"><span class="comment">//        response.sendRedirect(request.getContextPath()+&quot;/index.jsp&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查找</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ServletException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String findname = request.getParameter(<span class="string">&quot;findname&quot;</span>);  <span class="comment">//获取findname参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;findname:&quot;</span>+findname);    <span class="comment">//打印findname</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(findname))&#123;   <span class="comment">//如果findname是&quot;admin&quot;  就将它保存到request域中</span></span><br><span class="line">            request.setAttribute(<span class="string">&quot;request_findname&quot;</span>,findname);</span><br><span class="line">        &#125;</span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-3-运行结果"><a href="#2-2-3-运行结果" class="headerlink" title="2.2.3 运行结果"></a><font color=#3399EA>2.2.3 <strong>运行结果</strong></h3></font>
+
+<p>Servlet和调用Servlet的方法改变了，但是结果不会有丝毫的变化，还是以前的结果。</p>
+<h3 id="2-2-4-总结"><a href="#2-2-4-总结" class="headerlink" title="2.2.4 总结"></a><font color=#3399EA>2.2.4 <strong>总结</strong></font></h3><p><font color=#77BDF3>改进之处</font>：不用再像以前那样需要n个功能就必须要写n个Servlet了，现在可以按某规律来将功能进行分类，同一类的功能全部写在一个Servlet中。</p>
+<p><font color=#f33b55>存在不足</font>：从UserServlet代码中不难看出，每增加一个方法，就要修改源代码，这样显得耦合性高，不便于开发。</p>
+<p>当然这已经有了解决办法，那就是写一个BaseServlet,重写其中的service()方法，通过反射来调用当前类中已有的方法。后期开发中，所有的Servlet只要继承这个BaseServlet，就可以随意的增删功能而不需要修改源代码。</p>
+<hr>
+<h2 id="2-3-BaseServlet："><a href="#2-3-BaseServlet：" class="headerlink" title="2.3 BaseServlet："></a>2.3 <strong>BaseServlet</strong>：</h2><p>可以将Servlet都需要用的东西在BaseServlet中创建并初始化，当然BaseServlet最大的功能是：能够使子类增删方法，而不需要修改BaseServlet源代码。</p>
+<h3 id="2-3-1-下面我们先来编写一个具有基本功能的BaseServlet："><a href="#2-3-1-下面我们先来编写一个具有基本功能的BaseServlet：" class="headerlink" title="2.3.1 下面我们先来编写一个具有基本功能的BaseServlet："></a><font color=#3399EA>2.3.1 <strong>下面我们先来编写一个具有基本功能的BaseServlet：</strong></font></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> HttpSession session = <span class="keyword">null</span>;   <span class="comment">//创建一个session对象，让BaseServlet的子类可以直接拿来用</span></span><br><span class="line">    <span class="keyword">public</span> String rootPath = <span class="keyword">null</span>;  <span class="comment">//同理创建一个项目名变量</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 重写HttpServlet的service方法</span></span><br><span class="line"><span class="comment">     *    为什么要重写HttpServlet的service方法呢？ 因为每次请求服务器都会调用service()方法</span></span><br><span class="line"><span class="comment">     *         doGet()和doPost()也不例外，底层都会调用service()方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request , HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> ServletException,IOException</span>&#123;</span><br><span class="line">        session = request.getSession();  <span class="comment">//得到session</span></span><br><span class="line">        rootPath = request.getContextPath();   <span class="comment">//得到项目名</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">//处理编码问题</span></span><br><span class="line">        request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 1. 获取method参数的值，它是用户想调用的方法名称</span></span><br><span class="line">        String methodName = request.getParameter(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(methodName == <span class="keyword">null</span>)&#123;    <span class="comment">//如果method参数为空</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;请传递method参数以确定您要调用的方法！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Method method = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="comment">// 2. 通过方法名称methodName来获取Method对象</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * this.getClass()  :   得到当前类</span></span><br><span class="line"><span class="comment">             * this.getClass.getMethod()  : 调用当前类的getMethod()来获取当前类的方法</span></span><br><span class="line"><span class="comment">             * methodName : 要获取的方法名称</span></span><br><span class="line"><span class="comment">             * HttpServletRequest.class和HttpServletResponse.class : 要获取的方法的参数的类型</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 由下面的参数我们不难看出，我们以后写的继承了BaseServlet的子类Servlet中：</span></span><br><span class="line"><span class="comment">             *   1）形参必须是(HttpServletRequest request,HttpServletResponse response)</span></span><br><span class="line"><span class="comment">             *   2）必须抛出与service()方法抛出的相同的异常</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            method = <span class="keyword">this</span>.getClass().getMethod(methodName , HttpServletRequest.class , HttpServletResponse.class);</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">catch</span>(NoSuchMethodException e)&#123;</span><br><span class="line">            <span class="comment">//如果没有找到就说明你写的Servlet中没有此方法</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;您调用的&quot;</span>+methodName+</span><br><span class="line">            <span class="string">&quot;(HttpServletRequest request , HttpServletResponse response)方法不存在&quot;</span>,e);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">//如果程序能够继续执行到这里，说明要调用的方法存在</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 3. 通过Method对象来调用它</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 通过反射来调用当前类的方法：</span></span><br><span class="line"><span class="comment">             * method : 你要调用的方法的Method实例对象</span></span><br><span class="line"><span class="comment">             * this : 谁来调用(当前类就是this)</span></span><br><span class="line"><span class="comment">             * request,response : method方法的参数</span></span><br><span class="line"><span class="comment">             *</span></span><br><span class="line"><span class="comment">             * 本来是 this.method(request,response);</span></span><br><span class="line"><span class="comment">             *     现在method是一个变量，不能确定，所以用反射来调用。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            method.invoke(<span class="keyword">this</span>,request,response);</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的BaseServlet已经完成了，可以被其他Servlet所继承</p>
+<p>下面我们继续以同一个需求来展示BaseServlet用法：</p>
+<u>
+需求：有一个登录页面，点击登录按钮，客户端发送请求到Servlet,Servlet处理登录请求并进行逻辑判断将结果响应给客户端。点击查询按钮，客户端发送请求到Servlet,Servlet处理查询请求并将结果响应给客户端。
+</u>
+
+<h3 id="2-3-2-给出index-jsp页面"><a href="#2-3-2-给出index-jsp页面" class="headerlink" title="2.3.2 给出index.jsp页面"></a><font color=#3399EA>2.3.2 <strong>给出index.jsp页面</strong></font></h3><p>jsp页面没变，还是刚才那个页面：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;hello jsp&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=login&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;登录&quot;</span>&gt;$&#123;session_username&#125;</span><br><span class="line">        &lt;/form&gt;&lt;br/&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=find&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;findname&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;查询&quot;</span>&gt;$&#123;request_findname&#125;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-3-给出UserServlet"><a href="#2-3-3-给出UserServlet" class="headerlink" title="2.3.3 给出UserServlet"></a><font color=#3399EA>2.3.3 <strong>给出UserServlet</strong></font></h3><p>现在的UserServlet需要继承BaseServlet，UserServlet中只增加或删除功能(注意：这里的所有功能都必须和service()参数一致，抛出异常一致)，而负责调用功能的操作则有BaseServlet通过反射来完成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * UserServlet继承BaseServlet   UserServlet中的方法必须和service()方法格式一样(抛相同的异常，参数相同)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@WebServlet(&quot;/UserServlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServlet</span> <span class="keyword">extends</span> <span class="title">BaseServlet</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 登录</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ServletException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String username = request.getParameter(<span class="string">&quot;username&quot;</span>);  <span class="comment">//获取username参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;username:&quot;</span>+username);    <span class="comment">//打印username</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(username))&#123;   <span class="comment">//如果username是&quot;admin&quot;  就将它保存到session域中</span></span><br><span class="line">            <span class="comment">//session对象在BaseServlet中已经获取好了  直接可以用</span></span><br><span class="line">            session.setAttribute(<span class="string">&quot;session_username&quot;</span>,username);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重定向到index.jsp页面   rootPath是项目名  BaseServlet中已经获取好了</span></span><br><span class="line"><span class="comment">//        response.sendRedirect(rootPath+&quot;/index.jsp&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查找</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ServletException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String findname = request.getParameter(<span class="string">&quot;findname&quot;</span>);  <span class="comment">//获取findname参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;findname:&quot;</span>+findname);    <span class="comment">//打印findname</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(findname))&#123;   <span class="comment">//如果findname是&quot;admin&quot;  就将它保存到request域中</span></span><br><span class="line">            request.setAttribute(<span class="string">&quot;request_findname&quot;</span>,findname);</span><br><span class="line">        &#125;</span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/index.jsp&quot;</span>).forward(request,response);  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-4-运行结果"><a href="#2-3-4-运行结果" class="headerlink" title="2.3.4 运行结果"></a><font color=#3399EA>2.3.4 <strong>运行结果</strong></font></h3><p>运行结果与2.1和2.2中的结果完全相同。</p>
+<h3 id="2-3-5-总结"><a href="#2-3-5-总结" class="headerlink" title="2.3.5 总结"></a><font color=#3399EA>2.3.5 <strong>总结</strong></font></h3><p><font color=#77BDF3>改进之处</font>：Servlet中增删方法，不需要去改BaseServlet中调用方法的源代码，极大地降低了耦合性，使开发变得更加简便。</p>
+<hr>
+<p><font color=#F44C54>BaseServlet介绍到这里，最基本的功能就可以实现了，下面是简化转发和重定向操作的介绍。</font></p>
+<hr>
+<h1 id="3-BaseServlet的功能拓展"><a href="#3-BaseServlet的功能拓展" class="headerlink" title="3. BaseServlet的功能拓展"></a>3. <strong>BaseServlet的功能拓展</strong></h1><p>拓展功能：简化转发和重定向：</p>
+<h2 id="3-1-修改完的BaseServlet："><a href="#3-1-修改完的BaseServlet：" class="headerlink" title="3.1 修改完的BaseServlet："></a>3.1 <strong>修改完的BaseServlet：</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> HttpSession session = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">public</span> String rootPath = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        session = request.getSession();</span><br><span class="line">        rootPath = request.getServletContext().getContextPath();</span><br><span class="line"> </span><br><span class="line">        request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"> </span><br><span class="line">        String methodName = request.getParameter(<span class="string">&quot;method&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (methodName == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;请传递method参数以确定您要调用的方法！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Method method = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            method = <span class="keyword">this</span>.getClass().getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);</span><br><span class="line"> </span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</span><br><span class="line">                    <span class="string">&quot;您调用的&quot;</span> + methodName + <span class="string">&quot;(HttpServletRequest request , HttpServletResponse response)方法不存在&quot;</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            method.setAccessible(<span class="keyword">true</span>); <span class="comment">//使用单一安全性检查（为了提高效率）</span></span><br><span class="line">            </span><br><span class="line">            String result = (String) method.invoke(<span class="keyword">this</span>, request, response);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * 简化重定向和转发操作 </span></span><br><span class="line"><span class="comment">             * r:/index.jsp  重定向</span></span><br><span class="line"><span class="comment">             * f:/index.jsp  转发 </span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">if</span> (result != <span class="keyword">null</span> &amp;&amp; !result.trim().isEmpty()) &#123;</span><br><span class="line">                </span><br><span class="line">                String begin = result.substring(<span class="number">0</span>, <span class="number">1</span>);  <span class="comment">//分割出前缀  r或f</span></span><br><span class="line">                String path = result.substring(<span class="number">2</span>);    <span class="comment">//分割出路径</span></span><br><span class="line">                <span class="keyword">if</span>(<span class="string">&quot;f&quot;</span>.equals(begin))&#123;    <span class="comment">//前缀为f  表示转发</span></span><br><span class="line">                    request.getRequestDispatcher(path).forward(request, response);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;r&quot;</span>.equals(begin))&#123;    <span class="comment">//前缀为r 表示重定向</span></span><br><span class="line">                    response.sendRedirect(request.getContextPath() + path);  <span class="comment">//request.getContextPath()：项目名</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-用法"><a href="#3-2-用法" class="headerlink" title="3.2 用法"></a>3.2 <strong>用法</strong></h2><u>
+需求：有一个登录页面，点击登录按钮，客户端发送请求到Servlet,Servlet处理登录请求并进行逻辑判断将结果响应给客户端。点击查询按钮，客户端发送请求到Servlet,Servlet处理查询请求并将结果响应给客户端。
+</u>
+
+<h3 id="3-2-1-给出index-jsp"><a href="#3-2-1-给出index-jsp" class="headerlink" title="3.2.1 给出index.jsp"></a><font color=#3399EA>3.2.1 <strong>给出index.jsp</strong></font></h3><p>页面还是不变，和上面的一样</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=utf-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;hello jsp&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=login&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;登录&quot;</span>&gt;$&#123;session_username&#125;</span><br><span class="line">        &lt;/form&gt;&lt;br/&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/UserServlet?method=find&quot;</span> method=<span class="string">&quot;POST&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;findname&quot;</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;查询&quot;</span>&gt;$&#123;request_findname&#125;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-2-给出UserServlet"><a href="#3-2-2-给出UserServlet" class="headerlink" title="3.2.2 给出UserServlet"></a>3.2.2 <strong>给出UserServlet</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@WebServlet(&quot;/UserServlet&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServlet</span> <span class="keyword">extends</span> <span class="title">BaseServlet</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 登录    (将返回值类型改为String， 因为BaseServlet中的方法返回值为String)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String username = request.getParameter(<span class="string">&quot;username&quot;</span>);  <span class="comment">//获取username参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;username:&quot;</span>+username);    <span class="comment">//打印username</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(username))&#123;   <span class="comment">//如果username是&quot;admin&quot;  就将它保存到session域中</span></span><br><span class="line">            <span class="comment">//session对象在BaseServlet中已经获取好了  直接可以用</span></span><br><span class="line">            session.setAttribute(<span class="string">&quot;session_username&quot;</span>,username);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment">//        return &quot;f:/index.jsp&quot;;  //转发到index.jsp页面</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//重定向到index.jsp页面   rootPath是项目名  BaseServlet中已经获取好了</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;r:/index.jsp&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查找        (将返回值类型改为String， 因为BaseServlet中的方法返回值为String)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">find</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        String findname = request.getParameter(<span class="string">&quot;findname&quot;</span>);  <span class="comment">//获取findname参数的值</span></span><br><span class="line">        System.out.println(<span class="string">&quot;findname:&quot;</span>+findname);    <span class="comment">//打印findname</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;admin&quot;</span>.equals(findname))&#123;   <span class="comment">//如果findname是&quot;admin&quot;  就将它保存到request域中</span></span><br><span class="line">            request.setAttribute(<span class="string">&quot;request_findname&quot;</span>,findname);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;f:/index.jsp&quot;</span>;  <span class="comment">//转发到index.jsp页面</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-3-运行结果"><a href="#3-2-3-运行结果" class="headerlink" title="3.2.3 运行结果"></a><font color=#3399EA>3.2.3 <strong>运行结果</strong></font></h3><p>运行结果不变</p>
+<h3 id="3-2-4-总结"><a href="#3-2-4-总结" class="headerlink" title="3.2.4 总结"></a><font color=#3399EA>3.2.4 <strong>总结</strong></font></h3><p>改进功能：用返回值来代替转发和重定向操作，代码得到了简化。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+              <a href="/tags/BaseServlet/" rel="tag"># BaseServlet</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/14/MySQL%E4%BF%AE%E6%94%B9root%E5%AF%86%E7%A0%81/" rel="prev" title="MySQL修改root密码">
+                  <i class="fa fa-chevron-left"></i> MySQL修改root密码
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
