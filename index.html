@@ -154,13 +154,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -194,6 +194,108 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2022/03/29/Git-%E5%90%88%E5%B9%B6%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/29/Git-%E5%90%88%E5%B9%B6%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/" class="post-title-link" itemprop="url">Git 合并远程分支</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-03-29 09:16:06 / Modified: 09:36:49" itemprop="dateCreated datePublished" datetime="2022-03-29T09:16:06+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" itemprop="url" rel="index"><span itemprop="name">Git版本控制</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p>有的时候我们需要跟别人合作进行开发，然后分别使用不同的Git分支，等项目完成时，需要进行代码合并，就需要知道Git如何合并远程分支。</p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a><strong>步骤</strong></h1><p>假设你本地在使用的分支为a(master也是一样的)，需要合并的远程分支为b</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a><strong>第一步</strong></h2><p>在本地新建一个与远程的分支b相同(被合并的版本)的分支b</p>
+<p><code>git checkout -b b origin/b</code></p>
+<p>该指令的意思：创建一个本地分支，并将远程分支放到该分支里面去。</p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a><strong>第二步</strong></h2><p>将远程代码pull到本地</p>
+<p><code>git pull origin b</code></p>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a><strong>第三步</strong></h2><p>返回到你的分支a</p>
+<p><code>git checkout a</code></p>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a><strong>第四步</strong></h2><p>合并分支a与分支b</p>
+<p><code>git merge b</code></p>
+<p>该指令的意思：当前所在分支与b进行合并。</p>
+<h2 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a><strong>第五步</strong></h2><p>把本地的分支a同步到远程</p>
+<p><code>git push origin a</code></p>
+<h2 id="第五步-1"><a href="#第五步-1" class="headerlink" title="第五步"></a><strong>第五步</strong></h2><p>如果你不需要本地或者远程的分支，你可以查询并删除多余分支。</p>
+<h3 id="本地"><a href="#本地" class="headerlink" title="本地"></a><strong>本地</strong></h3><p>查询本地分支：</p>
+<p><code>git branch</code></p>
+<p>删除本地分支:</p>
+<p><code>git branch -D br</code></p>
+<h3 id="远程"><a href="#远程" class="headerlink" title="远程"></a><strong>远程</strong></h3><p>查询远程分支：</p>
+<p><code>git branch -a</code></p>
+<p>删除远程分支:</p>
+<p><code>git push origin :br  (origin 后面有空格)</code></p>
+<p>修改本地分支与远程分支的关联：</p>
+<p><code>git branch --set-upstream-to=origin/remote_branch  your_branch</code></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -967,88 +1069,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/08/05/%E7%88%AC%E8%99%AB%E9%81%87%E5%88%B0%E7%BD%91%E9%A1%B5%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0%EF%BC%88%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%EF%BC%89%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/08/04/MAC%E7%B3%BB%E7%BB%9F-MAC-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH-%E5%92%8C-%E6%9F%A5%E7%9C%8BPATH/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Aaron">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="TAIGERMOS">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/04/MAC%E7%B3%BB%E7%BB%9F-MAC-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH-%E5%92%8C-%E6%9F%A5%E7%9C%8BPATH/" class="post-title-link" itemprop="url">MAC系统 - MAC 设置环境变量PATH 和 查看PATH</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-08-04 15:25:47 / Modified: 16:01:02" itemprop="dateCreated datePublished" datetime="2021-08-04T15:25:47+08:00">2021-08-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="理论篇"><a href="#理论篇" class="headerlink" title="理论篇"></a>理论篇</h2><p>Mac系统的环境变量，加载顺序为：<br>/etc/profile /etc/paths ~/.bash_profile ~/.bash_login ~/.profile ~/.bashrc</p>
-<p>/etc/profile和/etc/paths是系统级别的，系统启动就会加载，后面几个是当前用户级的环境变量。后面3个按照从前往后的顺序读取，如果/.bash_profile文件存在，则后面的几个文件就会被忽略不读了，如果/.bash_profile文件不存在，才会以此类推读取后面的文件。~/.bashrc没有上述规则，它是bash shell打开的时候载入的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/08/04/MAC%E7%B3%BB%E7%BB%9F-MAC-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH-%E5%92%8C-%E6%9F%A5%E7%9C%8BPATH/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
