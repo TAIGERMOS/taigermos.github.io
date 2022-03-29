@@ -228,7 +228,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-29 09:16:06 / Modified: 09:36:49" itemprop="dateCreated datePublished" datetime="2022-03-29T09:16:06+08:00">2022-03-29</time>
+      <time title="Created: 2022-03-29 09:16:06 / Modified: 09:38:54" itemprop="dateCreated datePublished" datetime="2022-03-29T09:16:06+08:00">2022-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,31 +255,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h1><p>有的时候我们需要跟别人合作进行开发，然后分别使用不同的Git分支，等项目完成时，需要进行代码合并，就需要知道Git如何合并远程分支。</p>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a><strong>步骤</strong></h1><p>假设你本地在使用的分支为a(master也是一样的)，需要合并的远程分支为b</p>
-<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a><strong>第一步</strong></h2><p>在本地新建一个与远程的分支b相同(被合并的版本)的分支b</p>
-<p><code>git checkout -b b origin/b</code></p>
-<p>该指令的意思：创建一个本地分支，并将远程分支放到该分支里面去。</p>
-<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a><strong>第二步</strong></h2><p>将远程代码pull到本地</p>
-<p><code>git pull origin b</code></p>
-<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a><strong>第三步</strong></h2><p>返回到你的分支a</p>
-<p><code>git checkout a</code></p>
-<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a><strong>第四步</strong></h2><p>合并分支a与分支b</p>
-<p><code>git merge b</code></p>
-<p>该指令的意思：当前所在分支与b进行合并。</p>
-<h2 id="第五步"><a href="#第五步" class="headerlink" title="第五步"></a><strong>第五步</strong></h2><p>把本地的分支a同步到远程</p>
-<p><code>git push origin a</code></p>
-<h2 id="第五步-1"><a href="#第五步-1" class="headerlink" title="第五步"></a><strong>第五步</strong></h2><p>如果你不需要本地或者远程的分支，你可以查询并删除多余分支。</p>
-<h3 id="本地"><a href="#本地" class="headerlink" title="本地"></a><strong>本地</strong></h3><p>查询本地分支：</p>
-<p><code>git branch</code></p>
-<p>删除本地分支:</p>
-<p><code>git branch -D br</code></p>
-<h3 id="远程"><a href="#远程" class="headerlink" title="远程"></a><strong>远程</strong></h3><p>查询远程分支：</p>
-<p><code>git branch -a</code></p>
-<p>删除远程分支:</p>
-<p><code>git push origin :br  (origin 后面有空格)</code></p>
-<p>修改本地分支与远程分支的关联：</p>
-<p><code>git branch --set-upstream-to=origin/remote_branch  your_branch</code></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/29/Git-%E5%90%88%E5%B9%B6%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
