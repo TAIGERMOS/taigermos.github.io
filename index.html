@@ -165,7 +165,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -391,7 +391,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/28/Go-%E8%AF%AD%E8%A8%80JSON/" class="post-title-link" itemprop="url">Go 操作redis</a>
+          <a href="/2022/05/28/Go-%E8%AF%AD%E8%A8%80JSON/" class="post-title-link" itemprop="url">Go 语言JSON</a>
         </h2>
 
         <div class="post-meta-container">
@@ -403,7 +403,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-05-28 16:25:50 / Modified: 16:26:49" itemprop="dateCreated datePublished" datetime="2022-05-28T16:25:50+08:00">2022-05-28</time>
+      <time title="Created: 2022-05-28 16:25:50 / Modified: 16:34:08" itemprop="dateCreated datePublished" datetime="2022-05-28T16:25:50+08:00">2022-05-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -417,10 +417,6 @@
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%8A%80%E6%9C%AF/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
         </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
-        </span>
     </span>
 
   
@@ -433,7 +429,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>我们平时开发会经常用到redis。redis的应用场景有很多，在这就不介绍了，也不是本文的重点，接下来带大家了解一下如何用golang操作redis。</p>
+          <h1 id="Go-语言JSON"><a href="#Go-语言JSON" class="headerlink" title="Go 语言JSON"></a>Go 语言JSON</h1><p>Go具有对JSON编码和解码的内置支持。它还支持自定义数据类型。</p>
+<p>Marshal函数用于将go数据类型转换为JSON格式。</p>
+<p>Marshal函数的语法为：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;func Marshal(v interface&#123;&#125;) ([]byte, error)&quot;</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/28/Go-%E8%AF%AD%E8%A8%80JSON/#more" rel="contents">
