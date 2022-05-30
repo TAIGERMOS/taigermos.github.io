@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="在 Go 语言 中，我们要操作 RabbitMQ，我们可以使用 amqp 库，具体地址如下： 1github.com&#x2F;streadway&#x2F;amqp  这里，我们使用 GoMod 工程，直接操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 操作RabbitMQ">
+<meta property="og:url" content="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRabbitMQ/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="在 Go 语言 中，我们要操作 RabbitMQ，我们可以使用 amqp 库，具体地址如下： 1github.com&#x2F;streadway&#x2F;amqp  这里，我们使用 GoMod 工程，直接操作。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/05/30/gtsAxZl58K7zj6G.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/30/gcGRp46PEkx9Nns.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/30/MuNcOJArL3QTG42.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/30/MqWcEVpGwl9NXoH.png">
+<meta property="article:published_time" content="2022-05-30T02:33:47.000Z">
+<meta property="article:modified_time" content="2022-05-30T02:34:19.016Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="RabbitMQ">
+<meta property="article:tag" content="amqp 库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/05/30/gtsAxZl58K7zj6G.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRabbitMQ/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Go 操作RabbitMQ | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E6%93%8D%E4%BD%9CRabbitMQ%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">Go语言操作RabbitMQ程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85"><span class="nav-number">1.1.</span> <span class="nav-text">生产者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85"><span class="nav-number">1.2.</span> <span class="nav-text">消费者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.</span> <span class="nav-text">参数说明</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go 操作RabbitMQ
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-30 10:33:47 / Modified: 10:34:19" itemprop="dateCreated datePublished" datetime="2022-05-30T10:33:47+08:00">2022-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/RabbitMQ/" itemprop="url" rel="index"><span itemprop="name">RabbitMQ</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在 Go 语言 中，我们要操作 RabbitMQ，我们可以使用 amqp 库，具体地址如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">github.com/streadway/amqp</span><br></pre></td></tr></table></figure>
+
+<p>这里，我们使用 GoMod 工程，直接操作。</p>
+<a id="more"></a>
+
+<h3 id="Go语言操作RabbitMQ程序"><a href="#Go语言操作RabbitMQ程序" class="headerlink" title="Go语言操作RabbitMQ程序"></a>Go语言操作RabbitMQ程序</h3><h4 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h4><p>我们实现生产者向 RabbitMQ 中写入一条消息，然后消费者获取该消息这么一个简单的功能，具体流程图如下：</p>
+<p><img src="https://s2.loli.net/2022/05/30/gtsAxZl58K7zj6G.png" alt="image.png"></p>
+<p>需要操作 RabbitMQ，那么我们首先需要连接 RabbitMQ 的服务器，具体代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 尝试连接RabbitMQ，建立连接</span></span><br><span class="line"><span class="comment">// 该连接抽象了套接字连接，并为我们处理协议版本协商和认证等</span></span><br><span class="line">conn, err := amqp.Dial(<span class="string">&quot;amqp://guest:guest@localhost:5672/&quot;</span>)</span><br><span class="line"><span class="keyword">defer</span> conn.Close()</span><br></pre></td></tr></table></figure>
+
+<p>连接抽象了 socket 连接，并为我们处理协议版本协商和认证等。接下来，我们创建一个通道，这是大多数用于完成任务的 API 所在的位置：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接下来，我们创建一个通道，大多数API都是用过该通道操作的</span></span><br><span class="line">ch, err := conn.Channel()</span><br><span class="line"><span class="keyword">defer</span> ch.Close()</span><br></pre></td></tr></table></figure>
+
+<p>要发送，我们必须声明要发送到的队列。然后我们可以将消息发布到队列：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明消息要发送到的队列</span></span><br><span class="line">q, err := ch.QueueDeclare(</span><br><span class="line">  <span class="string">&quot;hello&quot;</span>, <span class="comment">// name</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// durable</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// delete when unused</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// exclusive</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// no-wait</span></span><br><span class="line">  <span class="literal">nil</span>,     <span class="comment">// arguments</span></span><br><span class="line">)</span><br><span class="line">body := <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line"><span class="comment">// 将消息发布到声明的队列</span></span><br><span class="line">err = ch.Publish(</span><br><span class="line">  <span class="string">&quot;&quot;</span>,     <span class="comment">// exchange</span></span><br><span class="line">  q.Name, <span class="comment">// routing key</span></span><br><span class="line">  <span class="literal">false</span>,  <span class="comment">// mandatory</span></span><br><span class="line">  <span class="literal">false</span>,  <span class="comment">// immediate</span></span><br><span class="line">  amqp.Publishing &#123;</span><br><span class="line">    ContentType: <span class="string">&quot;text/plain&quot;</span>,</span><br><span class="line">    Body:        []<span class="keyword">byte</span>(body),</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>声明队列是幂等的——仅当队列不存在时才创建。消息内容是一个字节数组，因此你可以在此处编码任何内容。</p>
+<h4 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h4><p>设置与发布者相同；我们打开一个连接和一个通道，并声明要消耗的队列。请注意，这与 send 发布到的队列匹配。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 建立连接</span></span><br><span class="line">conn, err := amqp.Dial(<span class="string">&quot;amqp://guest:guest@localhost:5672/&quot;</span>)</span><br><span class="line"><span class="keyword">defer</span> conn.Close()</span><br><span class="line"><span class="comment">// 获取channel</span></span><br><span class="line">ch, err := conn.Channel()</span><br><span class="line"><span class="keyword">defer</span> ch.Close()</span><br><span class="line"><span class="comment">// 声明队列</span></span><br><span class="line">q, err := ch.QueueDeclare(</span><br><span class="line">  <span class="string">&quot;hello&quot;</span>, <span class="comment">// name</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// durable</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// delete when unused</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// exclusive</span></span><br><span class="line">  <span class="literal">false</span>,   <span class="comment">// no-wait</span></span><br><span class="line">  <span class="literal">nil</span>,     <span class="comment">// arguments</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>请注意，我们也在这里声明队列。因为我们可能在发布者之前启动使用者，所以我们希望在尝试使用队列中的消息之前确保队列存在。</p>
+<p>我们将告诉服务器将队列中的消息传递给我们。由于它将异步地向我们发送消息，因此我们将在 goroutine 中从通道（由 amqp::Consume 返回）中读取消息。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取接收消息的Delivery通道</span></span><br><span class="line">msgs, err := ch.Consume(</span><br><span class="line">  q.Name, <span class="comment">// queue</span></span><br><span class="line">  <span class="string">&quot;&quot;</span>,     <span class="comment">// consumer</span></span><br><span class="line">  <span class="literal">true</span>,   <span class="comment">// auto-ack</span></span><br><span class="line">  <span class="literal">false</span>,  <span class="comment">// exclusive</span></span><br><span class="line">  <span class="literal">false</span>,  <span class="comment">// no-local</span></span><br><span class="line">  <span class="literal">false</span>,  <span class="comment">// no-wait</span></span><br><span class="line">  <span class="literal">nil</span>,    <span class="comment">// args</span></span><br><span class="line">)</span><br><span class="line">forever := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">bool</span>)</span><br><span class="line"><span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">for</span> d := <span class="keyword">range</span> msgs &#123;</span><br><span class="line">    log.Printf(<span class="string">&quot;Received a message: %s&quot;</span>, d.Body)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;()</span><br><span class="line">log.Printf(<span class="string">&quot; [*] Waiting for messages. To exit press CTRL+C&quot;</span>)</span><br><span class="line">&lt;-forever</span><br></pre></td></tr></table></figure>
+
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><p>生产者代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/streadway/amqp&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span>(</span><br><span class="line">    addr = <span class="string">&quot;amqp://guest:guest@localhost:5672/&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;haicoder(www.haicoder.net)&quot;</span>)</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        conn *amqp.Connection</span><br><span class="line">        channel *amqp.Channel</span><br><span class="line">        queue amqp.Queue</span><br><span class="line">        msg = <span class="string">&quot;Hello HaiCoder&quot;</span></span><br><span class="line">        err error</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">//连接MQServer</span></span><br><span class="line">    <span class="keyword">if</span> conn, err = amqp.Dial(addr); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Connect RabbitMQ Err =&quot;</span>, err, <span class="string">&quot;Addr =&quot;</span>, addr)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//需要关闭</span></span><br><span class="line">    <span class="keyword">defer</span> conn.Close()</span><br><span class="line">    <span class="comment">//创建一个Channel，所有的连接都是通过Channel管理的</span></span><br><span class="line">    <span class="keyword">if</span> channel, err = conn.Channel(); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Create Channel Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建队列</span></span><br><span class="line">    <span class="keyword">if</span> queue, err = channel.QueueDeclare(<span class="string">&quot;haicoder&quot;</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;QueueDeclare Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//发送数据</span></span><br><span class="line">    <span class="keyword">if</span> err = channel.Publish(<span class="string">&quot;&quot;</span>, queue.Name, <span class="literal">false</span>, <span class="literal">false</span>, amqp.Publishing&#123;</span><br><span class="line">        ContentType: <span class="string">&quot;text/plain&quot;</span>,</span><br><span class="line">        Body:        []<span class="keyword">byte</span>(msg),</span><br><span class="line">    &#125;); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Publish Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(<span class="string">&quot;Send msg ok, msg =&quot;</span>, msg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>消费者代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/streadway/amqp&quot;</span></span><br><span class="line">    <span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">const</span>(</span><br><span class="line">    serverAddr = <span class="string">&quot;amqp://guest:guest@localhost:5672/&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fmt.Println(<span class="string">&quot;haicoder(www.haicoder.net)&quot;</span>)</span><br><span class="line">    <span class="keyword">var</span>(</span><br><span class="line">        conn *amqp.Connection</span><br><span class="line">        channel *amqp.Channel</span><br><span class="line">        queue amqp.Queue</span><br><span class="line">        msgs &lt;-<span class="keyword">chan</span> amqp.Delivery</span><br><span class="line">        err error</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">//连接MQServer</span></span><br><span class="line">    <span class="keyword">if</span> conn, err = amqp.Dial(serverAddr); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Connect RabbitMQ Err =&quot;</span>, err, <span class="string">&quot;Addr =&quot;</span>, serverAddr)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//需要关闭</span></span><br><span class="line">    <span class="keyword">defer</span> conn.Close()</span><br><span class="line">    <span class="comment">//创建一个Channel，所有的连接都是通过Channel管理的</span></span><br><span class="line">    <span class="keyword">if</span> channel, err = conn.Channel(); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Create Channel Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//创建队列</span></span><br><span class="line">    <span class="keyword">if</span> queue, err = channel.QueueDeclare(<span class="string">&quot;haicoder&quot;</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;QueueDeclare Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//读取数据</span></span><br><span class="line">    <span class="keyword">if</span> msgs, err = channel.Consume(queue.Name, <span class="string">&quot;&quot;</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">nil</span>); err != <span class="literal">nil</span>&#123;</span><br><span class="line">        fmt.Println(<span class="string">&quot;Consume Err =&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> msg := <span class="keyword">range</span> msgs&#123;</span><br><span class="line">            fmt.Println(<span class="string">&quot;Receive Msg =&quot;</span>, <span class="keyword">string</span>(msg.Body))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    time.Sleep(<span class="number">100</span>*time.Second)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们首先运行生产者，运行后，结果如下：</p>
+<p><img src="https://s2.loli.net/2022/05/30/gcGRp46PEkx9Nns.png" alt="image.png"></p>
+<p>接着，我们再次启动消费者，运行后，结果如下：</p>
+<p><img src="https://s2.loli.net/2022/05/30/MuNcOJArL3QTG42.png" alt="image.png"></p>
+<p>同时，我们打开网页，如果没有消费的话，可以看到显示了队列以及有一条消息，如下：</p>
+<p><img src="https://s2.loli.net/2022/05/30/MqWcEVpGwl9NXoH.png" alt="image.png"></p>
+<h4 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h4><p>创建队列的函数 QueueDeclare，相关参数说明如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">name</td>
+<td align="left">队列名，如果为空，则系统自己创建一个名字。</td>
+</tr>
+<tr>
+<td align="left">durable</td>
+<td align="left">是否是持久队列，如果是，那么重启 MQ 之后，该队列不会被删除，否则，该队列会被删除。</td>
+</tr>
+<tr>
+<td align="left">autoDelete</td>
+<td align="left">是否自动删除。如果为true，当没有 Consumer</td>
+</tr>
+<tr>
+<td align="left">exclusive</td>
+<td align="left">是否独占。如果为true，只能有一个消费者监听这队列。</td>
+</tr>
+<tr>
+<td align="left">noWait</td>
+<td align="left">如果为True，那么其他连接尝试修改该队列，将会触发异常。</td>
+</tr>
+<tr>
+<td align="left">args</td>
+<td align="left">额外参数。</td>
+</tr>
+</tbody></table>
+<p>使用 Channel 的发送消息函数 Publish 的相关参数如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">exchange</td>
+<td align="left">交换机名称。简单模式下交换机会使用默认的 “”。</td>
+</tr>
+<tr>
+<td align="left">key</td>
+<td align="left">路由名称。</td>
+</tr>
+<tr>
+<td align="left">mandatory</td>
+<td align="left">如果为 true，那么当没有合适的 RoutingKey 时，将会触发 Channel 的 NotifyReturn。</td>
+</tr>
+<tr>
+<td align="left">immediate</td>
+<td align="left">如果为 true，那么当没有合适的消费着时，将会触发 Channel 的 NotifyReturn。</td>
+</tr>
+<tr>
+<td align="left">msg</td>
+<td align="left">具体要发送消息的结构体。</td>
+</tr>
+</tbody></table>
+<p>使用 Chanel 消费函数 Consume 的相关参数如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">queue</td>
+<td align="left">队列名称。</td>
+</tr>
+<tr>
+<td align="left">consumer</td>
+<td align="left">路由名称。</td>
+</tr>
+<tr>
+<td align="left">autoAck</td>
+<td align="left">是否自动确认。</td>
+</tr>
+<tr>
+<td align="left">exclusive</td>
+<td align="left">是否独占。</td>
+</tr>
+<tr>
+<td align="left">noLocal</td>
+<td align="left">未使用的参数。</td>
+</tr>
+<tr>
+<td align="left">noWait</td>
+<td align="left">如果为 True，那么其他连接尝试修改该队列，将会触发异常。</td>
+</tr>
+<tr>
+<td align="left">args</td>
+<td align="left">额外参数。</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+              <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+              <a href="/tags/amqp-%E5%BA%93/" rel="tag"># amqp 库</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/28/Go-%E6%93%8D%E4%BD%9CRedis/" rel="prev" title="Go 操作Redis">
+                  <i class="fa fa-chevron-left"></i> Go 操作Redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
