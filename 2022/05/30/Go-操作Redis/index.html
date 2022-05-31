@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.0">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.0.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -16,14 +15,12 @@
 
 
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
-  </script>
-<meta name="description" content="我们平时开发会经常用到redis。redis的应用场景有很多，在这就不介绍了，也不是本文的重点，接下来带大家了解一下如何用golang操作redis。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我们平时开发会经常用到redis。redis的应用场景有很多，在这就不介绍了，也不是本文的重点，接下来带大家了解一下如何用golang操作redis。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 操作Redis">
 <meta property="og:url" content="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRedis/index.html">
@@ -44,55 +41,20 @@
 <link rel="canonical" href="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRedis/">
 
 
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRedis/","path":"2022/05/30/Go-操作Redis/","title":"Go 操作Redis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Go 操作Redis | TAIGERMOS</title>
   
 
 
 
+
+
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -102,10 +64,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
   </div>
 
@@ -113,13 +72,14 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">TAIGERMOS</h1>
+      <p class="site-title">TAIGERMOS</p>
       <i class="logo-line"></i>
     </a>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -128,19 +88,42 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
   
-  <div class="toggle sidebar-toggle">
+  <div class="toggle sidebar-toggle" role="button">
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
     <span class="toggle-line"></span>
@@ -160,55 +143,40 @@
 
       <div class="sidebar-panel-container">
         <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
+        <div class="post-toc-wrap sidebar-panel">
             <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">1.安装依赖包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-golang%E8%BF%9E%E6%8E%A5redis"><span class="nav-number">2.</span> <span class="nav-text">2.golang连接redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">3.简单的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Options%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">4.Options参数详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">5.基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Set"><span class="nav-number">5.1.</span> <span class="nav-text">1.Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Get"><span class="nav-number">5.2.</span> <span class="nav-text">2.Get</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-GetSet"><span class="nav-number">5.3.</span> <span class="nav-text">3.GetSet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-SetNX"><span class="nav-number">5.4.</span> <span class="nav-text">4.SetNX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-MGet"><span class="nav-number">5.5.</span> <span class="nav-text">5.MGet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-MSet"><span class="nav-number">5.6.</span> <span class="nav-text">6.MSet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-Incr-IncrBy"><span class="nav-number">5.7.</span> <span class="nav-text">7.Incr,IncrBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-Decr-DecrBy"><span class="nav-number">5.8.</span> <span class="nav-text">8.Decr,DecrBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-Del"><span class="nav-number">5.9.</span> <span class="nav-text">9.Del</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-Expire"><span class="nav-number">5.10.</span> <span class="nav-text">10.Expire</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-hash%E7%9B%B8%E5%85%B3"><span class="nav-number">6.</span> <span class="nav-text">6.hash相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-HSet"><span class="nav-number">6.1.</span> <span class="nav-text">1.HSet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-HGet"><span class="nav-number">6.2.</span> <span class="nav-text">2.HGet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-HGetAll"><span class="nav-number">6.3.</span> <span class="nav-text">3.HGetAll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-HIncrBy"><span class="nav-number">6.4.</span> <span class="nav-text">4.HIncrBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-HKeys"><span class="nav-number">6.5.</span> <span class="nav-text">5.HKeys</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-HLen"><span class="nav-number">6.6.</span> <span class="nav-text">6.HLen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-HMGet"><span class="nav-number">6.7.</span> <span class="nav-text">7.HMGet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-HMSet"><span class="nav-number">6.8.</span> <span class="nav-text">8.HMSet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-HSetNX"><span class="nav-number">6.9.</span> <span class="nav-text">9.HSetNX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-HDel"><span class="nav-number">6.10.</span> <span class="nav-text">10.HDel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-HExists"><span class="nav-number">6.11.</span> <span class="nav-text">11.HExists</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-list%E7%9A%84%E7%9B%B8%E5%85%B3%E7%94%A8%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">7.list的相关用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-LPush"><span class="nav-number">7.1.</span> <span class="nav-text">1.LPush</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-LPushX"><span class="nav-number">7.2.</span> <span class="nav-text">2.LPushX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-RPop"><span class="nav-number">7.3.</span> <span class="nav-text">3.RPop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-RPush"><span class="nav-number">7.4.</span> <span class="nav-text">4.RPush</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-RPushX"><span class="nav-number">7.5.</span> <span class="nav-text">5.RPushX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-LPop"><span class="nav-number">7.6.</span> <span class="nav-text">6.LPop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-LLen"><span class="nav-number">7.7.</span> <span class="nav-text">7.LLen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-LRange"><span class="nav-number">7.8.</span> <span class="nav-text">8.LRange</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-LRem"><span class="nav-number">7.9.</span> <span class="nav-text">9.LRem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-LIndex"><span class="nav-number">7.10.</span> <span class="nav-text">10.LIndex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-LInsert"><span class="nav-number">7.11.</span> <span class="nav-text">11.LInsert</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-set%E7%9A%84%E7%9B%B8%E5%85%B3%E7%94%A8%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">8.set的相关用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-SAdd"><span class="nav-number">8.1.</span> <span class="nav-text">1.SAdd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-SCard"><span class="nav-number">8.2.</span> <span class="nav-text">2.SCard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-SIsMember"><span class="nav-number">8.3.</span> <span class="nav-text">3.SIsMember</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-SMembers"><span class="nav-number">8.4.</span> <span class="nav-text">4.SMembers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-SRem"><span class="nav-number">8.5.</span> <span class="nav-text">5.SRem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-SPop-SPopN"><span class="nav-number">8.6.</span> <span class="nav-text">6.SPop,SPopN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-zset%E7%9A%84%E7%9B%B8%E5%85%B3%E7%94%A8%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">9.zset的相关用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ZAdd"><span class="nav-number">9.1.</span> <span class="nav-text">1.ZAdd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-ZCard"><span class="nav-number">9.2.</span> <span class="nav-text">2.ZCard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-ZCount"><span class="nav-number">9.3.</span> <span class="nav-text">3.ZCount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ZIncrBy"><span class="nav-number">9.4.</span> <span class="nav-text">4.ZIncrBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-ZRange-ZRevRange"><span class="nav-number">9.5.</span> <span class="nav-text">5.ZRange,ZRevRange</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-ZRangeByScore"><span class="nav-number">9.6.</span> <span class="nav-text">6.ZRangeByScore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-ZRevRangeByScore"><span class="nav-number">9.7.</span> <span class="nav-text">7.ZRevRangeByScore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-ZRangeByScoreWithScores"><span class="nav-number">9.8.</span> <span class="nav-text">8.ZRangeByScoreWithScores</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-ZRem"><span class="nav-number">9.9.</span> <span class="nav-text">9.ZRem</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-ZRemRangeByRank"><span class="nav-number">9.10.</span> <span class="nav-text">10.ZRemRangeByRank</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-ZRemRangeByScore"><span class="nav-number">9.11.</span> <span class="nav-text">11.ZRemRangeByScore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-ZScore"><span class="nav-number">9.12.</span> <span class="nav-text">12.ZScore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-ZRank"><span class="nav-number">9.13.</span> <span class="nav-text">13.ZRank</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="nav-number">10.</span> <span class="nav-text">10.发布订阅</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Subscribe"><span class="nav-number">10.1.</span> <span class="nav-text">1.Subscribe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-PSubscribe"><span class="nav-number">10.2.</span> <span class="nav-text">2.PSubscribe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Publish"><span class="nav-number">10.3.</span> <span class="nav-text">3.Publish</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-PubSubChannels"><span class="nav-number">10.4.</span> <span class="nav-text">4.PubSubChannels</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-PubSubNumSub"><span class="nav-number">10.5.</span> <span class="nav-text">5.PubSubNumSub</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3"><span class="nav-number">11.</span> <span class="nav-text">11.事务相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-TxPipeline"><span class="nav-number">11.1.</span> <span class="nav-text">1.TxPipeline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-watch"><span class="nav-number">11.2.</span> <span class="nav-text">2.watch</span></a></li></ol></li></ol></div>
-        </section>
+        </div>
         <!--/noindex-->
 
-        <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Aaron"
-      src="/images/IMG_6199.JPG">
   <p class="site-author-name" itemprop="name">Aaron</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+        <a href="/archives/">
           <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
-      </span>
-  </div>
 
 
 
-        </section>
+        </div>
       </div>
     </div>
   </aside>
@@ -218,7 +186,7 @@
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="Back to top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
@@ -242,13 +210,18 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2022/05/30/Go-%E6%93%8D%E4%BD%9CRedis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Aaron">
-      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="TAIGERMOS">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Go 操作Redis | TAIGERMOS">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -632,28 +605,6 @@
 
 
 
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
 </div>
   </main>
 
@@ -665,53 +616,29 @@
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
-    <i class="fas fa-square"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Aaron</span>
 </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
 
     </div>
   </footer>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-
-
-  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
-
-
-<script>
-var options = {
-  bottom: '64px', // default: '32px'
-  right: 'unset', // default: '32px'
-  left: '32px', // default: 'unset'
-  time: '0.5s', // default: '0.3s'
-  mixColor: '#fff', // default: '#fff'
-  backgroundColor: '#fff',  // default: '#fff'
-  buttonColorDark: '#100f2c',  // default: '#100f2c'
-  buttonColorLight: '#fff', // default: '#fff'
-  saveInCookies: true, // default: true,
-  label: '🌓', // default: ''
-  autoMatchOsTheme: true // default: true
-}
-const darkmode = new Darkmode(options);
-darkmode.showWidget();
-</script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
   
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 
 
 
   
-
 
 
 
