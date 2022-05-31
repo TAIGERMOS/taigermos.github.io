@@ -21,7 +21,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="TAIGERMOS">
@@ -94,6 +94,9 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -108,15 +111,49 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -147,6 +184,8 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
   <p class="site-author-name" itemprop="name">Aaron</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -160,16 +199,29 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
 
 
 
@@ -206,7 +258,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/11/08/%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8Github%E5%AF%BB%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -287,7 +339,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/11/08/vue-3-x-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -376,7 +428,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -461,7 +513,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/09/28/Pandas-%E5%BF%85%E4%BC%9A%E7%9A%84%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -560,7 +612,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/09/28/NumPy-%E5%9B%BE%E8%A7%A3%E6%95%99%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -653,7 +705,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/08/05/%E7%88%AC%E8%99%AB%E9%81%87%E5%88%B0%E7%BD%91%E9%A1%B5%E5%AE%A1%E6%9F%A5%E5%85%83%E7%B4%A0%EF%BC%88%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%EF%BC%89%E6%89%93%E4%B8%8D%E5%BC%80%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -738,7 +790,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/08/04/MAC%E7%B3%BB%E7%BB%9F-MAC-%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FPATH-%E5%92%8C-%E6%9F%A5%E7%9C%8BPATH/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -820,7 +872,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/08/01/%E6%A2%B5%E9%AB%98%EF%BC%9A%E4%BB%96%E6%80%80%E7%9D%80%E5%AF%B9%E6%95%B4%E4%B8%AA%E4%B8%96%E7%95%8C%E7%82%99%E7%83%AD%E7%9A%84%E7%88%B1%EF%BC%8C%E5%8D%B4%E6%B2%A1%E6%9C%89%E4%B8%80%E4%B8%AA%E4%BA%BA%E6%83%B3%E8%A6%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -911,7 +963,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/07/30/Java-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -998,7 +1050,7 @@
     <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/07/27/%E5%A4%A9%E7%9C%9F-%E6%AD%BB%E4%BA%A1%E4%BB%8E%E4%B8%8D%E6%98%AF%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E9%80%89%E6%8B%A9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
       <meta itemprop="name" content="Aaron">
       <meta itemprop="description" content="">
     </span>
@@ -1124,10 +1176,12 @@
 
   
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 
 
   <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
 
 
 <script>
@@ -1151,6 +1205,7 @@ darkmode.showWidget();
 
   
 
+<script src="/js/local-search.js"></script>
 
 
 
