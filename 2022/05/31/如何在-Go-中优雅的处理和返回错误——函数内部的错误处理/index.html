@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="在使用 Go 开发的后台服务中，对于错误处理，一直以来都有多种不同的方案，本文探讨并提出一种从服务内到服务外的错误传递、返回和回溯的完整方案，还请读者们一起讨论。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在 Go 中优雅的处理和返回错误——函数内部的错误处理">
+<meta property="og:url" content="https://taigermos.github.io/2022/05/31/%E5%A6%82%E4%BD%95%E5%9C%A8-Go-%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="在使用 Go 开发的后台服务中，对于错误处理，一直以来都有多种不同的方案，本文探讨并提出一种从服务内到服务外的错误传递、返回和回溯的完整方案，还请读者们一起讨论。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-31T03:08:52.000Z">
+<meta property="article:modified_time" content="2022-05-31T03:09:36.391Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Go 异常处理">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2022/05/31/%E5%A6%82%E4%BD%95%E5%9C%A8-Go-%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>如何在 Go 中优雅的处理和返回错误——函数内部的错误处理 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%90%E5%87%BA"><span class="nav-number">1.</span> <span class="nav-text">问题提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">高级语言的错误处理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-%E7%9A%84%E9%94%99%E8%AF%AF%E6%96%AD%E8%A8%80"><span class="nav-number">3.</span> <span class="nav-text">Go 的错误断言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%8D%95%E8%A1%8C-if-return"><span class="nav-number">3.1.</span> <span class="nav-text">方法一：单行 if + return</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9Apanic-recover"><span class="nav-number">3.2.</span> <span class="nav-text">方法二：panic + recover</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA%E5%BB%BA%E8%AE%AE"><span class="nav-number">3.3.</span> <span class="nav-text">结论建议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-%E7%9A%84-try-%E2%80%A6-catch"><span class="nav-number">4.</span> <span class="nav-text">Go 的 try … catch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defer-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">defer 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">命名的错误处理函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#goto-LABEL"><span class="nav-number">4.3.</span> <span class="nav-text">goto LABEL</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2022/05/31/%E5%A6%82%E4%BD%95%E5%9C%A8-Go-%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在 Go 中优雅的处理和返回错误——函数内部的错误处理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-31 11:08:52 / Modified: 11:09:36" itemprop="dateCreated datePublished" datetime="2022-05-31T11:08:52+08:00">2022-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在使用 Go 开发的后台服务中，对于错误处理，一直以来都有多种不同的方案，本文探讨并提出一种从服务内到服务外的错误传递、返回和回溯的完整方案，还请读者们一起讨论。</p>
+<a id="more"></a>
+
+<h3 id="问题提出"><a href="#问题提出" class="headerlink" title="问题提出"></a>问题提出</h3><p>在后台开发中，针对错误处理，有三个维度的问题需要解决：</p>
+<ul>
+<li>函数内部的错误处理: 这指的是一个函数在执行过程中遇到各种错误时的错误处理。这是一个语言级的问题</li>
+<li>函数/模块的错误信息返回: 一个函数在操作错误之后，要怎么将这个错误信息优雅地返回，方便调用方（也要优雅地）处理。这也是一个语言级的问题</li>
+<li>服务/系统的错误信息返回: 微服务/系统在处理失败时，如何返回一个友好的错误信息，依然是需要让调用方优雅地理解和处理。这是一个服务级的问题，适用于任何语言</li>
+</ul>
+<p>针对这三个维度的问题，笔者准备写三篇文章一一说明。首先本文就是第一篇：<strong>函数内部的错误处理</strong></p>
+<h3 id="高级语言的错误处理机制"><a href="#高级语言的错误处理机制" class="headerlink" title="高级语言的错误处理机制"></a>高级语言的错误处理机制</h3><p>一个面向过程的函数，在不同的处理过程中需要 handle 不同的错误信息；一个面向对象的函数，针对一个操作所返回的不同类型的错误，有可能需要进行不同的处理。此外，在遇到错误时，也可以使用断言的方式，快速中止函数流程，大大提高代码的可读性。</p>
+<p>在许多高级语言中都提供了 <code>try ... catch</code> 的语法，函数内部可以通过这种方案，实现一个统一的错误处理逻辑。而即便是 <code>C</code> 这种 “中级语言”，虽然没有 <code>try catch</code>，但是程序员也可以使用宏定义配合 <code>goto LABEL</code> 的方式，来实现某种程度上的错误断言和处理。</p>
+<h3 id="Go-的错误断言"><a href="#Go-的错误断言" class="headerlink" title="Go 的错误断言"></a>Go 的错误断言</h3><p>在 Go 的情况就比较尴尬了。我们先来看断言，我们的目的是，仅使用一行代码就能够检查错误并终止当前函数。</p>
+<p>由于没有 <code>throw</code>、没有宏，如果要实现一行断言，有两种方法。</p>
+<h4 id="方法一：单行-if-return"><a href="#方法一：单行-if-return" class="headerlink" title="方法一：单行 if + return"></a>方法一：单行 if + return</h4><p>第一种是把 <code>if</code> 的错误判断写在一行内，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123; <span class="keyword">return</span> err &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法有值得商榷的点：</p>
+<ul>
+<li>虽然符合 Go 的代码规范，但是在实操中，if 语句中的花括号不换行这一点还是非常有争议的，并且笔者在实际代码中也很少见到过</li>
+<li>代码不够直观，大致浏览代码的时候，断言代码不显眼，而且在花括号中除了 <code>return</code> 之外也没法别的了，原因是 Go 的规范中强烈不建议使用 <code>;</code> 来分隔多条语句（<code>if</code> 条件判断除外）</li>
+</ul>
+<p>因此，笔者强烈不建议这么做。</p>
+<h4 id="方法二：panic-recover"><a href="#方法二：panic-recover" class="headerlink" title="方法二：panic + recover"></a>方法二：panic + recover</h4><p>第二种方法是借用 <code>panic</code> 函数，结合 <code>recover</code> 来实现，如以下代码所示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SomeProcess</span><span class="params">()</span> <span class="params">(err error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> e := <span class="built_in">recover</span>(); e != <span class="literal">nil</span> &#123;</span><br><span class="line">            err = e.(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    assert := <span class="function"><span class="keyword">func</span><span class="params">(cond <span class="keyword">bool</span>, e error)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> !cond &#123;</span><br><span class="line">            <span class="built_in">panic</span>(e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    err = DoSomething()</span><br><span class="line">    assert(err == <span class="literal">nil</span>, fmt.Errorf(<span class="string">&quot;DoSomething() error: %w&quot;</span>, err))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法好不好呢？我们要分情况看：</p>
+<p>首先，panic 的设计原意，是在当程序或协程遇到严重错误，完全无法继续运行下去的时候，才会调用（比如段错误、共享资源竞争错误）。这相当于 Linux 中 FATAL 级别的错误日志，用这种机制，仅仅用来进行普通的错误处理（ERROR 级别），杀鸡用牛刀了。</p>
+<p>其次，panic 调用本身，相比于普通的业务逻辑的系统开销是比较大的。而错误处理这种事情，可能是常态化逻辑，频繁的 panic - recover 操作，也会大大降低系统的吞吐。</p>
+<p>但是话虽这么说，使用 panic 来断言的方案，虽然在业务逻辑中基本上不用，但在测试场景下则是非常常见的。测试嘛，用牛刀有何不可？稍微大一点的系统开销也没啥问题。对于 Go 来说，非常热门的单元测试框架 goconvey 就是使用 panic 机制来实现单元测试中的断言，用的人都说好。</p>
+<h4 id="结论建议"><a href="#结论建议" class="headerlink" title="结论建议"></a>结论建议</h4><p>综上，在 Go 中，对于业务代码，笔者不建议采用断言，遇到错误的时候建议还是老老实实采用这种格式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> err := DoSomething(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在单测代码中，则完全可以大大方方地采用类似于 <code>goconvey</code> 之类基于 panic 机制的断言。</p>
+<h3 id="Go-的-try-…-catch"><a href="#Go-的-try-…-catch" class="headerlink" title="Go 的 try … catch"></a>Go 的 try … catch</h3><p>众所周知，Go（当前版本 1.17）是没有 <code>try ... catch</code> 的，而且从官方的态度而言，短时间内也没有明确的计划。但是程序员有这个需求呀。这里也催生出了集中解决方案</p>
+<h4 id="defer-函数"><a href="#defer-函数" class="headerlink" title="defer 函数"></a>defer 函数</h4><p>笔者采用的方法，是将需要返回的 <code>err</code> 变量在函数内部全局化，然后结合 <code>defer</code> 统一处理：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SomeProcess</span><span class="params">()</span> <span class="params">(err error)</span></span> &#123; <span class="comment">// &lt;-- 注意，err 变量必须在这里有定义</span></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这下面的逻辑，就当作 catch 作用了</span></span><br><span class="line">        <span class="keyword">if</span> errors.Is(err, somepkg.ErrRecordNotExist) &#123;</span><br><span class="line">            err = <span class="literal">nil</span>        <span class="comment">// 这里是举一个例子，有可能捕获到某些错误，对于该函数而言不算错误，因此 err = nil</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> errors.Like(err, somepkg.ErrConnectionClosed) &#123;</span><br><span class="line">            <span class="comment">// ...            // 或者是说遇到连接断开的操作时，可能需要做一些重连操作之类的；甚至乎还可以在这里重连成功之后，重新拉起一次请求</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err = DoSomething(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方案要特别注意变量作用域问题：</p>
+<p>比如前面的 <code>if err = DoSomething(); err != nil &#123;</code> 行，如果我们将 <code>err = ...</code> 改为 <code>err := ...</code>，那么这一行中的 <code>err</code> 变量和函数最前面定义的 <code>(err error)</code> 不是同一个变量，因此即便在此处发生了错误，但是在 defer 函数中无法捕获到 err 变量了。</p>
+<p>在 <code>try ... catch</code> 方面，笔者其实没有特别好的方法来模拟，即便是上面的方法也有一个很让人头疼的问题：defer 写法导致错误处理前置，而正常逻辑后置了。</p>
+<h4 id="命名的错误处理函数"><a href="#命名的错误处理函数" class="headerlink" title="命名的错误处理函数"></a>命名的错误处理函数</h4><p>要解决前文提及的 defer 写法导致错误处理前置的问题，有第一种解决方法是比较常规的，那就是将 defer 后面的匿名函数改成一个命名函数，抽象出一个专门的错误处理函数。这个时候我们可以将上一段函数进行这样的改造：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SomeProcess</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err = DoSomething(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> unifiedError(err)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">unifiedError</span><span class="params">(err error)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> errors.Is(err, somepkg.ErrRecordNotExist) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>        <span class="comment">// 有可能捕获到某些错误，对于该函数而言不算错误，因此 err = nil</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> errors.Like(err, somepkg.ErrConnectionClosed) &#123;</span><br><span class="line">        <span class="keyword">return</span> fmt.Errorf(<span class="string">&quot;handle XXX error: %w&quot;</span>, err)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样就舒服一些了，至少逻辑前置，错误处理后置。不过读者肯定会发现——这不是什么语言都可以这么搞嘛？诚然，这怎么看都不像是对 <code>try ... catch</code> 的模拟,但这种方法依然很推荐，特别是错误处理代码很长的时候。</p>
+<h4 id="goto-LABEL"><a href="#goto-LABEL" class="headerlink" title="goto LABEL"></a>goto LABEL</h4><p>理论上，我们可以通过 <code>goto</code> 语句，将错误处理后置，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SomeProcess</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> err = DoSomething(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">goto</span> ERR</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line"></span><br><span class="line">ERR:</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对 C 语言比较熟悉的同学可能会觉得很亲切，因为在 Linux 内核中就有大量这种写法。这种写法呢，笔者其实说不出具体不好的地方，但是这个看起来很像 C 的写法，其实限制很多，反而比起 C 而言，需要注意的地方也更多：</p>
+<ul>
+<li>仅限于 ANSI-C 的话，要求所有的局部变量都需要前置声明，这就避免了因为变量作用域而带来的同名变量覆盖；但 Go 需要注意这个问题。</li>
+<li>C 支持宏定义，配合前文可以实现断言，使得错误处理语句可以做得比较优雅；而 Go 不支持</li>
+<li>Go 经常有很多匿名函数，匿名函数无法 <code>goto</code> 到外层函数的标签，这也限制了 <code>goto</code> 的使用</li>
+</ul>
+<p>不过笔者倒也不是不支持使用 <code>goto</code>，只是觉得在现有机制下，还是使用前两种模式比较符合 Go 的习惯。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+              <a href="/tags/Go-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="tag"># Go 异常处理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/30/Go-%E6%93%8D%E4%BD%9CRedis/" rel="prev" title="Go 操作Redis">
+                  <i class="fa fa-chevron-left"></i> Go 操作Redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
