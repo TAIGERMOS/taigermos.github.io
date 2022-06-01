@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="使用Hexo+GitHubPages搭建个人博客GitHubPages设置 git安装及配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="彻底搞懂如何使用Hexo+GitHubPages搭建个人博客">
+<meta property="og:url" content="https://taigermos.github.io/2020/07/29/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Hexo-GitHubPages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="使用Hexo+GitHubPages搭建个人博客GitHubPages设置 git安装及配置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/jxXEoAPVQf42Crb.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/ip9B6nrZXIouOWj.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/2HNPYM3dJQm91pF.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/NJTWBzU256IArOh.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/pi7VC3Pzavh94sU.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/waoXLT9lj4nDZBc.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/IEyjO8Kt7sumphC.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/MVYlJA6NUnjCvIK.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/HcVbMwNkrjRFquz.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/BX7HboYGOiycnlJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/1rot7Y4eUhSKJ68.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/3suvYOcgjaFA7XR.png">
+<meta property="og:image" content="https://i.loli.net/2020/07/29/wNsK7qJaMIGj8Ez.png">
+<meta property="article:published_time" content="2020-07-29T07:01:13.000Z">
+<meta property="article:modified_time" content="2020-12-10T14:07:14.394Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GithubPages">
+<meta property="article:tag" content="博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/07/29/jxXEoAPVQf42Crb.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2020/07/29/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Hexo-GitHubPages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>彻底搞懂如何使用Hexo+GitHubPages搭建个人博客 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Hexo-GitHubPages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.</span> <span class="nav-text">使用Hexo+GitHubPages搭建个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHubPages%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">GitHubPages设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">git安装及配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEGitHub%E4%B8%AD%E7%9A%84%E5%85%AC%E9%92%A5"><span class="nav-number">1.1.2.</span> <span class="nav-text">配置GitHub中的公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAGitHub-Pages%E4%BB%93%E5%BA%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">创建GitHub Pages仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.2.</span> <span class="nav-text">安装Hexo并初始化博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Node-js"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.2.3.</span> <span class="nav-text">初始化创建博客</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo%E7%94%9F%E6%88%90%E7%AB%99%E7%82%B9%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Hexo生成站点目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#config-yml"><span class="nav-number">1.3.1.</span> <span class="nav-text">config.yml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package-json"><span class="nav-number">1.3.2.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scaffolds"><span class="nav-number">1.3.3.</span> <span class="nav-text">scaffolds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source"><span class="nav-number">1.3.4.</span> <span class="nav-text">source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#themes"><span class="nav-number">1.3.5.</span> <span class="nav-text">themes</span></a></li></ol></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2020/07/29/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Hexo-GitHubPages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          彻底搞懂如何使用Hexo+GitHubPages搭建个人博客
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-29 15:01:13" itemprop="dateCreated datePublished" datetime="2020-07-29T15:01:13+08:00">2020-07-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-10 22:07:14" itemprop="dateModified" datetime="2020-12-10T22:07:14+08:00">2020-12-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="使用Hexo-GitHubPages搭建个人博客"><a href="#使用Hexo-GitHubPages搭建个人博客" class="headerlink" title="使用Hexo+GitHubPages搭建个人博客"></a><strong>使用Hexo+GitHubPages搭建个人博客</strong></h1><h2 id="GitHubPages设置"><a href="#GitHubPages设置" class="headerlink" title="GitHubPages设置"></a><strong>GitHubPages设置</strong></h2><hr>
+<h3 id="git安装及配置"><a href="#git安装及配置" class="headerlink" title="git安装及配置"></a><strong>git安装及配置</strong></h3><a id="more"></a>
+<p>搭建一个Hexo+GithubPages博客需要做的第一步就是在GitHub上创建一个仓库。在这之前，需要在你的电脑上安装git。无论是Mac、Linux、Windows系统中的哪一种，Google上都能找到详细的<br>安装教程说明，建议直接参考<strong>git官网</strong>的安装教程。</p>
+<p>初次运行git前，你需要做一些配置：</p>
+<ul>
+<li><p><strong>设置Git用户信息</strong></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name “your_name”</span><br><span class="line">$ git config --global user.email your_email</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>生成SSH Key公钥</strong></p>
+<p>  查看当前用户的目录下是否存在.ssh目录，如果存在进入到此目录下检查是否存在id_rsa和id_rsa.pub两个文件，这两个文件分别对应的是公钥和私钥，如果存在直接跳过此步，否则输入下面的命令：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C “your_github_email”</span><br></pre></td></tr></table></figure>
+<p>  其中**-t type:指定你要生成的密钥类型**，-C commit:提供一个新的注释。然后一路回车，直到生成一个矩形的图案为止。记下生成的这串字符，这就是后面需要给GitHub配置的公钥。</p>
+</li>
+</ul>
+<h3 id="配置GitHub中的公钥"><a href="#配置GitHub中的公钥" class="headerlink" title="配置GitHub中的公钥"></a><strong>配置GitHub中的公钥</strong></h3><p>首先需要在**<a target="_blank" rel="noopener" href="https://github.com/" title="GitHub官网">GitHub官网</a>**上注册一个账号，GitHubPages的创建需要一个GitHub的账号，这一步就直接跳过。如果有GitHub账号，直接登录就可以。</p>
+<p>登陆到后Github后，如果你是初次申请，需要先配置SSH，按照下述步骤进行操作：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/jxXEoAPVQf42Crb.png"></p>
+<p><img data-src="https://i.loli.net/2020/07/29/ip9B6nrZXIouOWj.png" alt="image.png"></p>
+<ul>
+<li><p>Setp1:点击头像</p>
+</li>
+<li><p>Setp2:选择Settings</p>
+</li>
+<li><p>Setp3:选择侧边栏的SSH and GPG keys</p>
+</li>
+<li><p>Setp4:右上角点击New SSH key按钮</p>
+</li>
+</ul>
+<p>此时会看到如下界面，Titlt输入框中填写的是你要输入得SSH公钥的名称。我这里填的是”MacHome“，就是指我家里Mac电脑的SSH公钥。Key的输入框中需要填写刚才在本机生成公钥串：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/2HNPYM3dJQm91pF.png" alt="image.png"></p>
+<p>如果刚才你讲命令行窗口给关闭了，也不要紧，输入命令入cat ~/.ssh/id_rsa.pub就可以查看你刚生成的公钥</p>
+<p><img data-src="https://i.loli.net/2020/07/29/NJTWBzU256IArOh.png" alt="image.png"></p>
+<p>Key中复制查询到的SSH公钥。点击Add SSH key，这里需要你再次输入密码来确认。成功后会生成如下界面：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/pi7VC3Pzavh94sU.png" alt="image.png"></p>
+<h3 id="创建GitHub-Pages仓库"><a href="#创建GitHub-Pages仓库" class="headerlink" title="创建GitHub Pages仓库"></a><strong>创建GitHub Pages仓库</strong></h3><p>配置好git和GitHub后，需要在GitHub上创建Github Pages服务，具体步骤如下图：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/waoXLT9lj4nDZBc.png" alt="image.png"></p>
+<p>在GitHub首页的顶部菜单选择<strong>“+”号按钮，并且点击New respository选项</strong>。之后会出现下面的页面:</p>
+<p><img data-src="https://i.loli.net/2020/07/29/IEyjO8Kt7sumphC.png" alt="image.png"></p>
+<p>一定要注意：在Repository  name输入框中你需要填入你的【Github用户名】，这一点非常重要。因为这样才能保证你建立的是GithubPages页面而不是其他的代码仓库。另外一点记得勾选Initialize this repository with a README选项。这个时候你在浏览器输入https://<span></span>your_github_name.github.io后，可以看到一个简陋的界面，那么说明你已经成功开启了GithubPages服务了。下面需要做的就是安装Hexo，并且使用Hexo来生成Blog站点。</p>
+<h2 id="安装Hexo并初始化博客"><a href="#安装Hexo并初始化博客" class="headerlink" title="安装Hexo并初始化博客"></a><strong>安装Hexo并初始化博客</strong></h2><hr>
+<p>安装Hexo的过程非常的简单，只需要几行命令就可以轻松安装并创建Hexo框架，前提是已经安装好了Node.js。Hexo是一个快速、简洁且高效的博客框架。Hexo使用Markdown(或其他渲染引擎)解析文章，Node.js所带来的超快生成速度，让上百个页面在几秒内瞬间完成渲染。官方建议Node.js版本不低于8.10，建议使用Node.js 10.0及以上版本。</p>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a><strong>安装Node.js</strong></h3><p>安装Node.js请参照**<a target="_blank" rel="noopener" href="https://nodejs.org/en/">官网指南</a>**。安装完成后在终端输入以下命令，检查安装是否成功及Node.js对应的版本号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node —version</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a><strong>安装Hexo</strong></h3><p>安装Hexo也非常的简单，使用npm安装Hexo只需要一句命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化创建博客"><a href="#初始化创建博客" class="headerlink" title="初始化创建博客"></a><strong>初始化创建博客</strong></h3><ul>
+<li><p>创建站点根目录</p>
+<p>  创建一个默认主题的博客，首先需要初创建一个博客文件夹，注意这个文件夹的名字最好要和你刚才创建的GitHubPages的地址一致也就是your_github_name.github.io。这个文件夹以后也统称为站点根目录。</p>
+</li>
+<li><p>初始化站点根目录</p>
+<p>  使用以下命令初始化文件夹，Hexo会在指定的这个站点根目录中创建所需要的文件。然后进入到此文件夹下，安装npm所依赖的库文件。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir &lt;folder&gt;  #创建站点根目录</span><br><span class="line">$ cd &lt;folder&gt;  #进入到站点根目录</span><br><span class="line">$ hexo init &lt;folder&gt;  #使用Hexo初始化站点根目录</span><br><span class="line">$ npm install  #安装npm所依赖的文件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>创建完成后的目录结构如下图：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/MVYlJA6NUnjCvIK.png" alt="image.png"></p>
+<p>先不着急分析每个目录是做什么的，博客此时已经创建好了，只需要在命令行输入以下命令（也先不用理会这两行命令的含义，后面会做解释），就可以在本地预览已生成的博客了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate # 生成博客</span><br><span class="line">$ hexo server # 本地预览</span><br></pre></td></tr></table></figure>
+<p>打开浏览器，在地址栏输入http://<span></span>localhost:4000，先看下此时的博客是什么样子的。</p>
+<p><img data-src="https://i.loli.net/2020/07/29/HcVbMwNkrjRFquz.png" alt="image.png"></p>
+<p>此时，可以看到一个默认主题的博客已经生成了，并可以在本地访问它。但目前距离计划中的博客还存在一些差距，具体如下：</p>
+<ul>
+<li><p>博客的主题和样式并不是理想中的主题，需要选择合适的主题；</p>
+</li>
+<li><p>目前只能在本地访问，其他人还访问不到这个博客，需要将其部署到GitHubPages上；</p>
+</li>
+<li><p>通过个性域名来访问博客</p>
+</li>
+</ul>
+<h2 id="Hexo生成站点目录结构"><a href="#Hexo生成站点目录结构" class="headerlink" title="Hexo生成站点目录结构"></a><strong>Hexo生成站点目录结构</strong></h2><hr>
+<p>在完成以上还未完成的目标前，回到上一节还未解释的目录结构。在了解了目录结构中每个文件夹的含义及作用后，才能更好地来改造它，达成以上目标。</p>
+<p>我们再来看一下这个目录结构，命令行打印出来：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/BX7HboYGOiycnlJ.png" alt="image.png"></p>
+<p>细心的你可能已经发现，此时的文件目录下比之前多出来一个文件夹public/和一个文件db.json。执行了hexo generate和hexo server这两步操作产生了public/文件夹和db.json文件。实际上，正是在执行了hexo generate命令之后，将souce文件夹下的Markdown和HTML文件解析到了public文件夹下，并生成了db.json文件。下面来介绍一下使用Hexo生成的跟站点目录结构。</p>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="config.yml"></a><strong>config.yml</strong></h3><p>_config.yml是整个博客的配置文件，至于每项配置参数可以**<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">Hexo官网文档</a>**有详细的介绍。</p>
+<p><img data-src="https://i.loli.net/2020/07/29/1rot7Y4eUhSKJ68.png" alt="image.png"></p>
+<p>目前博客只能在本地浏览，还没有部署GitHubPages上。将博客发布到GitHubPages最直接的方式：使用git将本地博客文件夹关联到GitHub的远程仓库，并且把本地文件push到对应的仓库中。Hexo提供了一种更简便地方式，只需要在_config.yml中作相应的配置，通过命令行命令就可以很方便地把静态文件部署到对应的仓库中。</p>
+<p>打开根站点文件夹下的_config.yml博客配置文件，在deployment配置项下设置如下参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: git@github.com:yourname&#x2F;yourname.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+<p>安装以下插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git —save</span><br></pre></td></tr></table></figure>
+<p>执行以下命令发布本地博客到远程仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>然后在浏览器中输入GitHubPages的地址：<a target="_blank" rel="noopener" href="https://your_github_name.github.io/">your_github_name.github.io</a> ，你会发现刚才你在本地生成的博客已经可以在互联网上访问到了。但此时使用的依然是GitHub加仓库名称的URL来访问博客，当输入我们自己的个性域名访问时发现还是404错误，因为此时还没有做域名的解析配置，下一章节会具体讲解如果配置个性域名。</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a><strong>package.json</strong></h3><p>package.json是应用程序信息，打开此文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;hexo-site&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.0&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;build&quot;: &quot;hexo generate&quot;,</span><br><span class="line">    &quot;clean&quot;: &quot;hexo clean&quot;,</span><br><span class="line">    &quot;deploy&quot;: &quot;hexo deploy&quot;,</span><br><span class="line">    &quot;server&quot;: &quot;hexo server&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;hexo&quot;: &#123;</span><br><span class="line">    &quot;version&quot;: &quot;4.2.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;hexo&quot;: &quot;^4.0.0&quot;,</span><br><span class="line">    &quot;hexo-generator-archive&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;hexo-generator-category&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;hexo-generator-index&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;hexo-generator-tag&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-ejs&quot;: &quot;^1.0.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-stylus&quot;: &quot;^1.1.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-marked&quot;: &quot;^2.0.0&quot;,</span><br><span class="line">    &quot;hexo-server&quot;: &quot;^1.0.0&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个json文件，可以得到hexo的版本信息，所有安装的依赖程序。并且在scripts字段下发现了几个刚才执行的命令，其实之前执行的几个命令实际是执行了对应的脚本。以下列出了Hexo中最重要的几个命令及其缩略形式，记住以下几个命令，就可以基本完成Hexo的操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo clean  &#x3D; hexo c # 清除本地缓存，也就是清除public&#x2F;文件夹和db.json文件。</span><br><span class="line"></span><br><span class="line">hexo generate &#x3D; hexo g # 将souce文件夹下的Markdown和HTML文件解析到了public文件夹下，并生成了db.json文件</span><br><span class="line"></span><br><span class="line">hexo server &#x3D; hexo s # 开启本地调试模式</span><br><span class="line"></span><br><span class="line">hexo deploy &#x3D; hexo d # 将本地资源部署到GithubPages</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="scaffolds"><a href="#scaffolds" class="headerlink" title="scaffolds"></a><strong>scaffolds</strong></h3><p>scaffolds是模板文件夹，当创建新的文章时，Hexo会根据scaffold里的不同模板来建立文件。什么意思呢？当使用Hexo新建一篇文章时使用的命令是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;    </span><br></pre></td></tr></table></figure>
+<p>一般都会忽略[layout]可选参数，此时默认为post，也可以通过_config.yml中的default_layout参数来指定默认布局。</p>
+<p>继续打开此文件夹，发现有三个.md文件：</p>
+<p><img data-src="https://i.loli.net/2020/07/29/3suvYOcgjaFA7XR.png" alt="image.png"></p>
+<p>其实这是Hexo的三种默认布局post、page和draft。使用Hexo创建三种模板类型的文件时，被创建的文件会被保存到不同的路径。而我们自定义的其他布局和post相同，都会保存在source/_posts文件夹下。</p>
+<p><img data-src="https://i.loli.net/2020/07/29/wNsK7qJaMIGj8Ez.png" alt="image.png"></p>
+<p>由此可见其对应的保存路径关系如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">布局</th>
+<th align="center">路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">post</td>
+<td align="center">source/_post</td>
+</tr>
+<tr>
+<td align="center">page</td>
+<td align="center">source/</td>
+</tr>
+<tr>
+<td align="center">draft</td>
+<td align="center">source/_draft</td>
+</tr>
+<tr>
+<td align="center">自定义</td>
+<td align="center">source/_post</td>
+</tr>
+</tbody></table>
+<p>关于模板及文章发布相关的详细知识点建议您参考**<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/writing">官网文档</a>**。</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a><strong>source</strong></h3><p>source资源文件夹，是存放用户资源的地方。除post文件夹除外，开头以_（下划线）命名的文件/文件夹或隐藏文件都会在generate时被忽略。Markdown和HTML文件夹会被解析到public文件夹下，其它文件格式的文件会被直接拷贝过去。</p>
+<h3 id="themes"><a href="#themes" class="headerlink" title="themes"></a><strong>themes</strong></h3><p>themes是主题文件夹。Hexo会根据设置的主题来生成静态的页面，刚才说到<strong>使用Hexo init生成的初始化站点的主题可能并不是你预估的样子。Hexo提供了丰富的站点主题供你选择，现在先去官网提供的主题页面</strong>选取一个你喜欢的主题，下一章我们会讲解如何更换主题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/GithubPages/" rel="tag"># GithubPages</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"># 博客</a>
+          </div>
+
+        
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
