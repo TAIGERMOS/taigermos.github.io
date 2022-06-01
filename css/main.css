@@ -2553,6 +2553,25 @@ ul.breadcrumb li:last-child {
   border-bottom-color: #111;
   color: #111;
 }
+.search-active {
+  overflow: hidden;
+}
+.search-pop-overlay {
+  background: rgba(0,0,0,0);
+  display: flex;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition: visibility 0.4s, background 0.4s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1400;
+}
+.search-active .search-pop-overlay {
+  background: rgba(0,0,0,0.3);
+  visibility: visible;
+}
 @media (prefers-color-scheme: dark) {
   .tag-cloud-0 {
     border-bottom-color: #555;
