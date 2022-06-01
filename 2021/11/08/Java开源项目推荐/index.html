@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="推荐几个优秀的开源项目，包含Java项目学习，Java程序员面试等等，帮助你打好基础，提升能力，扩展视野，以及更好地应对面试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java开源项目推荐">
+<meta property="og:url" content="https://taigermos.github.io/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="推荐几个优秀的开源项目，包含Java项目学习，Java程序员面试等等，帮助你打好基础，提升能力，扩展视野，以及更好地应对面试。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-08T05:18:21.000Z">
+<meta property="article:modified_time" content="2021-11-08T05:52:40.697Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java 项目">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Java开源项目推荐 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">项目学习相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%95%86%E5%9F%8E"><span class="nav-number">1.1.</span> <span class="nav-text">Java商城</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E7%A7%92%E6%9D%80"><span class="nav-number">1.2.</span> <span class="nav-text">Java秒杀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.</span> <span class="nav-text">后台管理系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BA%BA%E4%BA%8B"><span class="nav-number">1.4.</span> <span class="nav-text">微人事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%AE%9E%E9%AA%8C%E5%AE%A4"><span class="nav-number">1.5.</span> <span class="nav-text">Java实验室</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot%E5%AD%A6%E4%B9%A0%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.6.</span> <span class="nav-text">springboot学习项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E6%95%99%E7%A8%8B"><span class="nav-number">1.7.</span> <span class="nav-text">Java教程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">面试相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E9%9D%A2%E8%AF%95"><span class="nav-number">2.1.</span> <span class="nav-text">Java面试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95"><span class="nav-number">2.2.</span> <span class="nav-text">系统设计面试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%9D%A2%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">计算机面试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%88%E9%9B%86%E7%9B%B8%E5%85%B3"><span class="nav-number">3.</span> <span class="nav-text">合集相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E5%90%88%E9%9B%86"><span class="nav-number">3.1.</span> <span class="nav-text">Java开源项目合集</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java开源项目推荐
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-08 13:18:21 / Modified: 13:52:40" itemprop="dateCreated datePublished" datetime="2021-11-08T13:18:21+08:00">2021-11-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Java%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">Java后端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>推荐几个优秀的开源项目，包含Java项目学习，Java程序员面试等等，帮助你打好基础，提升能力，扩展视野，以及更好地应对面试。</p>
+<a id="more"></a>
+
+<h1 id="项目学习相关"><a href="#项目学习相关" class="headerlink" title="项目学习相关"></a><strong>项目学习相关</strong></h1><h2 id="Java商城"><a href="#Java商城" class="headerlink" title="Java商城"></a><strong>Java商城</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/macrozheng/mall">https://github.com/macrozheng/mall</a></p>
+<p>完整学习文档：<a target="_blank" rel="noopener" href="http://www.macrozheng.com/#/">http://www.macrozheng.com/#/</a></p>
+<p>mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现，采用Docker容器化部署。前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</p>
+<h2 id="Java秒杀"><a href="#Java秒杀" class="headerlink" title="Java秒杀"></a><strong>Java秒杀</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/qiurunze123/miaosha">https://github.com/qiurunze123/miaosha</a></p>
+<p>高并发大流量如何进行秒杀架构，作者这部分知识做了一个系统的整理，写了一套系统。</p>
+<h2 id="后台管理系统"><a href="#后台管理系统" class="headerlink" title="后台管理系统"></a><strong>后台管理系统</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/elunez/eladmin">https://github.com/elunez/eladmin</a></p>
+<p>项目基于 Spring Boot 2.1.0 、 Jpa、 Spring Security、redis、Vue的前后端分离的后台管理系统，项目采用分模块开发方式， 权限控制采用 RBAC，支持数据字典与数据权限管理，支持一键生成前后端代码，支持动态路由。</p>
+<h2 id="微人事"><a href="#微人事" class="headerlink" title="微人事"></a><strong>微人事</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/lenve/vhr">https://github.com/lenve/vhr</a></p>
+<p>微人事是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。</p>
+<h2 id="Java实验室"><a href="#Java实验室" class="headerlink" title="Java实验室"></a><strong>Java实验室</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/YunaiV/SpringBoot-Labs">https://github.com/YunaiV/SpringBoot-Labs</a></p>
+<p>一个涵盖六个专栏：Spring Boot 2.X、Spring Cloud、Spring Cloud Alibaba、Dubbo、分布式消息队列、分布式事务的仓库。有非常多的教程和代码demo。</p>
+<h2 id="springboot学习项目"><a href="#springboot学习项目" class="headerlink" title="springboot学习项目"></a><strong>springboot学习项目</strong></h2><p>github地址：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ZHENFENG13/spring-boot-projects">https://github.com/ZHENFENG13/spring-boot-projects</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/YunaiV/SpringBoot-Labs">https://github.com/YunaiV/SpringBoot-Labs</a></li>
+</ul>
+<p>该仓库中主要是 Spring Boot 的入门学习教程以及一些常用的 Spring Boot 实战项目教程，包括 Spring Boot 使用的各种示例代码，同时也包括一些实战项目的项目源码和效果展示，实战项目包括基本的 web 开发以及目前大家普遍使用的前后端分离实践项目等。</p>
+<h2 id="Java教程"><a href="#Java教程" class="headerlink" title="Java教程"></a><strong>Java教程</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/ZhongFuCheng3y/3y">https://github.com/ZhongFuCheng3y/3y</a></p>
+<p>从Java基础、JavaWeb基础到常用的框架再到面试题都有完整的教程，几乎涵盖了Java后端必备的知识点。</p>
+<h1 id="面试相关"><a href="#面试相关" class="headerlink" title="面试相关"></a><strong>面试相关</strong></h1><h2 id="Java面试"><a href="#Java面试" class="headerlink" title="Java面试"></a><strong>Java面试</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/Snailclimb/JavaGuide">https://github.com/Snailclimb/JavaGuide</a></p>
+<p>「Java学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！</p>
+<h2 id="系统设计面试"><a href="#系统设计面试" class="headerlink" title="系统设计面试"></a><strong>系统设计面试</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/donnemartin/system-design-primer">https://github.com/donnemartin/system-design-primer</a><br>学习如何设计可扩展的系统将会有助于你成为一个更好的工程师。<br>系统设计是一个很宽泛的话题。在互联网上，关于系统设计原则的资源也是多如牛毛。<br>这个仓库就是这些资源的组织收集，它可以帮助你学习如何构建可扩展的系统。</p>
+<h2 id="计算机面试"><a href="#计算机面试" class="headerlink" title="计算机面试"></a><strong>计算机面试</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/CyC2018/CS-Notes">https://github.com/CyC2018/CS-Notes</a></p>
+<p>技术面试必备基础知识、Leetcode、计算机操作系统、计算机网络、系统设计</p>
+<h1 id="合集相关"><a href="#合集相关" class="headerlink" title="合集相关"></a><strong>合集相关</strong></h1><h2 id="Java开源项目合集"><a href="#Java开源项目合集" class="headerlink" title="Java开源项目合集"></a><strong>Java开源项目合集</strong></h2><p>github地址：<a target="_blank" rel="noopener" href="https://github.com/CodingDocs/awesome-java">https://github.com/CodingDocs/awesome-java</a></p>
+<p>Github 上非常棒的 Java 开源项目整理，我前面提到的开源项目很多都在里面有收录</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Java-%E9%A1%B9%E7%9B%AE/" rel="tag"># Java 项目</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/28/Pandas-%E5%BF%85%E4%BC%9A%E7%9A%84%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/" rel="prev" title="Pandas 必会的方法汇总">
+                  <i class="fa fa-chevron-left"></i> Pandas 必会的方法汇总
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/08/vue-3-x-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA/" rel="next" title="vue 3.x 环境搭建及项目创建">
+                  vue 3.x 环境搭建及项目创建 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+    <div class="pjax">
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://taigermos.github.io/2021/11/08/Java%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

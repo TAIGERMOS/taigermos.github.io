@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="Java后端开发学习路线:(主流技术点)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java后端开发：（侧重点学习）">
+<meta property="og:url" content="https://taigermos.github.io/2021/01/07/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%EF%BC%9A%EF%BC%88%E4%BE%A7%E9%87%8D%E7%82%B9%E5%AD%A6%E4%B9%A0%EF%BC%89/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="Java后端开发学习路线:(主流技术点)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/01/07/NJYxng4QV5CuzmS.jpg">
+<meta property="article:published_time" content="2021-01-07T03:33:55.000Z">
+<meta property="article:modified_time" content="2021-01-07T13:48:28.655Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="学习路线">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/01/07/NJYxng4QV5CuzmS.jpg">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2021/01/07/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%EF%BC%9A%EF%BC%88%E4%BE%A7%E9%87%8D%E7%82%B9%E5%AD%A6%E4%B9%A0%EF%BC%89/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Java后端开发：（侧重点学习） | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-%E4%B8%BB%E6%B5%81%E6%8A%80%E6%9C%AF%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">Java后端开发学习路线:(主流技术点)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%A7%E9%87%8D%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">侧重点:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">3.</span> <span class="nav-text">一、语言基础    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81JVM-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">4.</span> <span class="nav-text">二、JVM    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%B9%B6%E5%8F%91-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">5.</span> <span class="nav-text">三、并发&#x2F;多线程    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">6.</span> <span class="nav-text">四、数据结构    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%AE%97%E6%B3%95-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">7.</span> <span class="nav-text">五、算法    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">8.</span> <span class="nav-text">六、计算机网络    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93-SQL-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">9.</span> <span class="nav-text">七、数据库&#x2F;SQL    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">10.</span> <span class="nav-text">八、操作系统    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">11.</span> <span class="nav-text">九、设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">12.</span> <span class="nav-text">十、集成开发环境    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81Linux%E7%B3%BB%E7%BB%9F-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">13.</span> <span class="nav-text">十一、Linux系统    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">14.</span> <span class="nav-text">十二、代码管理工具    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">15.</span> <span class="nav-text">十三、项目管理&#x2F;构建工具    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81Spring%E5%AE%B6%E6%97%8F-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">16.</span> <span class="nav-text">十四、Spring家族    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">17.</span> <span class="nav-text">十五、服务器软件    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E7%BC%93%E5%AD%98-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">18.</span> <span class="nav-text">十六、缓存    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">19.</span> <span class="nav-text">十七、消息队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%85%AB%E3%80%81RPC%E6%A1%86%E6%9E%B6"><span class="nav-number">20.</span> <span class="nav-text">十八、RPC框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B9%9D%E3%80%81ORM%E5%B1%82%E6%A1%86%E6%9E%B6"><span class="nav-number">21.</span> <span class="nav-text">十九、ORM层框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E3%80%81%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-number">22.</span> <span class="nav-text">二十、连接池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%B8%80%E3%80%81%E4%B8%89%E5%A4%A7%E4%BB%B6-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">23.</span> <span class="nav-text">二十一、三大件    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81%E5%9F%BA%E7%A1%80%E5%BA%93-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">24.</span> <span class="nav-text">二十二、基础库    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E4%B8%89%E3%80%81%E6%A8%A1%E7%89%88%E6%A1%86%E6%9E%B6-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">25.</span> <span class="nav-text">二十三、模版框架    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8D%81%E5%9B%9B%E3%80%81%E7%BB%84%E4%BB%B6%E5%8C%96%E6%A1%86%E6%9E%B6-%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">26.</span> <span class="nav-text">二十四、组件化框架    (重中之重)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">27.</span> <span class="nav-text">编程基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%8D%E8%83%BD%E6%89%BE%EF%BC%88%E5%88%B0%EF%BC%89%E5%B7%A5%E4%BD%9C%EF%BC%9F"><span class="nav-number">28.</span> <span class="nav-text">学了哪些才能找（到）工作？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E9%9C%80%E8%A6%81%E5%AD%A6%E5%89%8D%E7%AB%AF%E5%90%97%EF%BC%9F"><span class="nav-number">29.</span> <span class="nav-text">后端开发需要学前端吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%92%8B%E6%B2%A1%E6%9C%89Java-Web%EF%BC%9F"><span class="nav-number">30.</span> <span class="nav-text">咋没有Java Web？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E5%AE%8C%E5%A6%82%E4%BD%95%E8%83%BD%E4%BF%9D%E8%AF%81%E7%95%99%E4%B8%8B%E4%B8%9C%E8%A5%BF%EF%BC%9F"><span class="nav-number">31.</span> <span class="nav-text">学完如何能保证留下东西？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B1-%E5%8B%89"><span class="nav-number">32.</span> <span class="nav-text">共 勉</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B3%E7%A8%B3%E9%99%8D%E8%90%BD"><span class="nav-number">33.</span> <span class="nav-text">平稳降落</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2021/01/07/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%EF%BC%9A%EF%BC%88%E4%BE%A7%E9%87%8D%E7%82%B9%E5%AD%A6%E4%B9%A0%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java后端开发：（侧重点学习）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-01-07 11:33:55 / Modified: 21:48:28" itemprop="dateCreated datePublished" datetime="2021-01-07T11:33:55+08:00">2021-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Java%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">Java后端</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Java后端开发学习路线-主流技术点"><a href="#Java后端开发学习路线-主流技术点" class="headerlink" title="Java后端开发学习路线:(主流技术点)"></a><strong>Java后端开发学习路线:(主流技术点)</strong></h1><p><img data-src="https://i.loli.net/2021/01/07/NJYxng4QV5CuzmS.jpg" alt="Java后端开发学习路线-高清版.jpg"></p>
+<a id="more"></a>
+<h1 id="侧重点"><a href="#侧重点" class="headerlink" title="侧重点:"></a><strong>侧重点:</strong></h1><ul>
+<li><strong>1. 编程基础</strong><ul>
+<li><strong>1.1 Java语言    (重中之重)</strong><ul>
+<li><strong>1.1.1 语言基础</strong></li>
+<li><strong>1.1.2 JVM</strong></li>
+<li><strong>1.1.3 并发/多线程</strong></li>
+</ul>
+</li>
+<li><strong>1.2 数据结构和算法    (重中之重)</strong><ul>
+<li><strong>1.2.1 数据结构</strong></li>
+<li><strong>1.2.2 算法</strong></li>
+</ul>
+</li>
+<li><strong>1.3 计算机网络    (重中之重)</strong></li>
+<li><strong>1.4 数据库/SQL    (重中之重)</strong></li>
+<li><strong>1.5 操作系统    (重中之重)</strong></li>
+<li><strong>1.6 设计模式</strong> </li>
+</ul>
+</li>
+<li><strong>2. 研发工具</strong><ul>
+<li><strong>2.1 集成开发环境    (重中之重)</strong></li>
+<li><strong>2.2 Linux系统    (重中之重)</strong></li>
+<li><strong>2.3 代码管理工具    (重中之重)</strong></li>
+<li><strong>2.4 项目管理/构建工具    (重中之重)</strong></li>
+</ul>
+</li>
+<li><strong>3. 应用框架</strong><ul>
+<li><strong>3.1 后端</strong><ul>
+<li><strong>3.1.1 Spring家族    (重中之重)</strong></li>
+<li><strong>3.1.2 服务器软件    (重中之重)</strong></li>
+<li><strong>3.1.3 中间件</strong><ul>
+<li><strong>3.1.3.1 缓存    (重中之重)</strong><ul>
+<li><strong>3.1.3.1.1 Redis</strong></li>
+</ul>
+</li>
+<li><strong>3.1.3.2 消息队列</strong></li>
+</ul>
+</li>
+<li><strong>3.1.4 数据库</strong><ul>
+<li><strong>3.1.4.1 ORM层框架</strong></li>
+<li><strong>3.1.4.2 连接池</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>3.2 前端</strong><ul>
+<li><strong>3.2.1 基础套餐    (重中之重)</strong><ul>
+<li><strong>3.2.1.1 三大件</strong></li>
+<li><strong>3.2.1.2 基础库</strong></li>
+</ul>
+</li>
+<li><strong>3.2.2 模版框架    (重中之重)</strong></li>
+<li><strong>3.2.3 组件化框架    (重中之重)</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="一、语言基础-重中之重"><a href="#一、语言基础-重中之重" class="headerlink" title="一、语言基础    (重中之重)"></a><strong>一、语言基础    (重中之重)</strong></h1><ol>
+<li><strong>基础语法</strong></li>
+<li><strong>面向对象</strong></li>
+<li><strong>接口</strong></li>
+<li><strong>容器</strong></li>
+<li><strong>异常</strong></li>
+<li><strong>泛型</strong></li>
+<li><strong>反射</strong></li>
+<li><strong>注解</strong></li>
+<li><strong>I/O</strong></li>
+<li><strong><del>图形化</del></strong></li>
+</ol>
+<h1 id="二、JVM-重中之重"><a href="#二、JVM-重中之重" class="headerlink" title="二、JVM    (重中之重)"></a><strong>二、JVM    (重中之重)</strong></h1><ol>
+<li><strong>类加载机制</strong></li>
+<li><strong>字节码执行机制</strong></li>
+<li><strong>JVM内存模式</strong></li>
+<li><strong>GC垃圾回收</strong></li>
+<li><strong>JVM性能监控与故障定位</strong></li>
+<li><strong>JVM调优</strong></li>
+</ol>
+<h1 id="三、并发-多线程-重中之重"><a href="#三、并发-多线程-重中之重" class="headerlink" title="三、并发/多线程    (重中之重)"></a><strong>三、并发/多线程    (重中之重)</strong></h1><ol>
+<li><strong>并发编程基础</strong></li>
+<li><strong>线程池</strong></li>
+<li><strong>锁</strong></li>
+<li><strong>并发容器</strong></li>
+<li><strong>原子类</strong></li>
+<li><strong>JUC并发工具类</strong></li>
+</ol>
+<h1 id="四、数据结构-重中之重"><a href="#四、数据结构-重中之重" class="headerlink" title="四、数据结构    (重中之重)"></a><strong>四、数据结构    (重中之重)</strong></h1><ol>
+<li><strong>字符串</strong></li>
+<li><strong>数组</strong></li>
+<li><strong>链表</strong></li>
+<li><strong>二叉树</strong></li>
+<li><strong>堆、栈、队列</strong></li>
+<li><strong>哈希</strong></li>
+</ol>
+<h1 id="五、算法-重中之重"><a href="#五、算法-重中之重" class="headerlink" title="五、算法    (重中之重)"></a><strong>五、算法    (重中之重)</strong></h1><ol>
+<li><strong>查找</strong></li>
+<li><strong>排序</strong></li>
+<li><strong>贪心</strong></li>
+<li><strong>分治</strong></li>
+<li><strong>动态规划</strong></li>
+<li><strong>回溯</strong></li>
+</ol>
+<h1 id="六、计算机网络-重中之重"><a href="#六、计算机网络-重中之重" class="headerlink" title="六、计算机网络    (重中之重)"></a><strong>六、计算机网络    (重中之重)</strong></h1><ol>
+<li><strong>ARP协议</strong></li>
+<li><strong>IP/ICMP协议</strong></li>
+<li><strong>TCPUDP协议</strong></li>
+<li><strong>DNS/HTTP/HTTPS协议</strong></li>
+<li><strong>Session/Cookie</strong></li>
+</ol>
+<h1 id="七、数据库-SQL-重中之重"><a href="#七、数据库-SQL-重中之重" class="headerlink" title="七、数据库/SQL    (重中之重)"></a><strong>七、数据库/SQL    (重中之重)</strong></h1><ol>
+<li><strong>SQL语句书写</strong></li>
+<li><strong>SQL语句优化</strong></li>
+<li><strong>事务以及隔离级别</strong></li>
+<li><strong>索引</strong></li>
+<li><strong>锁</strong></li>
+</ol>
+<h1 id="八、操作系统-重中之重"><a href="#八、操作系统-重中之重" class="headerlink" title="八、操作系统    (重中之重)"></a><strong>八、操作系统    (重中之重)</strong></h1><ol>
+<li><strong>进程/线程</strong></li>
+<li><strong>并发/锁</strong></li>
+<li><strong>内存管理和调度</strong></li>
+<li><strong>I/O原理</strong></li>
+</ol>
+<h1 id="九、设计模式"><a href="#九、设计模式" class="headerlink" title="九、设计模式"></a><strong>九、设计模式</strong></h1><ol>
+<li><strong>单例</strong></li>
+<li><strong>工厂</strong></li>
+<li><strong>代理</strong></li>
+<li><strong>策略</strong></li>
+<li><strong>模版方法</strong></li>
+<li><strong>观察者</strong></li>
+<li><strong>适配器</strong></li>
+<li><strong>责任链</strong></li>
+<li><strong>建造者</strong></li>
+</ol>
+<h1 id="十、集成开发环境-重中之重"><a href="#十、集成开发环境-重中之重" class="headerlink" title="十、集成开发环境    (重中之重)"></a><strong>十、集成开发环境    (重中之重)</strong></h1><ol>
+<li><strong>Eclipse</strong></li>
+<li><strong>Intellij IDEA</strong></li>
+<li><strong>VS Code</strong></li>
+</ol>
+<h1 id="十一、Linux系统-重中之重"><a href="#十一、Linux系统-重中之重" class="headerlink" title="十一、Linux系统    (重中之重)"></a><strong>十一、Linux系统    (重中之重)</strong></h1><ol>
+<li><strong>Linux常用命令</strong></li>
+<li><strong>基本Shell脚本</strong></li>
+</ol>
+<h1 id="十二、代码管理工具-重中之重"><a href="#十二、代码管理工具-重中之重" class="headerlink" title="十二、代码管理工具    (重中之重)"></a><strong>十二、代码管理工具    (重中之重)</strong></h1><ol>
+<li><strong>Git</strong></li>
+<li><strong>SVN</strong></li>
+</ol>
+<h1 id="十三、项目管理-构建工具-重中之重"><a href="#十三、项目管理-构建工具-重中之重" class="headerlink" title="十三、项目管理/构建工具    (重中之重)"></a><strong>十三、项目管理/构建工具    (重中之重)</strong></h1><ol>
+<li><strong>Maven</strong></li>
+<li><strong>Gradle</strong></li>
+</ol>
+<h1 id="十四、Spring家族-重中之重"><a href="#十四、Spring家族-重中之重" class="headerlink" title="十四、Spring家族    (重中之重)"></a><strong>十四、Spring家族    (重中之重)</strong></h1><ol>
+<li><strong>Spring</strong><ol>
+<li><strong>IoC</strong></li>
+<li><strong>AOP</strong></li>
+</ol>
+</li>
+<li><strong>Spring MVC</strong></li>
+<li><strong>Spring Boot</strong><ol>
+<li><strong>自动配置、开箱即用</strong></li>
+<li><strong>整合Web</strong></li>
+<li><strong>整合数据库(事务问题)</strong></li>
+<li><strong>整合权限</strong><ol>
+<li><strong>Shiro</strong></li>
+<li><strong>Spring Security</strong></li>
+</ol>
+</li>
+<li><strong>整合各种中间件:缓存、MQ、RPC框架、NIO框架等</strong></li>
+<li><strong>整合其他组件</strong></li>
+</ol>
+</li>
+<li><strong>Spring Cloud——见「微服务」部分</strong></li>
+</ol>
+<h1 id="十五、服务器软件-重中之重"><a href="#十五、服务器软件-重中之重" class="headerlink" title="十五、服务器软件    (重中之重)"></a><strong>十五、服务器软件    (重中之重)</strong></h1><ol>
+<li><strong>Web服务器——Nginx</strong></li>
+<li><strong>应用服务器</strong><ol>
+<li><strong>Tomcat</strong></li>
+<li><strong>Jetty</strong></li>
+<li><strong>Undertow</strong></li>
+</ol>
+</li>
+</ol>
+<h1 id="十六、缓存-重中之重"><a href="#十六、缓存-重中之重" class="headerlink" title="十六、缓存    (重中之重)"></a><strong>十六、缓存    (重中之重)</strong></h1><ol>
+<li><strong>Redis</strong><ol>
+<li><strong>5大数据类型</strong></li>
+<li><strong>事务</strong></li>
+<li><strong>消息通知</strong></li>
+<li><strong>管道</strong></li>
+<li><strong>持久化</strong></li>
+<li><strong>集群</strong></li>
+</ol>
+</li>
+<li><strong>memcache</strong></li>
+</ol>
+<h1 id="十七、消息队列"><a href="#十七、消息队列" class="headerlink" title="十七、消息队列"></a><strong>十七、消息队列</strong></h1><ol>
+<li><strong>RocketMQ</strong></li>
+<li><strong>RabbitMQ</strong></li>
+<li><strong>Kafka</strong></li>
+</ol>
+<h1 id="十八、RPC框架"><a href="#十八、RPC框架" class="headerlink" title="十八、RPC框架"></a><strong>十八、RPC框架</strong></h1><ol>
+<li><strong>Dubbo</strong></li>
+<li><strong>gRPC</strong></li>
+<li><strong>Thrift</strong></li>
+<li><strong>Netty</strong></li>
+</ol>
+<h1 id="十九、ORM层框架"><a href="#十九、ORM层框架" class="headerlink" title="十九、ORM层框架"></a><strong>十九、ORM层框架</strong></h1><ol>
+<li><strong>MyBatis</strong></li>
+<li><strong>Hibernate</strong></li>
+<li><strong>JPA</strong></li>
+</ol>
+<h1 id="二十、连接池"><a href="#二十、连接池" class="headerlink" title="二十、连接池"></a><strong>二十、连接池</strong></h1><ol>
+<li><strong>Druid</strong></li>
+<li><strong>HikariCP</strong></li>
+<li><strong>c3PO</strong></li>
+</ol>
+<h1 id="二十一、三大件-重中之重"><a href="#二十一、三大件-重中之重" class="headerlink" title="二十一、三大件    (重中之重)"></a><strong>二十一、三大件    (重中之重)</strong></h1><ol>
+<li><strong>HTML</strong></li>
+<li><strong>JavaScript</strong></li>
+<li><strong>CSS</strong></li>
+</ol>
+<h1 id="二十二、基础库-重中之重"><a href="#二十二、基础库-重中之重" class="headerlink" title="二十二、基础库    (重中之重)"></a><strong>二十二、基础库    (重中之重)</strong></h1><ol>
+<li><strong>jQuery</strong></li>
+<li><strong>Ajax</strong></li>
+</ol>
+<h1 id="二十三、模版框架-重中之重"><a href="#二十三、模版框架-重中之重" class="headerlink" title="二十三、模版框架    (重中之重)"></a><strong>二十三、模版框架    (重中之重)</strong></h1><ol>
+<li><strong>JSP/JSTL</strong></li>
+<li><strong>Thymeleaf</strong></li>
+<li><strong>FreeMarker</strong></li>
+</ol>
+<h1 id="二十四、组件化框架-重中之重"><a href="#二十四、组件化框架-重中之重" class="headerlink" title="二十四、组件化框架    (重中之重)"></a><strong>二十四、组件化框架    (重中之重)</strong></h1><ol>
+<li><strong>Vue</strong></li>
+<li><strong>React</strong></li>
+<li><strong>Angular</strong></li>
+</ol>
+<hr>
+<h1 id="编程基础"><a href="#编程基础" class="headerlink" title="编程基础"></a><strong>编程基础</strong></h1><p>到底我们口口声声所说的编程基础是什么？</p>
+<p>这次在上面的脑图中已经完全展现了！</p>
+<p>即使后面的东西都没学，基础部分是肯定需要完成的，这也是后面所有应用框架学习的基石；反之，在应用框架的学习时如果感觉吃力，可能非常有必要回过头来再巩固对应的基础知识。</p>
+<p>然而基础的确不是一蹴而就的，确实需要一定的反复和回炉，才能做到真正的融会贯通，这需要一个过程，所以珍惜每一次复习基础的机会。</p>
+<h1 id="学了哪些才能找（到）工作？"><a href="#学了哪些才能找（到）工作？" class="headerlink" title="学了哪些才能找（到）工作？"></a><strong>学了哪些才能找（到）工作？</strong></h1><p>啊，这个问题有点难。</p>
+<p>只能这样说，优先把编程基础准备充分，不留纰漏；其次，应用框架部分内容能学则学，尽力准备，在熟练使用的同时能了解原理，就基本很稳了。</p>
+<h1 id="后端开发需要学前端吗？"><a href="#后端开发需要学前端吗？" class="headerlink" title="后端开发需要学前端吗？"></a><strong>后端开发需要学前端吗？</strong></h1><p>完全不懂肯定是不行的，会太过于被动，但钻牛角尖也的确没必要。</p>
+<p>如果目标在后端开发相关岗位，还是优先掌握后端领域的东西为好，毕竟本领域的东西就太多了，而对于前端的知识，大致技术轮廓和概念了解一下还是有必要的。</p>
+<h1 id="咋没有Java-Web？"><a href="#咋没有Java-Web？" class="headerlink" title="咋没有Java Web？"></a><strong>咋没有Java Web？</strong></h1><p>有人问，为什么图中没有Java Web学习路线相关的东西呢？</p>
+<p>本来所谓的Java Web无非也就是：HTTP协议、Servlet、Web容器、JSP、Cookie和Session等等这些内容。</p>
+<p>所以这几点对照到上面的脑图会发现，其实已经包含在上图的诸如：「计算机网络」、「Spring框架」、「模板框架」等等这些部分里了，所以这些掌握了，所谓的Java Web就自然过关了。</p>
+<h1 id="学完如何能保证留下东西？"><a href="#学完如何能保证留下东西？" class="headerlink" title="学完如何能保证留下东西？"></a><strong>学完如何能保证留下东西？</strong></h1><p>我坚信：学习不在入，而在出。</p>
+<p>所以勤于做笔记、善于写博客，做好技术输出非常重要，这样后面复习、回顾、自查都有章可循了。</p>
+<h1 id="共-勉"><a href="#共-勉" class="headerlink" title="共 勉"></a><strong>共 勉</strong></h1><p>在没有这样总结之前，总感觉东西很乱，但经过这一番梳理和串接之后，会发现虽然东西是不少，但好在路线也非常清晰，按照这个路线去扎实推进一般问题就不大了。</p>
+<h1 id="平稳降落"><a href="#平稳降落" class="headerlink" title="平稳降落"></a><strong>平稳降落</strong></h1><p>飞得多快，非得多高，不是目的，重点是如何平稳降落，小伙伴们也记得调整心态、注意健康，徐图长期发展。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"># 后端</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="tag"># 学习路线</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/15/%E6%AD%8C%E8%AF%8D%EF%BC%9A%E3%80%8A%E8%B0%81%E6%9D%A5%E5%89%AA%E6%9C%88%E5%85%89%E3%80%8B-%E4%BD%9C%E8%AF%8D%E4%BA%BA%EF%BC%9A%E6%98%93%E5%AE%B6%E6%89%AC/" rel="prev" title="歌词：《谁来剪月光》- 作词人：易家扬">
+                  <i class="fa fa-chevron-left"></i> 歌词：《谁来剪月光》- 作词人：易家扬
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/07/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E4%BA%8B%E4%BB%B6%EF%BC%9A%E9%99%A4%E4%BA%86%E6%8A%B1%E6%80%A8996%EF%BC%8C%E4%BD%A0%E7%9C%9F%E7%9A%84%E5%9C%A8%E4%B9%8E%E5%90%97%EF%BC%9F/" rel="next" title="拼多多事件：除了抱怨996，你真的在乎吗？">
+                  拼多多事件：除了抱怨996，你真的在乎吗？ <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+    <div class="pjax">
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://taigermos.github.io/2021/01/07/Java%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%EF%BC%9A%EF%BC%88%E4%BE%A7%E9%87%8D%E7%82%B9%E5%AD%A6%E4%B9%A0%EF%BC%89/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

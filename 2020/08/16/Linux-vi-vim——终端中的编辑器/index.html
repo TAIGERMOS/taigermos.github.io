@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="什么是 vi&#x2F;vim?vivi 是 Visual interface 的简称，是 Linux 中最经典的文本编辑器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux vi&#x2F;vim——终端中的编辑器">
+<meta property="og:url" content="https://taigermos.github.io/2020/08/16/Linux-vi-vim%E2%80%94%E2%80%94%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="什么是 vi&#x2F;vim?vivi 是 Visual interface 的简称，是 Linux 中最经典的文本编辑器">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/08/20/hQdzCk1THycsWuq.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/20/SyDp1rMg8k26QUb.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/VbRE3z4LXhx2ONw.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/Svy5MXh2UnxV73i.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/cUIH65GTzNqvjpA.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/7Ver9Rl4IDAYEJx.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/QFV1q8KalBnXL2S.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/2Vq7rIy5LvQnmuD.png">
+<meta property="og:image" content="https://i.loli.net/2020/08/21/gb4DR8tx9KB3nXp.png">
+<meta property="article:published_time" content="2020-08-16T04:03:28.000Z">
+<meta property="article:modified_time" content="2020-12-11T05:26:12.613Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="vi">
+<meta property="article:tag" content="vim">
+<meta property="article:tag" content="终端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/08/20/hQdzCk1THycsWuq.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2020/08/16/Linux-vi-vim%E2%80%94%E2%80%94%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Linux vi/vim——终端中的编辑器 | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-vi-vim"><span class="nav-number">1.</span> <span class="nav-text">什么是 vi&#x2F;vim?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vi"><span class="nav-number">1.1.</span> <span class="nav-text">vi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim"><span class="nav-number">1.2.</span> <span class="nav-text">vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.3.</span> <span class="nav-text">学习的目的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-vim-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">vi&#x2F;vim 的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%92%8C%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">打开和新建文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%B9%B6%E4%B8%94%E5%AE%9A%E4%BD%8D%E8%A1%8C"><span class="nav-number">2.1.1.</span> <span class="nav-text">打开文件并且定位行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">2.1.2.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">四种工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%B8%B8%E6%A8%A1%E5%BC%8F%EF%BC%9ANormal-Mode%EF%BC%88%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F-Command-Mode%EF%BC%89-%E2%80%94%E2%80%94-%E4%B8%BB%E8%A6%81%E7%94%A8%E6%9D%A5%E6%B5%8F%E8%A7%88%E5%92%8C%E4%BF%AE%E6%94%B9%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E7%9A%84"><span class="nav-number">2.2.1.</span> <span class="nav-text">正常模式：Normal Mode（命令模式 Command Mode） —— 主要用来浏览和修改文本内容的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%95%E7%BA%BF%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%EF%BC%9ALast-Line-Mode%EF%BC%88%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F-Command-Mode%EF%BC%89-%E2%80%94%E2%80%94-%E7%94%A8%E4%BA%8E%E6%93%8D%E4%BD%9C%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%EF%BC%88%E8%80%8C%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">底线命令模式：Last Line Mode（命令模式 Command Mode） —— 用于操作文本文件（而不是操作文本文件的内容）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%A8%A1%E5%BC%8F%EF%BC%9AInsert-Mode-%E2%80%94%E2%80%94-%E7%94%A8%E6%9D%A5%E5%90%91%E6%96%87%E6%9C%AC%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E7%9A%84"><span class="nav-number">2.2.3.</span> <span class="nav-text">插入模式：Insert Mode —— 用来向文本中添加内容的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E8%A7%89%E6%A8%A1%E5%BC%8F%EF%BC%9AVisual-Mode-%E2%80%94%E2%80%94-%E7%9B%B8%E5%BD%93%E4%BA%8E%E9%AB%98%E4%BA%AE%E9%80%89%E5%8F%96%E6%96%87%E6%9C%AC%E5%90%8E%E7%9A%84%E6%99%AE%E9%80%9A%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.4.</span> <span class="nav-text">视觉模式：Visual Mode —— 相当于高亮选取文本后的普通模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A7%BB%E5%8A%A8%EF%BC%88%E5%9F%BA%E6%9C%AC%EF%BC%89"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 移动（基本）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%B8%8A%E3%80%81%E4%B8%8B%E3%80%81%E5%B7%A6%E3%80%81%E5%8F%B3"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">1) 上、下、左、右</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%A1%8C%E5%86%85%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">2) 行内移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%A1%8C%E6%95%B0%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">3) 行数移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%B1%8F%E5%B9%95%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">4) 屏幕移动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A7%BB%E5%8A%A8%EF%BC%88%E7%A8%8B%E5%BA%8F%EF%BC%89"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 移动（程序）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%AE%B5%E8%90%BD%E7%A7%BB%E5%8A%A8"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">1) 段落移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%8B%AC%E5%8F%B7%E5%88%87%E6%8D%A2"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">2) 括号切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%A0%87%E8%AE%B0"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">3) 标记</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%92%A4%E9%94%80%E5%92%8C%E6%81%A2%E5%A4%8D%E6%92%A4%E9%94%80"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 撤销和恢复撤销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%80%89%E4%B8%AD%E6%96%87%E6%9C%AC%EF%BC%88%E5%8F%AF%E8%A7%86%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="nav-number">2.3.4.</span> <span class="nav-text">4. 选中文本（可视模式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%A4%8D%E5%88%B6%E3%80%81%E7%B2%98%E8%B4%B4"><span class="nav-number">2.3.5.</span> <span class="nav-text">5. 复制、粘贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%88%A0%E9%99%A4%E6%96%87%E6%9C%AC"><span class="nav-number">2.3.6.</span> <span class="nav-text">6. 删除文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.7.</span> <span class="nav-text">7. 替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E6%9F%A5%E6%89%BE"><span class="nav-number">2.3.8.</span> <span class="nav-text">8. 查找</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B8%B8%E8%A7%84%E6%9F%A5%E6%89%BE"><span class="nav-number">2.3.8.1.</span> <span class="nav-text">1) 常规查找</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8D%95%E8%AF%8D%E5%BF%AB%E9%80%9F%E5%8C%B9%E9%85%8D"><span class="nav-number">2.3.8.2.</span> <span class="nav-text">2) 单词快速匹配</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E6%9F%A5%E6%89%BE%E5%B9%B6%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.9.</span> <span class="nav-text">9. 查找并替换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%A8%E5%B1%80%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.9.1.</span> <span class="nav-text">1) 全局替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8F%AF%E8%A7%86%E5%8C%BA%E5%9F%9F%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.9.2.</span> <span class="nav-text">2) 可视区域替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A1%AE%E8%AE%A4%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.9.3.</span> <span class="nav-text">3) 确认替换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E6%8F%92%E5%85%A5%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.10.</span> <span class="nav-text">10. 插入命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%BC%94%E7%BB%83-1-%E2%80%94%E2%80%94-%E7%BC%96%E8%BE%91%E5%91%BD%E4%BB%A4%E5%92%8C%E6%95%B0%E5%AD%97%E8%BF%9E%E7%94%A8"><span class="nav-number">2.3.10.1.</span> <span class="nav-text">1) 演练 1 —— 编辑命令和数字连用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%BC%94%E7%BB%83-2-%E2%80%94%E2%80%94-%E5%88%A9%E7%94%A8-%E5%8F%AF%E8%A7%86%E5%9D%97-%E7%BB%99%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%A2%9E%E5%8A%A0%E6%B3%A8%E9%87%8A"><span class="nav-number">2.3.10.2.</span> <span class="nav-text">2) 演练 2 —— 利用 可视块 给多行代码增加注释</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E5%BA%95%E7%BA%BF%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.11.</span> <span class="nav-text">11. 底线命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E5%BA%95%E7%BA%BF%E5%91%BD%E4%BB%A4"><span class="nav-number">2.3.11.1.</span> <span class="nav-text">1) 基本底线命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BA%95%E7%BA%BF%E5%91%BD%E4%BB%A4%E6%89%A9%E5%B1%95"><span class="nav-number">2.3.11.2.</span> <span class="nav-text">2) 底线命令扩展</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B1%8F%E5%91%BD%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">分屏命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%87%E6%8D%A2%E5%88%86%E5%B1%8F%E7%AA%97%E5%8F%A3"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">1) 切换分屏窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%B0%83%E6%95%B4%E7%AA%97%E5%8F%A3%E5%A4%A7%E5%B0%8F"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">2) 调整窗口大小</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">常用命令速查图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-vim-%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">vi&#x2F;vim 使用实例</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2020/08/16/Linux-vi-vim%E2%80%94%E2%80%94%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux vi/vim——终端中的编辑器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-08-16 12:03:28" itemprop="dateCreated datePublished" datetime="2020-08-16T12:03:28+08:00">2020-08-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-11 13:26:12" itemprop="dateModified" datetime="2020-12-11T13:26:12+08:00">2020-12-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="什么是-vi-vim"><a href="#什么是-vi-vim" class="headerlink" title="什么是 vi/vim?"></a><strong>什么是 vi/vim?</strong></h1><h2 id="vi"><a href="#vi" class="headerlink" title="vi"></a><strong>vi</strong></h2><p>vi 是 Visual interface 的简称，是 Linux 中最经典的文本编辑器</p>
+<a id="more"></a>
+
+<p>vi 的核心设计思想 —— 让程序员的手指始终保持在键盘的核心区域，就能完成所有的编辑操作</p>
+<p><img data-src="https://i.loli.net/2020/08/20/hQdzCk1THycsWuq.png" alt="image.png"></p>
+<p>vi 的特点：</p>
+<ul>
+<li><p>没有图形界面 的 功能强大 的编辑器</p>
+</li>
+<li><p>只能是编辑 文本内容，不能对字体、段落进行排版</p>
+</li>
+<li><p>不支持鼠标操作</p>
+</li>
+<li><p>没有菜单</p>
+</li>
+<li><p>只有命令</p>
+</li>
+</ul>
+<p>vi 编辑器在系统管理、服务器管理编辑文件时，其功能永远不是图形界面的编辑器能比拟的</p>
+<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a><strong>vim</strong></h2><p>vim = vi improved</p>
+<p>vim 是从 vi 发展出来的一个文本编辑器，支持代码补全、编译及错误跳转等方便编程的功能特别丰富，在程序员中被广泛使用，被称为编辑器之神</p>
+<h2 id="学习的目的"><a href="#学习的目的" class="headerlink" title="学习的目的"></a><strong>学习的目的</strong></h2><p>在工作中，要对服务器上的文件进行简单的修改，可以使用 ssh 远程登录到服务器上，并且使用 vim 进行快速的编辑即可</p>
+<p>常见需要修改的文件包括：</p>
+<ul>
+<li><p>源程序</p>
+</li>
+<li><p>配置文件，例如 ssh 的配置文件 ~/.ssh/config</p>
+<blockquote>
+<ul>
+<li>在没有图形界面的环境下，要编辑文件，vim 是最佳选择！</li>
+<li>每一个要使用 Linux 的程序员，都应该或多或少的学习一些 vim 的常用命令</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h1 id="vi-vim-的使用"><a href="#vi-vim-的使用" class="headerlink" title="vi/vim 的使用"></a><strong>vi/vim 的使用</strong></h1><h2 id="打开和新建文件"><a href="#打开和新建文件" class="headerlink" title="打开和新建文件"></a><strong>打开和新建文件</strong></h2><p>在终端中输入 vim 在后面跟上文件名 即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim 文件名</span><br></pre></td></tr></table></figure>
+
+<p>如果文件已经存在，会直接打开该文件</p>
+<p>如果文件不存在，会新建一个文件</p>
+<h3 id="打开文件并且定位行"><a href="#打开文件并且定位行" class="headerlink" title="打开文件并且定位行"></a><strong>打开文件并且定位行</strong></h3><p>在日常工作中，有可能会遇到 打开一个文件，并定位到指定行 的情况</p>
+<p>例如：在开发时，知道某一行代码有错误，可以 快速定位 到出错代码的位置</p>
+<p>这个时候，可以使用以下命令打开文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim 文件名 + 行数</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：</strong></p>
+<p>如果只带上 + 而不指定行号，会直接定位到文件末尾</p>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a><strong>异常处理</strong></h3><p>如果 vim 异常退出，在磁盘上可能会保存有交换文件</p>
+<p>下次再使用 vim 编辑该文件时，会看到以下屏幕信息，按下字母 d 可以 删除交换文件 即可</p>
+<p><strong>提示：</strong></p>
+<p>按下键盘时，注意关闭输入法</p>
+<p><img data-src="https://i.loli.net/2020/08/20/SyDp1rMg8k26QUb.png" alt="image.png"></p>
+<h2 id="四种工作模式"><a href="#四种工作模式" class="headerlink" title="四种工作模式"></a><strong>四种工作模式</strong></h2><p><strong>vim 有四种基本工作模式：</strong></p>
+<ul>
+<li><h3 id="正常模式：Normal-Mode（命令模式-Command-Mode）-——-主要用来浏览和修改文本内容的"><a href="#正常模式：Normal-Mode（命令模式-Command-Mode）-——-主要用来浏览和修改文本内容的" class="headerlink" title="正常模式：Normal Mode（命令模式 Command Mode） —— 主要用来浏览和修改文本内容的"></a><strong>正常模式：Normal Mode（命令模式 Command Mode）</strong> —— 主要用来浏览和修改文本内容的</h3><ul>
+<li><p>打开文件首先进入命令模式，是使用 vim 的 <strong>入口</strong></p>
+</li>
+<li><p>通过 命令 对文件进行常规的编辑操作，例如：定位、翻页、复制、粘贴、删除……</p>
+</li>
+<li><p>在其他图形编辑器下，通过 快捷键 或者 鼠标 实现的操作，都在 命令模式 下实现</p>
+</li>
+</ul>
+</li>
+<li><h3 id="底线命令模式：Last-Line-Mode（命令模式-Command-Mode）-——-用于操作文本文件（而不是操作文本文件的内容）"><a href="#底线命令模式：Last-Line-Mode（命令模式-Command-Mode）-——-用于操作文本文件（而不是操作文本文件的内容）" class="headerlink" title="底线命令模式：Last Line Mode（命令模式 Command Mode） —— 用于操作文本文件（而不是操作文本文件的内容）"></a><strong>底线命令模式：Last Line Mode（命令模式 Command Mode）</strong> —— 用于操作文本文件（而不是操作文本文件的内容）</h3><ul>
+<li><p>例如保存文件；或者用来改变编辑器本身的状态，例如设定多栏窗口、标签或者退出编辑器</p>
+</li>
+<li><p>要退出 vim 返回到控制台，需要在底线命令模式下输入命令</p>
+</li>
+<li><p>末行模式 是 vim 的 <strong>出口</strong></p>
+</li>
+</ul>
+</li>
+<li><h3 id="插入模式：Insert-Mode-——-用来向文本中添加内容的"><a href="#插入模式：Insert-Mode-——-用来向文本中添加内容的" class="headerlink" title="插入模式：Insert Mode —— 用来向文本中添加内容的"></a><strong>插入模式：Insert Mode</strong> —— 用来向文本中添加内容的</h3></li>
+<li><h3 id="视觉模式：Visual-Mode-——-相当于高亮选取文本后的普通模式"><a href="#视觉模式：Visual-Mode-——-相当于高亮选取文本后的普通模式" class="headerlink" title="视觉模式：Visual Mode —— 相当于高亮选取文本后的普通模式"></a><strong>视觉模式：Visual Mode</strong> —— 相当于高亮选取文本后的普通模式</h3><ul>
+<li>可视模式具有子模式，以行为单位进行选取的可视行模式，使用 “V” 键进入（也就是 Shift+v）；和以块为单位进行选取的可视块模式，使用 “Ctrl+v” 键进入。</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://i.loli.net/2020/08/21/VbRE3z4LXhx2ONw.png" alt="image.png"></p>
+<p><strong>提示：</strong><br>在 Touch Bar 的 Mac 电脑上 ，按 ESC 不方便，可以使用 CTRL + [ 替代</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a><strong>常用命令</strong></h2><h3 id="1-移动（基本）"><a href="#1-移动（基本）" class="headerlink" title="1. 移动（基本）"></a><strong>1. 移动（基本）</strong></h3><p>要熟练使用 vim，首先应该学会怎么在正常模式下样快速移动光标</p>
+<p>编辑操作命令，能够和移动命令结合在一起使用</p>
+<h4 id="1-上、下、左、右"><a href="#1-上、下、左、右" class="headerlink" title="1) 上、下、左、右"></a><strong>1) 上、下、左、右</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">功能</th>
+<th align="center">手指</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">h</td>
+<td align="center">向左</td>
+<td align="center">食指</td>
+</tr>
+<tr>
+<td align="center">j</td>
+<td align="center">向下</td>
+<td align="center">食指</td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td align="center">向上</td>
+<td align="center">中指</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center">向右</td>
+<td align="center">无名指</td>
+</tr>
+</tbody></table>
+<p><img data-src="https://i.loli.net/2020/08/21/Svy5MXh2UnxV73i.png" alt="image.png"></p>
+<h4 id="2-行内移动"><a href="#2-行内移动" class="headerlink" title="2) 行内移动"></a><strong>2) 行内移动</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">w</td>
+<td align="center">word</td>
+<td align="center">向后移动一个单词</td>
+</tr>
+<tr>
+<td align="center">b</td>
+<td align="center">back</td>
+<td align="center">向前移动一个单词</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center"></td>
+<td align="center">行首</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center"></td>
+<td align="center">行首，第一个不是空白字符的位置</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td align="center"></td>
+<td align="center">行尾</td>
+</tr>
+</tbody></table>
+<h4 id="3-行数移动"><a href="#3-行数移动" class="headerlink" title="3) 行数移动"></a><strong>3) 行数移动</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">gg</td>
+<td align="center">go</td>
+<td align="center">文件顶部</td>
+</tr>
+<tr>
+<td align="center">G</td>
+<td align="center">go</td>
+<td align="center">文件末尾</td>
+</tr>
+<tr>
+<td align="center">数字gg</td>
+<td align="center">go</td>
+<td align="center">移动到 数字 对应行数</td>
+</tr>
+<tr>
+<td align="center">数字G</td>
+<td align="center">go</td>
+<td align="center">移动到 数字 对应行数</td>
+</tr>
+<tr>
+<td align="center">:数字</td>
+<td align="center"></td>
+<td align="center">移动到 数字 对应行数</td>
+</tr>
+</tbody></table>
+<h4 id="4-屏幕移动"><a href="#4-屏幕移动" class="headerlink" title="4) 屏幕移动"></a><strong>4) 屏幕移动</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ctrl + b</td>
+<td align="center">back</td>
+<td align="center">向上翻页</td>
+</tr>
+<tr>
+<td align="center">Ctrl + f</td>
+<td align="center">forward</td>
+<td align="center">向下翻页</td>
+</tr>
+<tr>
+<td align="center">H</td>
+<td align="center">Head</td>
+<td align="center">屏幕顶部</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">Middle</td>
+<td align="center">屏幕中间</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">Low</td>
+<td align="center">屏幕底部</td>
+</tr>
+</tbody></table>
+<h3 id="2-移动（程序）"><a href="#2-移动（程序）" class="headerlink" title="2. 移动（程序）"></a><strong>2. 移动（程序）</strong></h3><h4 id="1-段落移动"><a href="#1-段落移动" class="headerlink" title="1) 段落移动"></a><strong>1) 段落移动</strong></h4><p>vim中使用空行来区分段落</p>
+<p>在程序开发时，通常一段功能相关的代码会写在一起 —— 之间没有空行</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">{</td>
+<td align="center">上一段</td>
+</tr>
+<tr>
+<td align="center">}</td>
+<td align="center">下一段</td>
+</tr>
+</tbody></table>
+<h4 id="2-括号切换"><a href="#2-括号切换" class="headerlink" title="2) 括号切换"></a><strong>2) 括号切换</strong></h4><p>在程序世界中，()、[]、{} 使用频率很高，而且都是成对出现的</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">%</td>
+<td align="center">括号匹配及切换</td>
+</tr>
+</tbody></table>
+<h4 id="3-标记"><a href="#3-标记" class="headerlink" title="3) 标记"></a><strong>3) 标记</strong></h4><p>在开发时，某一块代码可能需要稍后处理，例如：编辑、查看</p>
+<p>此时先使用 m 增加一个标记，这样可以在需要时快速地跳转回来或者执行其他编辑操作</p>
+<p>标记名称 可以是 a~z 或者 A~Z 之间的任意一个字母<br>添加了标记的行如果被删除，标记同时被删除</p>
+<p>如果在其他行添加了相同名称的标记，之前添加的标记也会被替换掉</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">mx</td>
+<td align="center">mark</td>
+<td align="center">添加标记 x，x 是 a~z 或者 A~Z 之间的任意一个字母</td>
+</tr>
+<tr>
+<td align="center">‘x</td>
+<td align="center"></td>
+<td align="center">直接定位到标记 x 所在位置</td>
+</tr>
+</tbody></table>
+<h3 id="3-撤销和恢复撤销"><a href="#3-撤销和恢复撤销" class="headerlink" title="3. 撤销和恢复撤销"></a><strong>3. 撤销和恢复撤销</strong></h3><p>在学习编辑命令之前，先要知道怎样撤销之前一次 错误的 编辑动作！</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u</td>
+<td align="center">undo</td>
+<td align="center">撤销上次命令</td>
+</tr>
+<tr>
+<td align="center">CTRL + r</td>
+<td align="center">redo</td>
+<td align="center">恢复撤销的命令</td>
+</tr>
+</tbody></table>
+<h3 id="4-选中文本（可视模式）"><a href="#4-选中文本（可视模式）" class="headerlink" title="4. 选中文本（可视模式）"></a><strong>4. 选中文本（可视模式）</strong></h3><p>学习复制命令前，应该先学会怎么样选中要复制的代码</p>
+<p>在 vim 中要选择文本，需要先使用 Visual 命令切换到 可视模式</p>
+<p>vim 中提供了三种可视模式，可以方便程序员选择选中文本的方式</p>
+<p>按 ESC 可以放弃选中，返回到正常模式</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">模式</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">v</td>
+<td align="center">可视模式</td>
+<td align="center">从光标位置开始按照正常模式选择文本</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">可视行模式</td>
+<td align="center">选中光标经过的完整行</td>
+</tr>
+<tr>
+<td align="center">Ctrl + v</td>
+<td align="center">可视块模式</td>
+<td align="center">垂直方向选中文本</td>
+</tr>
+</tbody></table>
+<p>可视模式下，可以和 移动命令 连用，例如：ggVG 能够选中所有内容</p>
+<h3 id="5-复制、粘贴"><a href="#5-复制、粘贴" class="headerlink" title="5. 复制、粘贴"></a><strong>5. 复制、粘贴</strong></h3><p>vi 中提供有一个 被复制文本的缓冲区</p>
+<ul>
+<li><p>复制 命令会将选中的文字保存在缓冲区</p>
+</li>
+<li><p>删除 命令删除的文字会被保存在缓冲区</p>
+</li>
+<li><p>在需要的位置，使用 粘贴 命令可以将缓冲区的文字插入到光标所在位置</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">y(移动命令)</td>
+<td align="center">copy</td>
+<td align="center">复制</td>
+</tr>
+<tr>
+<td align="center">yy</td>
+<td align="center">copy</td>
+<td align="center">复制一行，可以 nyy 复制多行</td>
+</tr>
+<tr>
+<td align="center">p</td>
+<td align="center">paste</td>
+<td align="center">粘贴</td>
+</tr>
+</tbody></table>
+<p><strong>提示：</strong></p>
+<ul>
+<li><p>命令 d、x 类似于图形界面的 剪切操作 —— CTRL + X</p>
+</li>
+<li><p>命令 y 类似于图形界面的 复制操作 —— CTRL + C</p>
+</li>
+<li><p>命令 p 类似于图形界面的 粘贴操作 —— CTRL + V</p>
+</li>
+<li><p>vi 中的 文本缓冲区同样只有一个，如果后续做过 复制、剪切 操作，之前缓冲区中的内容会被替换</p>
+</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li>vi 中的 文本缓冲区 和系统的 剪贴板 不是同一个</li>
+<li>所以在其他软件中使用 CTRL + C 复制的内容，不能在 vi 中通过 P 命令粘贴</li>
+<li>可以在 编辑模式 下使用 鼠标右键粘贴</li>
+</ul>
+<h3 id="6-删除文本"><a href="#6-删除文本" class="headerlink" title="6. 删除文本"></a><strong>6. 删除文本</strong></h3><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">x</td>
+<td align="center">cut</td>
+<td align="center">删除光标所在字符，或者选中文字</td>
+</tr>
+<tr>
+<td align="center">d(移动命令)</td>
+<td align="center">delete</td>
+<td align="center">删除移动命令对应的内容</td>
+</tr>
+<tr>
+<td align="center">dd</td>
+<td align="center">delete</td>
+<td align="center">删除光标所在行，可以 ndd 复制多行</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">delete</td>
+<td align="center">删除至行尾</td>
+</tr>
+</tbody></table>
+<p><strong>提示：</strong><br>如果使用可视模式已经选中了一段文本，那么无论使用 d 还是 x，都可以删除选中文本</p>
+<p>删除命令可以和移动命令连用，以下是常见的组合命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dw        # 从光标位置删除到单词末尾</span><br><span class="line">d0        # 从光标位置删除到一行的起始位置</span><br><span class="line">d&#125;        # 从光标位置删除到段落结尾</span><br><span class="line">ndd       # 从光标位置向下连续删除 n 行</span><br><span class="line">d代码行G   # 从光标所在行 删除到 指定代码行 之间的所有代码</span><br><span class="line">d&#39;a       # 从光标所在行 删除到 标记a 之间的所有代码</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-替换"><a href="#7-替换" class="headerlink" title="7. 替换"></a><strong>7. 替换</strong></h3><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+<th align="center">工作模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">r</td>
+<td align="center">replace</td>
+<td align="center">替换当前字符</td>
+<td align="center">命令模式</td>
+</tr>
+<tr>
+<td align="center">R</td>
+<td align="center">replace</td>
+<td align="center">替换当前行光标后的字符</td>
+<td align="center">替换模式</td>
+</tr>
+</tbody></table>
+<p>R 命令可以进入替换模式，替换完成后，按下 ESC 可以回到命令模式</p>
+<p>替换命令的作用就是不用进入编辑模式，对文件进行轻量级的修改</p>
+<h3 id="8-查找"><a href="#8-查找" class="headerlink" title="8. 查找"></a><strong>8. 查找</strong></h3><h4 id="1-常规查找"><a href="#1-常规查找" class="headerlink" title="1) 常规查找"></a><strong>1) 常规查找</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">/str</td>
+<td align="center">查找 str</td>
+</tr>
+</tbody></table>
+<p>查找到指定内容之后，使用 Next 查找下一个出现的位置</p>
+<ul>
+<li>n: 查找下一个</li>
+<li>N: 查找上一个</li>
+</ul>
+<p>如果不想看到高亮显示，可以随便查找一个文件中不存在的内容即可</p>
+<h4 id="2-单词快速匹配"><a href="#2-单词快速匹配" class="headerlink" title="2) 单词快速匹配"></a><strong>2) 单词快速匹配</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">*</td>
+<td align="center">向后查找当前光标所在单词</td>
+</tr>
+<tr>
+<td align="center">#</td>
+<td align="center">向前查找当前光标所在单词</td>
+</tr>
+</tbody></table>
+<p>在开发中，通过单词快速匹配，可以快速看到这个单词在其他什么位置使用过</p>
+<h3 id="9-查找并替换"><a href="#9-查找并替换" class="headerlink" title="9. 查找并替换"></a><strong>9. 查找并替换</strong></h3><p>在 vim 中查找和替换命令需要在底线命令模式下执行</p>
+<p>命令格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s&#x2F;&#x2F;&#x2F;g</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-全局替换"><a href="#1-全局替换" class="headerlink" title="1) 全局替换"></a><strong>1) 全局替换</strong></h4><p>一次性替换文件中的所有出现的旧文本</p>
+<p>命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s&#x2F;旧文本&#x2F;新文本&#x2F;g</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-可视区域替换"><a href="#2-可视区域替换" class="headerlink" title="2) 可视区域替换"></a><strong>2) 可视区域替换</strong></h4><p>先选中要替换文字的范围</p>
+<p>命令格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:s&#x2F;旧文本&#x2F;新文本&#x2F;g</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-确认替换"><a href="#3-确认替换" class="headerlink" title="3) 确认替换"></a><strong>3) 确认替换</strong></h4><p>如果把末尾的 g 改成 gc 在替换的时候，会有提示！推荐使用！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s&#x2F;旧文本&#x2F;新文本&#x2F;gc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>y - yes 替换</p>
+</li>
+<li><p>n - no 不替换</p>
+</li>
+<li><p>a - all 替换所有</p>
+</li>
+<li><p>q - quit 退出替换</p>
+</li>
+<li><p>l - last 最后一个，并把光标移动到行首</p>
+</li>
+<li><p>^E 向下滚屏</p>
+</li>
+<li><p>^Y 向上滚屏</p>
+</li>
+</ul>
+<h3 id="10-插入命令"><a href="#10-插入命令" class="headerlink" title="10. 插入命令"></a><strong>10. 插入命令</strong></h3><p>在 vi 中除了常用的 i 进入 编辑模式 外，还提供了以下命令同样可以进入编辑模式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+<th align="center">常用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i</td>
+<td align="center">insert</td>
+<td align="center">在当前字符前插入文本</td>
+<td align="center">常用</td>
+</tr>
+<tr>
+<td align="center">I</td>
+<td align="center">insert</td>
+<td align="center">在行首插入文本</td>
+<td align="center">较常用</td>
+</tr>
+<tr>
+<td align="center">a</td>
+<td align="center">append</td>
+<td align="center">在当前字符后添加文本</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">A</td>
+<td align="center">append</td>
+<td align="center">在行末添加文本</td>
+<td align="center">较常用</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="center"></td>
+<td align="center">在当前行后面插入一空行</td>
+<td align="center">常用</td>
+</tr>
+<tr>
+<td align="center">O</td>
+<td align="center"></td>
+<td align="center">在当前行前面插入一空行</td>
+<td align="center">常用</td>
+</tr>
+</tbody></table>
+<p><img data-src="https://i.loli.net/2020/08/21/cUIH65GTzNqvjpA.png" alt="image.png"></p>
+<h4 id="1-演练-1-——-编辑命令和数字连用"><a href="#1-演练-1-——-编辑命令和数字连用" class="headerlink" title="1) 演练 1 —— 编辑命令和数字连用"></a><strong>1) 演练 1 —— 编辑命令和数字连用</strong></h4><p>在开发中，可能会遇到连续输入 N 个同样的字符</p>
+<p>在 Python 中有简单的方法，但是其他语言中通常需要自己输入</p>
+<p>例如：**<strong>****</strong> 连续 10 个星号</p>
+<p>要实现这个效果可以在正常模式下</p>
+<ol>
+<li><p>输入 10，表示要重复 10 次</p>
+</li>
+<li><p>输入 i 进入 插入模式</p>
+</li>
+<li><p>输入 * 也就是重复的文字</p>
+</li>
+<li><p>按下 ESC 返回到 正常模式，返回之后 vim 就会把第 2、3 两步的操作重复 10 次</p>
+</li>
+</ol>
+<p><strong>提示：</strong> 正常开发时，在 进入插入模式之前，不要按数字</p>
+<h4 id="2-演练-2-——-利用-可视块-给多行代码增加注释"><a href="#2-演练-2-——-利用-可视块-给多行代码增加注释" class="headerlink" title="2) 演练 2 —— 利用 可视块 给多行代码增加注释"></a><strong>2) 演练 2 —— 利用 可视块 给多行代码增加注释</strong></h4><p>在开发中，可能会遇到一次性给多行代码 增加注释 的情况</p>
+<p>在 Python 中，要给代码增加注释，可以在代码前增加一个 #</p>
+<p>要实现这个效果可以在正常模式下</p>
+<ol>
+<li><p>移动到要添加注释的 第 1 行代码，按 ^ 来到行首</p>
+</li>
+<li><p>按 CTRL + v 进入 可视块 模式</p>
+</li>
+<li><p>使用 j 向下连续选中要添加的代码行</p>
+</li>
+<li><p>输入 I 进入 插入模式，并在 行首插5. 入，注意：一定要使用 I</p>
+</li>
+<li><p>输入 # 也就是注释符号</p>
+</li>
+<li><p>按下 ESC 返回到 正常模式，返回之后 vi 会在之前选中的每一行代码 前 插入 #</p>
+</li>
+</ol>
+<h3 id="11-底线命令"><a href="#11-底线命令" class="headerlink" title="11. 底线命令"></a><strong>11. 底线命令</strong></h3><p>底线命令主要是针对文件进行操作的：保存、退出、保存&amp;退出、搜索&amp;替换、另存、新建、浏览文件</p>
+<h4 id="1-基本底线命令"><a href="#1-基本底线命令" class="headerlink" title="1) 基本底线命令"></a><strong>1) 基本底线命令</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">:w</td>
+<td align="center">write</td>
+<td align="center">保存</td>
+</tr>
+<tr>
+<td align="center">:q</td>
+<td align="center">quit</td>
+<td align="center">退出，如果没有保存，不允许退出</td>
+</tr>
+<tr>
+<td align="center">:q!</td>
+<td align="center">quit</td>
+<td align="center">强行退出，不保存退出</td>
+</tr>
+<tr>
+<td align="center">:wq</td>
+<td align="center">write &amp; quit</td>
+<td align="center">保存并退出</td>
+</tr>
+<tr>
+<td align="center">:x</td>
+<td align="center"></td>
+<td align="center">保存并退出</td>
+</tr>
+<tr>
+<td align="center">:%s///gc</td>
+<td align="center"></td>
+<td align="center">确认搜索并替换</td>
+</tr>
+</tbody></table>
+<p><strong>提示：</strong> 在实际开发中，可以使用 w 命令阶段性的备份代码</p>
+<h4 id="2-底线命令扩展"><a href="#2-底线命令扩展" class="headerlink" title="2) 底线命令扩展"></a><strong>2) 底线命令扩展</strong></h4><table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">:e .</td>
+<td align="center">edit</td>
+<td align="center">会打开内置的文件浏览器，浏览要当前目录下的文件</td>
+</tr>
+<tr>
+<td align="center">:n 文件名</td>
+<td align="center">new</td>
+<td align="center">新建文件</td>
+</tr>
+<tr>
+<td align="center">:w 文件名</td>
+<td align="center">write</td>
+<td align="center">另存为，但是仍然编辑当前文件，并不会切换文件</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong> 切换文件之前，必须保证当前这个文件已经被保存！</p>
+<h2 id="分屏命令"><a href="#分屏命令" class="headerlink" title="分屏命令"></a><strong>分屏命令</strong></h2><p>属于 vim 的高级命令 —— 可以 同时编辑和查看多个文件</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">:sp [文件名]</td>
+<td align="center">split</td>
+<td align="center">横向增加分屏</td>
+</tr>
+<tr>
+<td align="center">:vsp [文件名]</td>
+<td align="center">vertical split</td>
+<td align="center">纵向增加分屏</td>
+</tr>
+</tbody></table>
+<h4 id="1-切换分屏窗口"><a href="#1-切换分屏窗口" class="headerlink" title="1) 切换分屏窗口"></a><strong>1) 切换分屏窗口</strong></h4><p>分屏窗口都是基于 CTRL + W 这个快捷键的，w 对应的英文单词是 window</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">w</td>
+<td align="center">window</td>
+<td align="center">切换到下一个窗口</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">reverse</td>
+<td align="center">互换窗口</td>
+</tr>
+<tr>
+<td align="center">c</td>
+<td align="center">close</td>
+<td align="center">关闭当前窗口，但是不能关闭最后一个窗口</td>
+</tr>
+<tr>
+<td align="center">q</td>
+<td align="center">quit</td>
+<td align="center">退出当前窗口，如果是最后一个窗口，则关闭 vi</td>
+</tr>
+<tr>
+<td align="center">o</td>
+<td align="center">other</td>
+<td align="center">关闭其他窗口</td>
+</tr>
+</tbody></table>
+<h4 id="2-调整窗口大小"><a href="#2-调整窗口大小" class="headerlink" title="2) 调整窗口大小"></a><strong>2) 调整窗口大小</strong></h4><p>分屏窗口都是基于 CTRL + W 这个快捷键的，w 对应的英文单词是 window</p>
+<table>
+<thead>
+<tr>
+<th align="center">命令</th>
+<th align="center">英文</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">+</td>
+<td align="center"></td>
+<td align="center">增加窗口高度</td>
+</tr>
+<tr>
+<td align="center">-</td>
+<td align="center"></td>
+<td align="center">减少窗口高度</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="center"></td>
+<td align="center">增加窗口宽度</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center"></td>
+<td align="center">减少窗口宽度</td>
+</tr>
+<tr>
+<td align="center">=</td>
+<td align="center"></td>
+<td align="center">等分窗口大小</td>
+</tr>
+</tbody></table>
+<p>调整窗口宽高的命令可以和数字连用，例如：5 CTRL + W + 连续 5 次增加高度</p>
+<h1 id="常用命令速查图"><a href="#常用命令速查图" class="headerlink" title="常用命令速查图"></a><strong>常用命令速查图</strong></h1><p><img data-src="https://i.loli.net/2020/08/21/7Ver9Rl4IDAYEJx.png" alt="image.png"></p>
+<h1 id="vi-vim-使用实例"><a href="#vi-vim-使用实例" class="headerlink" title="vi/vim 使用实例"></a><strong>vi/vim 使用实例</strong></h1><p><strong>使用 vi/vim 进入正常模式</strong></p>
+<p>如果你想要使用 vim 来建立一个名为 runoob.txt 的文件时，你可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim runoob.txt</span><br></pre></td></tr></table></figure>
+
+<p>直接输入 vim 文件名 就能够进入 vim 的一般模式了。请注意，记得 vim 后面一定要加文件名，不管该文件存在与否！</p>
+<p><img data-src="https://i.loli.net/2020/08/21/QFV1q8KalBnXL2S.png" alt="image.png"></p>
+<p><strong>按下 i 进入插入模式(也称为编辑模式)，开始编辑文字</strong></p>
+<p>在正常模式之中，只要按下 i, o, a 等字符就可以进入输插入模式了！</p>
+<p>在插入模式当中，你可以发现在左下角状态栏中会出现 –INSERT- 的字样，那就是可以输入任意字符的提示。</p>
+<p>这个时候，键盘上除了 Esc 这个按键之外，其他的按键都可以视作为一般的输入按钮了，所以你可以进行任何的编辑。</p>
+<p><img data-src="https://i.loli.net/2020/08/21/2Vq7rIy5LvQnmuD.png" alt="image.png"></p>
+<p><strong>按下 ESC 按钮回到正常模式</strong></p>
+<p>好了，假设我已经按照上面的样式给他编辑完毕了，那么应该要如何退出呢？是的！没错！就是给他按下 Esc 这个按钮即可！马上你就会发现画面左下角的 – INSERT – 不见了！</p>
+<p><strong>在正常模式中按下 :wq 储存后离开 vim</strong></p>
+<p>OK，我们要存档了，存盘并离开的指令很简单，输入 :wq 即可保存离开！</p>
+<p><img data-src="https://i.loli.net/2020/08/21/gb4DR8tx9KB3nXp.png" alt="image.png"></p>
+<p>OK! 这样我们就成功创建了一个 runoob.txt 的文件。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/vi/" rel="tag"># vi</a>
+              <a href="/tags/vim/" rel="tag"># vim</a>
+              <a href="/tags/%E7%BB%88%E7%AB%AF/" rel="tag"># 终端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/10/Mac-Os%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%92%8C%E5%AE%B6-home-%E7%9B%AE%E5%BD%95%E5%88%86%E5%88%AB%E6%8C%87%E4%BB%80%E4%B9%88%EF%BC%8C%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BD%95%E5%85%B3%E7%B3%BB%EF%BC%9F/" rel="prev" title="Mac Os系统中的根目录和家(home)目录分别指什么，它们有何关系？">
+                  <i class="fa fa-chevron-left"></i> Mac Os系统中的根目录和家(home)目录分别指什么，它们有何关系？
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/15/%E5%B0%8F%E8%AF%B4%EF%BC%9A%E3%80%8A%E6%9C%88%E4%BA%AE%E4%B8%8E%E5%85%AD%E4%BE%BF%E5%A3%AB%E3%80%8B/" rel="next" title="小说：《月亮与六便士》">
+                  小说：《月亮与六便士》 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+    <div class="pjax">
+
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://taigermos.github.io/2020/08/16/Linux-vi-vim%E2%80%94%E2%80%94%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E7%BC%96%E8%BE%91%E5%99%A8/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>
