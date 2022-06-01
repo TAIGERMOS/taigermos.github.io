@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taigermos.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="Uber-go ZapZap是非常快的、结构化的，分日志级别的Go日志库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 使用Zap Logger">
+<meta property="og:url" content="https://taigermos.github.io/2022/06/01/Go-%E4%BD%BF%E7%94%A8Zap-Logger/index.html">
+<meta property="og:site_name" content="TAIGERMOS">
+<meta property="og:description" content="Uber-go ZapZap是非常快的、结构化的，分日志级别的Go日志库。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/06/01/nO4WL76d29Fv8NT.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/01/nVEzmwspjgebYAD.png">
+<meta property="article:published_time" content="2022-06-01T02:19:49.000Z">
+<meta property="article:modified_time" content="2022-06-01T02:20:23.796Z">
+<meta property="article:author" content="Aaron">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Zap Logger">
+<meta property="article:tag" content="Uber-go Zap">
+<meta property="article:tag" content="日志">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/06/01/nO4WL76d29Fv8NT.png">
+
+
+<link rel="canonical" href="https://taigermos.github.io/2022/06/01/Go-%E4%BD%BF%E7%94%A8Zap-Logger/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Go 使用Zap Logger | TAIGERMOS</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">TAIGERMOS</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Uber-go-Zap"><span class="nav-number">1.</span> <span class="nav-text">Uber-go Zap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9Uber-go-zap"><span class="nav-number">2.</span> <span class="nav-text">为什么选择Uber-go zap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEZap-Logger"><span class="nav-number">4.</span> <span class="nav-text">配置Zap Logger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logger"><span class="nav-number">5.</span> <span class="nav-text">Logger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sugared-Logger"><span class="nav-number">6.</span> <span class="nav-text">Sugared Logger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6logger"><span class="nav-number">7.</span> <span class="nav-text">定制logger</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6%E8%80%8C%E4%B8%8D%E6%98%AF%E7%BB%88%E7%AB%AF"><span class="nav-number">7.1.</span> <span class="nav-text">将日志写入文件而不是终端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86JSON-Encoder%E6%9B%B4%E6%94%B9%E4%B8%BA%E6%99%AE%E9%80%9A%E7%9A%84Log-Encoder"><span class="nav-number">7.2.</span> <span class="nav-text">将JSON Encoder更改为普通的Log Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E6%97%B6%E9%97%B4%E7%BC%96%E7%A0%81%E5%B9%B6%E6%B7%BB%E5%8A%A0%E8%B0%83%E7%94%A8%E8%80%85%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-number">7.3.</span> <span class="nav-text">更改时间编码并添加调用者详细信息</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Aaron"
+      src="/images/IMG_6199.JPG">
+  <p class="site-author-name" itemprop="name">Aaron</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TAIGERMOS" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TAIGERMOS" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:taigermos@qq.com" title="E-Mail → mailto:taigermos@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/TAIGERMOSS" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;TAIGERMOSS" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://taigermos.github.io/2022/06/01/Go-%E4%BD%BF%E7%94%A8Zap-Logger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/IMG_6199.JPG">
+      <meta itemprop="name" content="Aaron">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TAIGERMOS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Go 使用Zap Logger
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-06-01 10:19:49 / Modified: 10:20:23" itemprop="dateCreated datePublished" datetime="2022-06-01T10:19:49+08:00">2022-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Uber-go-Zap"><a href="#Uber-go-Zap" class="headerlink" title="Uber-go Zap"></a>Uber-go Zap</h3><p>Zap是非常快的、结构化的，分日志级别的Go日志库。</p>
+<a id="more"></a>
+
+<h3 id="为什么选择Uber-go-zap"><a href="#为什么选择Uber-go-zap" class="headerlink" title="为什么选择Uber-go zap"></a>为什么选择Uber-go zap</h3><ul>
+<li>它同时提供了结构化日志记录和printf风格的日志记录</li>
+<li>它非常的快</li>
+</ul>
+<p>根据Uber-go Zap的文档，它的性能比类似的结构化日志包更好——也比标准库更快。 以下是Zap发布的基准测试信息</p>
+<p>记录一条消息和10个字段:</p>
+<p><img data-src="https://s2.loli.net/2022/06/01/nO4WL76d29Fv8NT.png" alt="image.png"></p>
+<p>记录一个静态字符串，没有任何上下文或printf风格的模板：</p>
+<p><img data-src="https://s2.loli.net/2022/06/01/nVEzmwspjgebYAD.png" alt="image.png"></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>运行下面的命令安装zap</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> get -u <span class="keyword">go</span>.uber.org/zap</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置Zap-Logger"><a href="#配置Zap-Logger" class="headerlink" title="配置Zap Logger"></a>配置Zap Logger</h3><p>Zap提供了两种类型的日志记录器—Sugared Logger和Logger。</p>
+<p>在性能很好但不是很关键的上下文中，使用SugaredLogger。它比其他结构化日志记录包快4-10倍，并且支持结构化和printf风格的日志记录。</p>
+<p>在每一微秒和每一次内存分配都很重要的上下文中，使用Logger。它甚至比SugaredLogger更快，内存分配次数也更少，但它只支持强类型的结构化日志记录。</p>
+<h3 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h3><ul>
+<li>通过调用zap.NewProduction()/zap.NewDevelopment()或者zap.Example()创建一个Logger。</li>
+<li>上面的每一个函数都将创建一个logger。唯一的区别在于它将记录的信息不同。例如production logger默认记录调用函数信息、日期和时间等。</li>
+<li>通过Logger调用Info/Error等。</li>
+<li>默认情况下日志都会打印到应用程序的console界面。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> logger *zap.Logger</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    InitLogger()</span><br><span class="line">    <span class="keyword">defer</span> logger.Sync()</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;www.5lmh.com&quot;</span>)</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;http://www.google.com&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitLogger</span><span class="params">()</span></span> &#123;</span><br><span class="line">    logger, _ = zap.NewProduction()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">simpleHttpGet</span><span class="params">(url <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    resp, err := http.Get(url)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        logger.Error(</span><br><span class="line">            <span class="string">&quot;Error fetching url..&quot;</span>,</span><br><span class="line">            zap.String(<span class="string">&quot;url&quot;</span>, url),</span><br><span class="line">            zap.Error(err))</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        logger.Info(<span class="string">&quot;Success..&quot;</span>,</span><br><span class="line">            zap.String(<span class="string">&quot;statusCode&quot;</span>, resp.Status),</span><br><span class="line">            zap.String(<span class="string">&quot;url&quot;</span>, url))</span><br><span class="line">        resp.Body.Close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，我们首先创建了一个Logger，然后使用Info/ Error等Logger方法记录消息。</p>
+<p>日志记录器方法的语法是这样的：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(log *Logger)</span> <span class="title">MethodXXX</span><span class="params">(msg <span class="keyword">string</span>, fields ...Field)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>其中MethodXXX是一个可变参数函数，可以是Info / Error/ Debug / Panic等。每个方法都接受一个消息字符串和任意数量的zapcore.Field场参数。</p>
+<p>每个zapcore.Field其实就是一组键值对参数。</p>
+<p>我们执行上面的代码会得到如下输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573180648.858149,&quot;caller&quot;:&quot;ce2&#x2F;main.go:25&quot;,&quot;msg&quot;:&quot;Error fetching url..&quot;,&quot;url&quot;:&quot;www.5lmh.com&quot;,&quot;error&quot;:&quot;Get www.5lmh.com: unsupported protocol scheme \&quot;\&quot;&quot;,&quot;stacktrace&quot;:&quot;main.simpleHttpGet\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce2&#x2F;main.go:25\nmain.main\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce2&#x2F;main.go:14\nruntime.main\n\tE:&#x2F;go&#x2F;src&#x2F;runtime&#x2F;proc.go:200&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573180669.9273467,&quot;caller&quot;:&quot;ce2&#x2F;main.go:25&quot;,&quot;msg&quot;:&quot;Error fetching url..&quot;,&quot;url&quot;:&quot;http:&#x2F;&#x2F;www.google.com&quot;,&quot;error&quot;:&quot;Get http:&#x2F;&#x2F;www.google.com: dial tcp 31.13.72.54:80: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.&quot;,&quot;stacktrace&quot;:&quot;main.simpleHttpGet\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce2&#x2F;main.go:25\nmain.main\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce2&#x2F;main.go:15\nruntime.main\n\tE:&#x2F;go&#x2F;src&#x2F;runtime&#x2F;proc.go:200&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Sugared-Logger"><a href="#Sugared-Logger" class="headerlink" title="Sugared Logger"></a>Sugared Logger</h3><p>现在让我们使用Sugared Logger来实现相同的功能。</p>
+<ul>
+<li>大部分的实现基本都相同。</li>
+<li>惟一的区别是，我们通过调用主logger的. Sugar()方法来获取一个SugaredLogger。</li>
+<li>然后使用SugaredLogger以printf格式记录语句</li>
+</ul>
+<p>下面是修改过后使用SugaredLogger代替Logger的代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sugarLogger *zap.SugaredLogger</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    InitLogger()</span><br><span class="line">    <span class="keyword">defer</span> sugarLogger.Sync()</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;www.5lmh.com&quot;</span>)</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;http://www.google.com&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitLogger</span><span class="params">()</span></span> &#123;</span><br><span class="line">    logger, _ := zap.NewProduction()</span><br><span class="line">    sugarLogger = logger.Sugar()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">simpleHttpGet</span><span class="params">(url <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    sugarLogger.Debugf(<span class="string">&quot;Trying to hit GET request for %s&quot;</span>, url)</span><br><span class="line">    resp, err := http.Get(url)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        sugarLogger.Errorf(<span class="string">&quot;Error fetching URL %s : Error = %s&quot;</span>, url, err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        sugarLogger.Infof(<span class="string">&quot;Success! statusCode = %s for URL %s&quot;</span>, resp.Status, url)</span><br><span class="line">        resp.Body.Close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573180998.3522997,&quot;caller&quot;:&quot;ce3&#x2F;main.go:27&quot;,&quot;msg&quot;:&quot;Error fetching URL www.5lmh.com : Error &#x3D; Get www.5lmh.com: unsupported protocol scheme \&quot;\&quot;&quot;,&quot;stacktrace&quot;:&quot;main.simpleHttpGet\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce3&#x2F;main.go:27\nmain.main\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce3&#x2F;main.go:14\nruntime.main\n\tE:&#x2F;go&#x2F;src&#x2F;runtime&#x2F;proc.go:200&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573181019.3677258,&quot;caller&quot;:&quot;ce3&#x2F;main.go:27&quot;,&quot;msg&quot;:&quot;Error fetching URL http:&#x2F;&#x2F;www.google.com : Error &#x3D; Get http:&#x2F;&#x2F;www.google.com: dial tcp 67.228.37.26:80: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.&quot;,&quot;stacktrace&quot;:&quot;main.simpleHttpGet\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce3&#x2F;main.go:27\nmain.main\n\te:&#x2F;goproject&#x2F;src&#x2F;github.com&#x2F;student&#x2F;log&#x2F;ce3&#x2F;main.go:15\nruntime.main\n\tE:&#x2F;go&#x2F;src&#x2F;runtime&#x2F;proc.go:200&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你应该注意到的了，到目前为止这两个logger都打印输出JSON结构格式。</p>
+<p>在本博客的后面部分，我们将更详细地讨论SugaredLogger，并了解如何进一步配置它。</p>
+<h3 id="定制logger"><a href="#定制logger" class="headerlink" title="定制logger"></a>定制logger</h3><h4 id="将日志写入文件而不是终端"><a href="#将日志写入文件而不是终端" class="headerlink" title="将日志写入文件而不是终端"></a>将日志写入文件而不是终端</h4><ul>
+<li>我们要做的第一个更改是把日志写入文件，而不是打印到应用程序控制台。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">New</span><span class="params">(core zapcore.Core, options ...Option)</span> *<span class="title">Logger</span></span></span><br></pre></td></tr></table></figure>
+
+<p>zapcore.Core需要三个配置——Encoder，WriteSyncer，LogLevel。</p>
+<p>1.Encoder:编码器(如何写入日志)。我们将使用开箱即用的NewJSONEncoder()，并使用预先设置的ProductionEncoderConfig()。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span><br></pre></td></tr></table></figure>
+
+<p>2.WriterSyncer ：指定日志将写到哪里去。我们使用zapcore.AddSync()函数并且将打开的文件句柄传进去。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file, _ := os.Create(<span class="string">&quot;./test.log&quot;</span>)</span><br><span class="line">   writeSyncer := zapcore.AddSync(file)</span><br></pre></td></tr></table></figure>
+
+<p>3.Log Level：哪种级别的日志将被写入。</p>
+<p>我们将修改上述部分中的Logger代码，并重写InitLogger()方法。其余方法—main() /SimpleHttpGet()保持不变。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net/http&quot;</span></span><br><span class="line">    <span class="string">&quot;os&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;go.uber.org/zap&quot;</span></span><br><span class="line">    <span class="string">&quot;go.uber.org/zap/zapcore&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sugarLogger *zap.SugaredLogger</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    InitLogger()</span><br><span class="line">    <span class="keyword">defer</span> sugarLogger.Sync()</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;www.5lmh.com&quot;</span>)</span><br><span class="line">    simpleHttpGet(<span class="string">&quot;http://www.google.com&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitLogger</span><span class="params">()</span></span> &#123;</span><br><span class="line">    writeSyncer := getLogWriter()</span><br><span class="line">    encoder := getEncoder()</span><br><span class="line">    core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)</span><br><span class="line"></span><br><span class="line">    logger := zap.New(core)</span><br><span class="line">    sugarLogger = logger.Sugar()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getEncoder</span><span class="params">()</span> <span class="title">zapcore</span>.<span class="title">Encoder</span></span> &#123;</span><br><span class="line">    <span class="keyword">return</span> zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLogWriter</span><span class="params">()</span> <span class="title">zapcore</span>.<span class="title">WriteSyncer</span></span> &#123;</span><br><span class="line">    <span class="comment">//如果想要追加写入可以查看我的博客文件操作那一章</span></span><br><span class="line">    file, _ := os.Create(<span class="string">&quot;./test.log&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> zapcore.AddSync(file)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">simpleHttpGet</span><span class="params">(url <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    sugarLogger.Debugf(<span class="string">&quot;Trying to hit GET request for %s&quot;</span>, url)</span><br><span class="line">    resp, err := http.Get(url)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        sugarLogger.Errorf(<span class="string">&quot;Error fetching URL %s : Error = %s&quot;</span>, url, err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        sugarLogger.Infof(<span class="string">&quot;Success! statusCode = %s for URL %s&quot;</span>, resp.Status, url)</span><br><span class="line">        resp.Body.Close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用这些修改过的logger配置调用上述部分的main()函数时，以下输出将打印在文件——test.log中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;level&quot;:&quot;debug&quot;,&quot;ts&quot;:1573181732.5292294,&quot;msg&quot;:&quot;Trying to hit GET request for www.5lmh.com&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573181732.5292294,&quot;msg&quot;:&quot;Error fetching URL www.5lmh.com : Error &#x3D; Get www.5lmh.com: unsupported protocol scheme \&quot;\&quot;&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;debug&quot;,&quot;ts&quot;:1573181732.5292294,&quot;msg&quot;:&quot;Trying to hit GET request for http:&#x2F;&#x2F;www.google.com&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1573181753.564804,&quot;msg&quot;:&quot;Error fetching URL http:&#x2F;&#x2F;www.google.com : Error &#x3D; Get http:&#x2F;&#x2F;www.google.com: dial tcp 66.220.149.32:80: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="将JSON-Encoder更改为普通的Log-Encoder"><a href="#将JSON-Encoder更改为普通的Log-Encoder" class="headerlink" title="将JSON Encoder更改为普通的Log Encoder"></a>将JSON Encoder更改为普通的Log Encoder</h4><p>现在，我们希望将编码器从JSON Encoder更改为普通Encoder。为此，我们需要将NewJSONEncoder()更改为NewConsoleEncoder()。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())</span><br></pre></td></tr></table></figure>
+
+<p>当使用这些修改过的logger配置调用上述部分的main()函数时，以下输出将打印在文件——test.log中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.573181811861697e+09    debug    Trying to hit GET request for www.5lmh.com</span><br><span class="line">1.5731818118626883e+09    error    Error fetching URL www.5lmh.com : Error &#x3D; Get www.5lmh.com: unsupported protocol scheme &quot;&quot;</span><br><span class="line">1.5731818118626883e+09    debug    Trying to hit GET request for http:&#x2F;&#x2F;www.google.com</span><br><span class="line">1.5731818329012108e+09    error    Error fetching URL http:&#x2F;&#x2F;www.google.com : Error &#x3D; Get http:&#x2F;&#x2F;www.google.com: dial tcp 216.58.200.228:80: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.</span><br></pre></td></tr></table></figure>
+
+<h4 id="更改时间编码并添加调用者详细信息"><a href="#更改时间编码并添加调用者详细信息" class="headerlink" title="更改时间编码并添加调用者详细信息"></a>更改时间编码并添加调用者详细信息</h4><p>鉴于我们对配置所做的更改，有下面两个问题：</p>
+<ul>
+<li>时间是以非人类可读的方式展示，例如1.572161051846623e+09</li>
+<li>调用方函数的详细信息没有显示在日志中 我们要做的第一件事是覆盖默认的ProductionConfig()，并进行以下更改:</li>
+</ul>
+<p>修改时间编码器</p>
+<ul>
+<li>在日志文件中使用大写字母记录日志级别</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getEncoder</span><span class="params">()</span> <span class="title">zapcore</span>.<span class="title">Encoder</span></span> &#123;</span><br><span class="line">    encoderConfig := zap.NewProductionEncoderConfig()</span><br><span class="line">    encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder</span><br><span class="line">    encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder</span><br><span class="line">    <span class="keyword">return</span> zapcore.NewConsoleEncoder(encoderConfig)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们将修改zap logger代码，添加将调用函数信息记录到日志中的功能。为此，我们将在zap.New(..)函数中添加一个Option。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger := zap.New(core, zap.AddCaller())</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Go/" rel="tag"># Go</a>
+              <a href="/tags/Zap-Logger/" rel="tag"># Zap Logger</a>
+              <a href="/tags/Uber-go-Zap/" rel="tag"># Uber-go Zap</a>
+              <a href="/tags/%E6%97%A5%E5%BF%97/" rel="tag"># 日志</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/31/Go-%E9%94%99%E8%AF%AF%E3%80%81%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AF%A6%E8%A7%A3-%E6%9B%B4%E8%AF%A6%E7%BB%86%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%BB%86%E8%8A%82%E6%9F%A5%E7%9C%8B%EF%BC%9AGo-%E5%85%B3%E9%94%AE%E5%AD%97defer%E3%80%81panic%E3%80%81recover%E8%AF%A6%E8%A7%A3/" rel="prev" title="Go 错误、异常处理详解 更详细的使用和细节查看：Go 关键字defer、panic、recover详解">
+                  <i class="fa fa-chevron-left"></i> Go 错误、异常处理详解 更详细的使用和细节查看：Go 关键字defer、panic、recover详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-square"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aaron</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+
+
+  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+
+
+<script>
+var options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: true, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+</script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
